@@ -1,12 +1,9 @@
 package com.li.basemvvm.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
-import com.hdl.elog.ELog;
 import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.ExceptionHandle;
 import com.trello.rxlifecycle2.LifecycleProvider;
