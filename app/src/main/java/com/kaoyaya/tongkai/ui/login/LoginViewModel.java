@@ -27,7 +27,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 
-public class LoginViewModel extends BaseViewModel<DemoRepository> {
+public class LoginViewModel extends BaseViewModel{
 
 
     public ObservableField<String> userName = new ObservableField<>();
@@ -42,9 +42,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
     }
 
 
-    public LoginViewModel(@NonNull Application application, DemoRepository model) {
-        super(application, model);
-
+    public LoginViewModel(@NonNull Application application) {
+        super(application);
     }
 
     public BindingCommand loginOnClickCommand = new BindingCommand(new BindingAction() {
@@ -102,6 +101,8 @@ public class LoginViewModel extends BaseViewModel<DemoRepository> {
                                 SPUtils.getInstance().saveToken(token);
                             }
                         }
+
+                        getUserInfo();
                     }
                 }, new Consumer<Throwable>() {
                     @Override

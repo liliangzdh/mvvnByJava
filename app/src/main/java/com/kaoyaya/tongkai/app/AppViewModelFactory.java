@@ -45,9 +45,9 @@ public class AppViewModelFactory extends ViewModelProvider.NewInstanceFactory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            return (T) new LoginViewModel(mApplication, mRepository);
-        }
+//        if (modelClass.isAssignableFrom(LoginViewModel.class)) {
+//            return (T) new LoginViewModel(mApplication, mRepository);
+//        }
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.li.basemvvm.base.inter.IBaseView;
@@ -61,7 +62,7 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
          binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState));
          viewModelId = initVariableId();
          viewModel = initViewModel();
-         if(viewModel != null){
+         if(viewModel == null){
              Class modelClass;
              Type type = getClass().getGenericSuperclass();
              if (type instanceof ParameterizedType) {

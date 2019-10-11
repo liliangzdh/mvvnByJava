@@ -8,7 +8,6 @@ import io.reactivex.Observable;
 
 public class DemoRepository extends BaseModel {
 
-
     public Observable<Object> login() {
         return Observable.just(new Object()).delay(3, TimeUnit.SECONDS);
     }
