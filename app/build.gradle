@@ -32,6 +32,10 @@ dependencies {
     // base mvvm 导入
     implementation project(':basemvvm')
 
+    implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
+
+    //底部tabBar
+    implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0X'
 }
