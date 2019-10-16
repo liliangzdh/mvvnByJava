@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.ExceptionHandle;
-import com.trello.rxlifecycle2.LifecycleProvider;
-import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.trello.rxlifecycle3.LifecycleProvider;
+import com.trello.rxlifecycle3.LifecycleTransformer;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;

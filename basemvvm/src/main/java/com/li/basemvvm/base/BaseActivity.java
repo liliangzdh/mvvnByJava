@@ -10,13 +10,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.li.basemvvm.base.inter.IBaseView;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.utils.MaterialDialogUtils;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -50,6 +49,7 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
         super.onDestroy();
         //解除Messenger注册
         Messenger.getDefault().unregister(viewModel);
+        Messenger.getDefault().unregister(this);
         if (viewModel != null) {
             viewModel.removeRxBus();
         }

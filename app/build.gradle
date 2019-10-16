@@ -38,4 +38,7 @@ dependencies {
 
     //底部tabBar
     implementation 'me.majiajie:pager-bottom-tab-strip:2.3.0X'
+
+    //录播图
+    implementation 'com.youth.banner:banner:1.4.10'
 }

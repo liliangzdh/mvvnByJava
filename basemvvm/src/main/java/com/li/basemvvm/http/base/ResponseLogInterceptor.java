@@ -37,7 +37,7 @@ public class ResponseLogInterceptor implements Interceptor {
             String bodyString = Printer.getJsonString(string);
             body = ResponseBody.create(contentType, bodyString);
 
-            ELog.e("test",bodyString);
+            ELog.e("response",bodyString);
             if(response.code() == 200){
                 BaseResponse baseResponse = new Gson().fromJson(bodyString, BaseResponse.class);
                 if(baseResponse.getCode() == 401){

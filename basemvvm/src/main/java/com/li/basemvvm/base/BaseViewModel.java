@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer;
 
 import com.li.basemvvm.base.inter.IBaseViewModel;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
-import com.trello.rxlifecycle2.LifecycleProvider;
+import com.trello.rxlifecycle3.LifecycleProvider;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;

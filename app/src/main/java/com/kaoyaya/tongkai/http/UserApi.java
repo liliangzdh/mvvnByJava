@@ -1,8 +1,10 @@
 package com.kaoyaya.tongkai.http;
 
+import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.entity.UserInfo;
 import com.li.basemvvm.http.base.BaseResponse;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.reactivex.Observable;
@@ -25,4 +27,8 @@ public interface UserApi {
     @POST("api/v1/login/password")
     Observable<BaseResponse<HashMap<String, String>>> passWord2(@Field("username") String username, @Field("password") String password,@Field("json") boolean json);
 
+
+    // 获取用户分发资源
+    @GET("api/v1/distribute/resource?examType=2")
+    Observable<BaseResponse<ArrayList<HomeResourseDistribute>>> getUserDistribute();
 }

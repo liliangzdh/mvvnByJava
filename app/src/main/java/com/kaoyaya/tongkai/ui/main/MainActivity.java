@@ -2,17 +2,24 @@ package com.kaoyaya.tongkai.ui.main;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Gravity;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.databinding.ActMainBinding;
 import com.kaoyaya.tongkai.entity.TabItem;
+import com.kaoyaya.tongkai.ui.home.HomeFragment;
+import com.kaoyaya.tongkai.ui.home.HomeViewModel;
+import com.kaoyaya.tongkai.ui.study.StudyFragment;
+import com.kaoyaya.tongkai.ui.user.UserCenterFragment;
 import com.li.basemvvm.base.BaseActivity;
+import com.li.basemvvm.binding.command.BindingAction;
+import com.li.basemvvm.bus.Messenger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +45,17 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
     public void initData() {
         initFragment();
         initBottomTab();
+        initOpenDrawerListener();
+    }
+
+    //监听打开菜单
+    private void initOpenDrawerListener() {
+        Messenger.getDefault().register(this, HomeViewModel.OpenMenuAction, new BindingAction() {
+            @Override
+            public void call() {
+                binding.drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
     }
 
 
@@ -45,9 +63,9 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
 
     private void initFragment() {
         mFragments = new ArrayList<>();
-        mFragments.add(SimpleCardFragment.getInstance("1"));
-        mFragments.add(SimpleCardFragment.getInstance("2"));
-        mFragments.add(SimpleCardFragment.getInstance("3"));
+        mFragments.add(new HomeFragment());
+        mFragments.add(new StudyFragment());
+        mFragments.add(new UserCenterFragment());
         //默认选中第一个
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayout, mFragments.get(0));

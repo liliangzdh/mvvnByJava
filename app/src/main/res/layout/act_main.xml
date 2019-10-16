@@ -11,26 +11,68 @@
             type="MainViewModel" />
     </data>
 
-    <LinearLayout
+
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
 
-        <View
+        <LinearLayout
+            android:id="@+id/content_frame"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#F0F0F0" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <me.majiajie.pagerbottomtabstrip.PageNavigationView
-            android:id="@+id/pager_bottom_tab"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:elevation="8dp" />
-    </LinearLayout>
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F0F0F0" />
+
+            <me.majiajie.pagerbottomtabstrip.PageNavigationView
+                android:id="@+id/pager_bottom_tab"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:elevation="8dp" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="#fff"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="字符串2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="字符串3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="字符串4" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="字符串5" />
+        </LinearLayout>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
+
+
 </layout>

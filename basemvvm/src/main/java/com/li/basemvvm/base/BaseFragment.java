@@ -18,7 +18,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.li.basemvvm.base.inter.IBaseView;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.utils.MaterialDialogUtils;
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
