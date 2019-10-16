@@ -217,6 +217,7 @@
 
                 <include
                     layout="@layout/layout_more"
+                    binding:action="@{viewModel.goodLessonMoreCommand}"
                     binding:name="@{viewModel.title}" />
             </RelativeLayout>
 

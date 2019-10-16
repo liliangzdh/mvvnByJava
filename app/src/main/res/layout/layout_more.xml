@@ -7,9 +7,15 @@
         <variable
             name="name"
             type="String" />
+
+        <variable
+            name="action"
+            type="com.li.basemvvm.binding.command.BindingCommand" />
+
     </data>
 
     <LinearLayout
+        binding:onClickCommand="@{action}"
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:layout_alignParentRight="true"
