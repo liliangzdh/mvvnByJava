@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.ObservableField;
 
+import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.li.basemvvm.base.BaseViewModel;
@@ -26,6 +28,7 @@ public class HomeViewModel extends BaseViewModel {
     public ObservableField<String> title = new ObservableField<>("初级会计");
 
 
+
     public UIChangeObservable uc = new UIChangeObservable();
 
 
@@ -39,6 +42,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
+
     }
 
 
@@ -55,11 +59,15 @@ public class HomeViewModel extends BaseViewModel {
             Log.e("test", "点击事件");
         }
     });
-    public class Presenter {
-        public void goodLessonMoreCommand(View view){
-            Log.e("test", "点击事件2");
+
+
+    public BindingCommand goodLessonCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            Log.e("test", "点击事件 精选好课");
         }
-    }
+    });
+
 
 
     // 发起网络请求。获取分发资源

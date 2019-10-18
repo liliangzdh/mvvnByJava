@@ -1,9 +1,11 @@
 package com.li.basemvvm.binding.viewadapter.image;
 
 
+import android.annotation.SuppressLint;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import androidx.annotation.IdRes;
 import androidx.databinding.BindingAdapter;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +24,13 @@ public final class ViewAdapter {
                     .apply(new RequestOptions().placeholder(placeholderRes))
                     .into(imageView);
         }
+    }
+
+
+    @SuppressLint("ResourceType")
+    @BindingAdapter("load_image")
+    public static void loadImage(ImageView view, @IdRes int imageId) {
+        view.setImageResource(imageId);
     }
 }
 

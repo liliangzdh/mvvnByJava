@@ -8,6 +8,8 @@
             name="viewModel"
             type="com.kaoyaya.tongkai.ui.home.HomeViewModel" />
 
+        <import type="com.kaoyaya.tongkai.R" />
+
     </data>
 
     <LinearLayout
@@ -70,121 +72,37 @@
             android:orientation="horizontal"
             android:paddingTop="6dp">
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+            <!--binding:title="@string/every_day_exam"-->
+            <!--@mipmap/xuexi-->
+            <include
+                layout="@layout/layout_home_top_ceil"
+                binding:title="@{@string/good_lesson}"
+                binding:img='@{R.mipmap.xuexi}'
+                binding:action="@{viewModel.goodLessonCommand}"/>
 
-                <LinearLayout
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/circle_color_ffea"
-                    android:gravity="center">
+            <include
+                layout="@layout/layout_home_top_ceil"
+                binding:title="@{@string/every_day_exam}"
+                binding:img='@{R.mipmap.tiku_write}'
+                binding:action="@{viewModel.goodLessonCommand}"/>
 
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:src="@mipmap/xuexi" />
-                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/good_lesson"
-                    android:textColor="@color/color_33"
-                    android:textSize="12sp" />
+            <include
+                layout="@layout/layout_home_top_ceil"
+                binding:title="@{@string/exam_news}"
+                binding:img='@{R.mipmap.kaoshizixun}'
+                binding:action="@{viewModel.goodLessonCommand}"/>
 
-            </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
+            <include
+                layout="@layout/layout_home_top_ceil"
+                binding:title="@{@string/online}"
+                binding:img='@{R.mipmap.online}'
+                binding:action="@{viewModel.goodLessonCommand}"/>
 
-                <LinearLayout
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/circle_color_ffea"
-                    android:gravity="center">
 
-                    <ImageView
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:src="@mipmap/tiku_write" />
-                </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/every_day_exam"
-                    android:textColor="@color/color_33"
-                    android:textSize="12sp" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/circle_color_ffea"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:src="@mipmap/kaoshizixun" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/exam_news"
-                    android:textColor="@color/color_33"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="38dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/circle_color_ffea"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:layout_width="23dp"
-                        android:layout_height="28dp"
-                        android:src="@mipmap/online" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/online"
-                    android:textColor="@color/color_33"
-                    android:textSize="12sp" />
-
-            </LinearLayout>
 
         </LinearLayout>
 
@@ -212,13 +130,9 @@
                     android:textSize="17sp" />
 
 
-                <!--<include-->
-                <!--layout="@layout/layout_more" onClickCommand="@{viewModel.goodLessonMoreCommand}" />-->
-
                 <include
                     layout="@layout/layout_more"
-                    binding:action="@{viewModel.goodLessonMoreCommand}"
-                    binding:name="@{viewModel.title}" />
+                    binding:action="@{viewModel.goodLessonMoreCommand}"/>
             </RelativeLayout>
 
         </LinearLayout>

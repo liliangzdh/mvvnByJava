@@ -1,5 +1,6 @@
 package com.li.basemvvm.binding.viewadapter.view;
 
+import android.util.Log;
 import android.view.View;
 
 import androidx.databinding.BindingAdapter;
@@ -18,7 +19,7 @@ import io.reactivex.functions.Consumer;
 
 public class ViewAdapter {
     //防重复点击间隔(秒)
-    private static final int CLICK_INTERVAL = 1;
+    private static final int CLICK_INTERVAL = 500;
 
     /**
      * requireAll 是意思是是否需要绑定全部参数, false为否
@@ -27,7 +28,7 @@ public class ViewAdapter {
      * isThrottleFirst 是否开启防止过快点击
      */
     @BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
-    public static void onClickCommand(View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
+    public static void onClickCommand(final View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
         if (isThrottleFirst) {
             Disposable subscribe  = RxView.clicks(view)
                     .subscribe(new Consumer<Object>() {
@@ -40,7 +41,7 @@ public class ViewAdapter {
                     });
         } else {
             Disposable subscribe = RxView.clicks(view)
-                    .throttleFirst(CLICK_INTERVAL, TimeUnit.SECONDS)//1秒钟内只允许点击1次
+                    .throttleFirst(CLICK_INTERVAL, TimeUnit.MILLISECONDS)//1秒钟内只允许点击1次
                     .subscribe(new Consumer<Object>() {
                         @Override
                         public void accept(Object object)  {
