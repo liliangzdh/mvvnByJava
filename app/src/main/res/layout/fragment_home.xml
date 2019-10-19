@@ -76,32 +76,31 @@
             <!--@mipmap/xuexi-->
             <include
                 layout="@layout/layout_home_top_ceil"
-                binding:title="@{@string/good_lesson}"
-                binding:img='@{R.mipmap.xuexi}'
-                binding:action="@{viewModel.goodLessonCommand}"/>
+                binding:action="@{viewModel.goodLessonCommand}"
+                binding:img="@{R.mipmap.xuexi}"
+                binding:title="@{@string/good_lesson}" />
 
             <include
                 layout="@layout/layout_home_top_ceil"
-                binding:title="@{@string/every_day_exam}"
+                binding:action="@{viewModel.goodLessonCommand}"
                 binding:img='@{R.mipmap.tiku_write}'
-                binding:action="@{viewModel.goodLessonCommand}"/>
+                binding:title="@{@string/every_day_exam}" />
+
+            <!--binding:load_image="@{@mipmap/tiku_write}"-->
 
 
             <include
                 layout="@layout/layout_home_top_ceil"
-                binding:title="@{@string/exam_news}"
+                binding:action="@{viewModel.goodLessonCommand}"
                 binding:img='@{R.mipmap.kaoshizixun}'
-                binding:action="@{viewModel.goodLessonCommand}"/>
+                binding:title="@{@string/exam_news}" />
 
 
             <include
                 layout="@layout/layout_home_top_ceil"
-                binding:title="@{@string/online}"
+                binding:action="@{viewModel.goodLessonCommand}"
                 binding:img='@{R.mipmap.online}'
-                binding:action="@{viewModel.goodLessonCommand}"/>
-
-
-
+                binding:title="@{@string/online}" />
 
 
         </LinearLayout>
@@ -132,7 +131,8 @@
 
                 <include
                     layout="@layout/layout_more"
-                    binding:action="@{viewModel.goodLessonMoreCommand}"/>
+                    binding:name='@{"更多"}'
+                    binding:action="@{viewModel.goodLessonMoreCommand}" />
             </RelativeLayout>
 
         </LinearLayout>

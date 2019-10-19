@@ -2,7 +2,10 @@ package com.li.basemvvm.binding.viewadapter.image;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.IdRes;
@@ -32,5 +35,22 @@ public final class ViewAdapter {
     public static void loadImage(ImageView view, @IdRes int imageId) {
         view.setImageResource(imageId);
     }
+
+    @BindingAdapter("load_image")
+    public static void loadImage(ImageView view,  Drawable resource) {
+        view.setImageDrawable(resource);
+    }
+
+    @BindingAdapter("load_image")
+    public static void loadImage(ImageView view,  Bitmap resource) {
+        view.setImageBitmap(resource);
+    }
+
+    @BindingAdapter("load_image")
+    public static void loadImage(ImageView view,  String resource) {
+
+        Log.e("test","sasas");
+    }
+
 }
 
