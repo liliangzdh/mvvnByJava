@@ -60,23 +60,22 @@ public class RxUtils {
     /**
      * 线程调度器
      */
-    @SuppressWarnings("unchecked")
-    public static ObservableTransformer schedulersTransformer() {
-        return new ObservableTransformer() {
+
+    public static <T>ObservableTransformer<T,T> schedulersTransformer() {
+        return new ObservableTransformer<T,T>() {
             @Override
-            public ObservableSource apply(Observable upstream) {
+            public ObservableSource<T> apply(Observable<T> upstream) {
                 return upstream.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
             }
         };
     }
 
-
     /**
      * 切记切记，不能会报什么 类型转换异常。
      * 如果使用了  exceptionTransformer 。那么 subscribe 接收 就不能使用 BaseResponse<T>。只能是 T .
      */
-    @SuppressWarnings("unchecked")
+
     public static ObservableTransformer exceptionTransformer() {
 
         return new ObservableTransformer() {
@@ -85,7 +84,6 @@ public class RxUtils {
                 return observable
                         .map(new HandleFuc())
                         .onErrorResumeNext(new HttpResponseFunc());
-
 //                return observable.onErrorResumeNext(new HttpResponseFunc());
             }
         };

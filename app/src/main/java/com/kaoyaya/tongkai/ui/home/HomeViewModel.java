@@ -22,6 +22,7 @@ import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
+import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.RetrofitClient;
 import com.li.basemvvm.utils.RxUtils;
 
@@ -81,13 +82,13 @@ public class HomeViewModel extends BaseViewModel {
 
 
     // 发起网络请求。获取分发资源
-    @SuppressWarnings("unchecked")
+//    @SuppressWarnings("unchecked")
     public void getNetResource() {
         UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
         Disposable subscribe = userApi.getUserDistribute().
-                compose(RxUtils.schedulersTransformer()).
-                compose(RxUtils.exceptionTransformer()).
-                subscribe(new Consumer<ArrayList<HomeResourseDistribute>>() {
+                compose(RxUtils.<BaseResponse<ArrayList<HomeResourseDistribute>>>schedulersTransformer())
+                .compose(RxUtils.exceptionTransformer())
+                .subscribe(new Consumer<ArrayList<HomeResourseDistribute> >() {
                     @Override
                     public void accept(ArrayList<HomeResourseDistribute> list) throws Exception {
                         for (HomeResourseDistribute homeResourseDistribute : list) {
@@ -104,12 +105,8 @@ public class HomeViewModel extends BaseViewModel {
                             }
                         }
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-
-                    }
                 });
+
         addSubscribe(subscribe);
     }
 
