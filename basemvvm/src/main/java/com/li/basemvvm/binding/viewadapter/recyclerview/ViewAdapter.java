@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.li.basemvvm.base.LayoutManagers;
 import com.li.basemvvm.binding.command.BindingCommand;
 
 import java.util.concurrent.TimeUnit;
@@ -16,6 +17,13 @@ import io.reactivex.subjects.PublishSubject;
  * Created by goldze on 2017/6/16.
  */
 public class ViewAdapter {
+
+
+
+    @BindingAdapter("layoutManager")
+    public static void setLayoutManager(RecyclerView recyclerView, LayoutManagers.LayoutManagerFactory layoutManagerFactory) {
+        recyclerView.setLayoutManager(layoutManagerFactory.create(recyclerView));
+    }
 
     @BindingAdapter("lineManager")
     public static void setLineManager(RecyclerView recyclerView, LineManagers.LineManagerFactory lineManagerFactory) {

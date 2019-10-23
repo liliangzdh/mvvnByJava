@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.kaoyaya.tongkai.ui.home.GoodCourseItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:layout_marginRight="14dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="96dp"
+            binding:url="@{item.entity.pictureURL}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12sp"
+            android:text="@{item.entity.name}"
+            android:textColor="#171717"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="4dp"
+            android:text="@{item.entity.remark}"
+            android:maxLines="2"
+            android:textColor="#B2B2B2"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+</layout>

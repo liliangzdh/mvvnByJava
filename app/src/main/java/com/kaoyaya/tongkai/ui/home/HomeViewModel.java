@@ -6,9 +6,15 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableList;
 
+import com.google.gson.Gson;
+import com.hdl.elog.ELog;
+import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
+import com.kaoyaya.tongkai.entity.HomeResource;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.li.basemvvm.base.BaseViewModel;
@@ -20,17 +26,22 @@ import com.li.basemvvm.http.base.RetrofitClient;
 import com.li.basemvvm.utils.RxUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class HomeViewModel extends BaseViewModel {
     public ObservableField<String> title = new ObservableField<>("初级会计");
 
 
-
     public UIChangeObservable uc = new UIChangeObservable();
 
+    // 精选好课的 数据源
+    public ObservableList<GoodCourseItemViewModel> goodCourseList = new ObservableArrayList<>();
+    // 给RecyclerView添加ItemBinding
+    public ItemBinding<GoodCourseItemViewModel> goodCourseItemBinding = ItemBinding.of(BR.item, R.layout.item_good_course);
 
 
     public class UIChangeObservable {
@@ -69,7 +80,6 @@ public class HomeViewModel extends BaseViewModel {
     });
 
 
-
     // 发起网络请求。获取分发资源
     @SuppressWarnings("unchecked")
     public void getNetResource() {
@@ -85,6 +95,12 @@ public class HomeViewModel extends BaseViewModel {
                             if ("Banner".equals(homeResourseDistribute.getName())) {
                                 //发送 banner 数据到 页面上。更新数据源
                                 uc.finishGetBannerData.setValue(homeResourseDistribute);
+                            } else if ("精品体验课".equals(homeResourseDistribute.getName())) {
+                                List<HomeResource> goodCourseResource = homeResourseDistribute.getResource();
+                                for (HomeResource homeResource : goodCourseResource) {
+                                    GoodCourseItemViewModel itemViewModel = new GoodCourseItemViewModel(HomeViewModel.this, homeResource);
+                                    goodCourseList.add(itemViewModel);
+                                }
                             }
                         }
                     }
@@ -97,5 +113,13 @@ public class HomeViewModel extends BaseViewModel {
         addSubscribe(subscribe);
     }
 
+
+    /**
+     * 获取条目下标
+     */
+    public int getItemPosition(GoodCourseItemViewModel itemViewModel) {
+        ELog.e("test", "huoqu---->" + goodCourseList.size());
+        return goodCourseList.indexOf(itemViewModel);
+    }
 
 }

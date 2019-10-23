@@ -4,138 +4,199 @@
 
     <data>
 
+        <import type="com.kaoyaya.tongkai.R" />
+
+        <import type="me.tatarka.bindingcollectionadapter2.BindingRecyclerViewAdapter" />
+
+        <import type="com.li.basemvvm.binding.viewadapter.recyclerview.LineManagers" />
+
+        <import type="com.li.basemvvm.base.LayoutManagers" />
+
+
         <variable
             name="viewModel"
             type="com.kaoyaya.tongkai.ui.home.HomeViewModel" />
 
-        <import type="com.kaoyaya.tongkai.R" />
+        <variable
+            name="adapter"
+            type="BindingRecyclerViewAdapter" />
 
     </data>
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:background="@color/white">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentLeft="true"
-                    android:src="@mipmap/menu"
-                    binding:onClickCommand="@{viewModel.openMenuCommand}" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@{viewModel.title}"
-                    android:textColor="#000"
-                    android:textSize="18sp" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="14dp"
-                    android:text="@string/message"
-                    android:textColor="#000"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-
-
-        </androidx.appcompat.widget.Toolbar>
-
-
-        <com.youth.banner.Banner
-            android:id="@+id/banner"
-            android:layout_width="match_parent"
-            android:layout_height="155dp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="86dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingTop="6dp">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <!--binding:title="@string/every_day_exam"-->
-            <!--@mipmap/xuexi-->
-            <include
-                layout="@layout/layout_home_top_ceil"
-                binding:action="@{viewModel.goodLessonCommand}"
-                binding:img="@{R.mipmap.xuexi}"
-                binding:title="@{@string/good_lesson}" />
-
-            <include
-                layout="@layout/layout_home_top_ceil"
-                binding:action="@{viewModel.goodLessonCommand}"
-                binding:img='@{R.mipmap.tiku_write}'
-                binding:title="@{@string/every_day_exam}" />
-
-            <!--binding:load_image="@{@mipmap/tiku_write}"-->
-
-
-            <include
-                layout="@layout/layout_home_top_ceil"
-                binding:action="@{viewModel.goodLessonCommand}"
-                binding:img='@{R.mipmap.kaoshizixun}'
-                binding:title="@{@string/exam_news}" />
-
-
-            <include
-                layout="@layout/layout_home_top_ceil"
-                binding:action="@{viewModel.goodLessonCommand}"
-                binding:img='@{R.mipmap.online}'
-                binding:title="@{@string/online}" />
-
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:background="@color/color_efef" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="5dp">
-
-            <RelativeLayout
+            <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="42dp"
+                android:background="@color/white">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="@string/good_lesson"
-                    android:textColor="#ff333333"
-                    android:textSize="17sp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentLeft="true"
+                        android:src="@mipmap/menu"
+                        binding:onClickCommand="@{viewModel.openMenuCommand}" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@{viewModel.title}"
+                        android:textColor="#000"
+                        android:textSize="18sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="14dp"
+                        android:text="@string/message"
+                        android:textColor="#000"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+
+            </androidx.appcompat.widget.Toolbar>
+
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="155dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingTop="6dp">
+
+                <!--binding:title="@string/every_day_exam"-->
+                <!--@mipmap/xuexi-->
+                <include
+                    layout="@layout/layout_home_top_ceil"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:img="@{R.mipmap.xuexi}"
+                    binding:title="@{@string/good_lesson}" />
+
+                <include
+                    layout="@layout/layout_home_top_ceil"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:img='@{R.mipmap.tiku_write}'
+                    binding:title="@{@string/every_day_exam}" />
+
+                <!--binding:load_image="@{@mipmap/tiku_write}"-->
 
 
                 <include
-                    layout="@layout/layout_more"
-                    binding:name='@{"更多"}'
-                    binding:action="@{viewModel.goodLessonMoreCommand}" />
-            </RelativeLayout>
+                    layout="@layout/layout_home_top_ceil"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:img='@{R.mipmap.kaoshizixun}'
+                    binding:title="@{@string/exam_news}" />
+
+
+                <include
+                    layout="@layout/layout_home_top_ceil"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:img='@{R.mipmap.online}'
+                    binding:title="@{@string/online}" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_efef" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+
+                <include
+                    layout="@layout/layout_title"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:show="@{true}"
+                    binding:title="@{@string/good_course}" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="10dp"
+                    binding:itemBinding="@{viewModel.goodCourseItemBinding}"
+                    binding:items="@{viewModel.goodCourseList}"
+                    binding:layoutManager="@{LayoutManagers.horizontal()}" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:background="#D5DBEB" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="5dp">
+
+                <include
+                    layout="@layout/layout_title"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:title="@{@string/good_tiku}" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="5dp">
+
+                <include
+                    layout="@layout/layout_title"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:show="@{true}"
+                    binding:title="@{@string/good_teacher}" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="5dp">
+
+                <include
+                    layout="@layout/layout_title"
+                    binding:action="@{viewModel.goodLessonCommand}"
+                    binding:title="@{@string/good_live}" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 </layout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="action"
+            type="com.li.basemvvm.binding.command.BindingCommand" />
+
+        <variable
+            name="show"
+            type="Boolean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@{title}"
+            android:textColor="#ff333333"
+            android:textSize="17sp" />
+
+        <include
+            android:visibility="@{show?View.VISIBLE:View.INVISIBLE}"
+            layout="@layout/layout_more"
+            binding:action="@{action}"
+            binding:name='@{"更多"}' />
+    </RelativeLayout>
+</layout>

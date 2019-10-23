@@ -75,4 +75,8 @@ dependencies {
     // fragment快速实现（可选）
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
 
+    //Recyclerview的databinding套装
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:3.1.1'
+    api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.1'
+
 }

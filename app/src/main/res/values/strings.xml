@@ -2,12 +2,17 @@
     <string name="app_name">kaoyayaMvvm</string>
 
     <string name="message">消息</string>
-    <string name="good_lesson">精选好课</string>
     <string name="question_guide">问答指南</string>
     <string name="free_trial">免费试听</string>
     <string name="online">在线咨询</string>
     <string name="exam_news">考试咨询</string>
     <string name="every_day_exam">每日一练</string>
     <string name="more">更多</string>
+    <string name="good_lesson">精选好课</string>
+    <string name="good_tiku">智能题库</string>
+    <string name="good_live">名师直播</string>
+    <string name="good_teacher">名师推荐</string>
+    <string name="good_course">精品体验课</string>
+
 
 </resources>
