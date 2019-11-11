@@ -79,7 +79,6 @@ public class BaseViewModel <M extends BaseModel>  extends AndroidViewModel imple
     /**
      * 跳转页面
      *
-     * @param clz 所跳转的目的Activity类
      */
     public void startActivity(Class<?> clz) {
         startActivity(clz, null);

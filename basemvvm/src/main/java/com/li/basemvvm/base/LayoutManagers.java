@@ -43,6 +43,15 @@ public class LayoutManagers {
         };
     }
 
+    public static LayoutManagerFactory ver() {
+        return new LayoutManagerFactory() {
+            @Override
+            public RecyclerView.LayoutManager create(RecyclerView recyclerView) {
+                return new LinearLayoutManager(recyclerView.getContext(),RecyclerView.VERTICAL,false);
+            }
+        };
+    }
+
     /**
      * A {@link LinearLayoutManager} with the given orientation and reverseLayout.
      */

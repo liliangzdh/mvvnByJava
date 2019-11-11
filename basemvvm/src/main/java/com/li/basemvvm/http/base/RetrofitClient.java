@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String baseUrl = "http://www.kuaixuezaixian.com/";
+    private static final String baseUrl = "http://www.kuaixuezai.com/";
     private static Retrofit retrofit;
 
     private static OkHttpClient okHttpClient;

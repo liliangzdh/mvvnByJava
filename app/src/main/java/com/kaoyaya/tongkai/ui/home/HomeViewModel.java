@@ -2,21 +2,19 @@ package com.kaoyaya.tongkai.ui.home;
 
 import android.app.Application;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
 
-import com.google.gson.Gson;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.entity.HomeResource;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.http.UserApi;
+import com.kaoyaya.tongkai.ui.test.TestAct;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
@@ -69,6 +67,7 @@ public class HomeViewModel extends BaseViewModel {
         @Override
         public void call() {
             Log.e("test", "点击事件");
+
         }
     });
 
@@ -77,12 +76,13 @@ public class HomeViewModel extends BaseViewModel {
         @Override
         public void call() {
             Log.e("test", "点击事件 精选好课");
+            startActivity(TestAct.class);
         }
     });
 
 
     // 发起网络请求。获取分发资源
-//    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public void getNetResource() {
         UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
         Disposable subscribe = userApi.getUserDistribute().

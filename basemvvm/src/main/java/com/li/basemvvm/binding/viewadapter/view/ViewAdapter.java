@@ -1,8 +1,10 @@
 package com.li.basemvvm.binding.viewadapter.view;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.BindingAdapter;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -120,6 +122,13 @@ public class ViewAdapter {
         } else {
             view.setVisibility(View.GONE);
         }
+    }
+
+    /** view的显示隐藏
+     */
+    @BindingAdapter(value = {"backgroundColor"}, requireAll = false)
+    public static void backgroundColor(View view, String color) {
+        view.setBackgroundColor(Color.parseColor(color));
     }
 //    @BindingAdapter({"onTouchCommand"})
 //    public static void onTouchCommand(View view, final ResponseCommand<MotionEvent, Boolean> onTouchCommand) {

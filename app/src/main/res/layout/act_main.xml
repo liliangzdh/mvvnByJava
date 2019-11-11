@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/tools">
 
     <data>
 
         <import type="com.kaoyaya.tongkai.ui.main.MainViewModel" />
+
+        <import type="com.li.basemvvm.base.LayoutManagers" />
 
         <variable
             name="viewModel"
@@ -45,31 +48,42 @@
 
         <LinearLayout
             android:id="@+id/left_drawer"
-            android:layout_width="240dp"
+            android:layout_width="245dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#fff"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="字符串2" />
+            <LinearLayout
+                android:id="@+id/drawerTop"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="字符串3" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="字符串4" />
+                <View
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="15dp"
+                    binding:onClickCommand="@{viewModel.closeCommend}"
+                    android:background="@mipmap/delete" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="字符串5" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#C7CCE2" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                binding:itemBinding="@{viewModel.examItemBinding}"
+                binding:items="@{viewModel.examList}"
+                binding:layoutManager="@{LayoutManagers.ver()}" />
         </LinearLayout>
 
     </androidx.drawerlayout.widget.DrawerLayout>

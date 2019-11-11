@@ -1,13 +1,20 @@
 package com.kaoyaya.tongkai.ui.main;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.ViewGroup;
+import android.view.animation.LayoutAnimationController;
+import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 
+import com.gyf.immersionbar.ImmersionBar;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
@@ -43,9 +50,29 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
 
     @Override
     public void initData() {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.drawerTop.getLayoutParams();
+        params.setMargins(0, ImmersionBar.getStatusBarHeight(this), 0, 0);
+        binding.drawerTop.setLayoutParams(params);
         initFragment();
         initBottomTab();
         initOpenDrawerListener();
+        viewModel.request();
+    }
+
+
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+
+        //关闭侧滑菜单。
+        viewModel.uc.closeDrawer.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(!aBoolean){
+                    binding.drawerLayout.closeDrawers();
+                }
+            }
+        });
     }
 
     //监听打开菜单
@@ -102,4 +129,5 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
         normalItemView.setTextCheckedColor(getResources().getColor(R.color.colorPrimary));
         return normalItemView;
     }
+
 }

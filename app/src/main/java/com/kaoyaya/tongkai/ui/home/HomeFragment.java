@@ -37,11 +37,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void initData() {
         super.initData();
-        ImmersionBar.with(this).
-                fitsSystemWindows(true).
-                statusBarColor(R.color.white).
-                statusBarDarkFont(true, 0.2f).
-                init();
+        ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .titleBar(binding.toolbar)
+                .init();
         initBanner();
 
         // 发起获取分发资源请求

@@ -1,5 +1,7 @@
 package com.li.basemvvm.http.base;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.hdl.elog.ELog;
 import com.li.basemvvm.http.logging.Printer;
@@ -37,7 +39,7 @@ public class ResponseLogInterceptor implements Interceptor {
             String bodyString = Printer.getJsonString(string);
             body = ResponseBody.create(contentType, bodyString);
 
-            ELog.e("response",bodyString);
+            Log.d("response", bodyString);
             if(response.code() == 200){
                 BaseResponse baseResponse = new Gson().fromJson(bodyString, BaseResponse.class);
                 if(baseResponse.getCode() == 401){

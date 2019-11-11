@@ -1,14 +1,17 @@
 package com.li.basemvvm.http.base;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.li.basemvvm.utils.SPUtils;
 import com.li.basemvvm.utils.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
@@ -46,6 +49,7 @@ public class RequestLoggerInterceptor implements Interceptor {
         builder.addHeader("User-Agent", Utils.getUserAgent());
 
         RequestBody body = request.body();
+        Log.d("request", new Gson().toJson(body));
         if ("POST".equals(request.method()) && body instanceof FormBody) {
             FormBody formBody = (FormBody) body;
             //找出 是否有json 这个字符
@@ -59,6 +63,7 @@ public class RequestLoggerInterceptor implements Interceptor {
             //如果有的话，就把post formData 该成 post json
             if (hasJsonParams) {
                 LinkedHashMap<String, Object> hashMap = new LinkedHashMap<>();
+                Log.e("test", new Gson().toJson(formBody));
                 for (int i = 0; i < formBody.size(); i++) {
                     hashMap.put(formBody.encodedName(i), formBody.encodedValue(i));
                 }
