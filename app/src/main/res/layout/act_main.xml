@@ -79,11 +79,14 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 binding:itemBinding="@{viewModel.examItemBinding}"
                 binding:items="@{viewModel.examList}"
                 binding:layoutManager="@{LayoutManagers.ver()}" />
+
+
         </LinearLayout>
 
     </androidx.drawerlayout.widget.DrawerLayout>

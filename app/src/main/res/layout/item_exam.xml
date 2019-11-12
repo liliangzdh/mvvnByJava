@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            binding:onClickCommand="@{item.click}"
             android:text="@{item.entity.name}"
             android:textSize="17sp"
             binding:backgroundColor='@{item.entity.isSelect?"#5F76F8":"#ffffff"}'

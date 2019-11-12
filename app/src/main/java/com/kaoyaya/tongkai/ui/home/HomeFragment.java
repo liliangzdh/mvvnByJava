@@ -1,32 +1,36 @@
 package com.kaoyaya.tongkai.ui.home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.gyf.immersionbar.ImmersionBar;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.databinding.FragmentHomeBinding;
-import com.kaoyaya.tongkai.entity.HomeResource;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.utils.GlideImageLoader;
 import com.li.basemvvm.BR;
 import com.li.basemvvm.base.BaseFragment;
-import com.li.basemvvm.base.LayoutManagers;
 import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> {
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return R.layout.fragment_home;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.e("test","创建  p--------");
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -37,14 +41,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void initData() {
         super.initData();
+        initStatusBar();
+        // 发起获取分发资源请求
+        viewModel.getNetResource();
+    }
+
+
+    public void initStatusBar(){
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
                 .titleBar(binding.toolbar)
                 .init();
         initBanner();
-
-        // 发起获取分发资源请求
-        viewModel.getNetResource();
     }
 
 //    GoodCourseAdapter adapter;

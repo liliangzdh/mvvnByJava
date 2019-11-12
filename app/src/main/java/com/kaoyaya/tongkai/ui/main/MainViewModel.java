@@ -39,6 +39,7 @@ public class MainViewModel extends BaseViewModel {
         super(application);
 
     }
+
     public UIChangeObservable uc = new UIChangeObservable();
 
     public class UIChangeObservable {
@@ -48,7 +49,6 @@ public class MainViewModel extends BaseViewModel {
     public void request() {
         getOemExamTypeList();
     }
-
 
 
     //绑定 action
@@ -77,14 +77,12 @@ public class MainViewModel extends BaseViewModel {
                     public void accept(List<ExamTypeInfo> infoList) {
                         if (infoList.size() > 0) {
                             ExamTypeInfo examTypeInfo = infoList.get(0);
-                            ELog.e("test", examTypeInfo.getName());
                             List<ExamInfo> children = examTypeInfo.getChildren();
                             if (children != null) {
                                 examList.clear();
-
                                 for (int i = 0; i < children.size(); i++) {
                                     ExamInfo child = children.get(i);
-                                    if(i == 0){
+                                    if (i == 0) {
                                         child.setSelect(true);
                                     }
                                     examList.add(new ExamItemViewModel(MainViewModel.this, child));

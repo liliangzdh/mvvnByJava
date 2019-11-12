@@ -19,6 +19,7 @@ import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.databinding.ActMainBinding;
+import com.kaoyaya.tongkai.entity.ExamInfo;
 import com.kaoyaya.tongkai.entity.TabItem;
 import com.kaoyaya.tongkai.ui.home.HomeFragment;
 import com.kaoyaya.tongkai.ui.home.HomeViewModel;
@@ -68,7 +69,7 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
         viewModel.uc.closeDrawer.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(!aBoolean){
+                if (!aBoolean) {
                     binding.drawerLayout.closeDrawers();
                 }
             }
@@ -88,14 +89,18 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
 
     private List<Fragment> mFragments;
 
+    private List<Fragment> cacheFragments;
+
     private void initFragment() {
         mFragments = new ArrayList<>();
+        cacheFragments = new ArrayList<>();
         mFragments.add(new HomeFragment());
         mFragments.add(new StudyFragment());
         mFragments.add(new UserCenterFragment());
         //默认选中第一个
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.frameLayout, mFragments.get(0));
+        cacheFragments.add(mFragments.get(0));
         transaction.commitAllowingStateLoss();
     }
 
@@ -110,8 +115,21 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
             @Override
             public void onSelected(int index, int old) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frameLayout, mFragments.get(index));
-                transaction.commitAllowingStateLoss();
+
+                Fragment oldFragment = mFragments.get(old);
+                Fragment newFragment = mFragments.get(index);
+                transaction.hide(oldFragment);
+                if (!cacheFragments.contains(newFragment)) {
+                    cacheFragments.add(newFragment);
+                    transaction.add(R.id.frameLayout, newFragment);
+                } else {
+                    transaction.show(newFragment);
+                }
+
+                if (newFragment instanceof HomeFragment) {
+                    ((HomeFragment) newFragment).initStatusBar();
+                }
+                transaction.commit();
             }
 
             @Override
