@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 
 import com.gyf.immersionbar.ImmersionBar;
@@ -29,7 +30,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        Log.e("test","创建  p--------");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -42,9 +42,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void initData() {
         super.initData();
         initStatusBar();
+        initBanner();
+
+        binding.teacherRecyclerView.setNestedScrollingEnabled(false);
+        binding.tiKuRecyclerView     .setNestedScrollingEnabled(false);
+
         // 发起获取分发资源请求
         viewModel.getNetResource();
     }
+
 
 
     public void initStatusBar(){
@@ -52,7 +58,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
                 .statusBarDarkFont(true)
                 .titleBar(binding.toolbar)
                 .init();
-        initBanner();
+
     }
 
 //    GoodCourseAdapter adapter;

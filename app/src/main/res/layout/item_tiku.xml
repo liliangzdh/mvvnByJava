@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.kaoyaya.tongkai.ui.home.GoodTiKuItemViewModel" />
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="14dp"
+        android:background="#5D92FF">
+
+
+        <ImageView
+            android:layout_width="62dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/tiku_bg" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:text="@{item.entity.name}"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</layout>

@@ -11,8 +11,12 @@ import androidx.databinding.ObservableList;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
+import com.kaoyaya.tongkai.entity.ExamTypeInfo;
 import com.kaoyaya.tongkai.entity.HomeResource;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
+import com.kaoyaya.tongkai.entity.TiKuExamInfo;
+import com.kaoyaya.tongkai.entity.TiKuExamResponse;
+import com.kaoyaya.tongkai.http.TiKuApi;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.kaoyaya.tongkai.ui.test.TestAct;
 import com.li.basemvvm.base.BaseViewModel;
@@ -27,8 +31,12 @@ import com.li.basemvvm.utils.RxUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class HomeViewModel extends BaseViewModel {
@@ -41,6 +49,15 @@ public class HomeViewModel extends BaseViewModel {
     public ObservableList<GoodCourseItemViewModel> goodCourseList = new ObservableArrayList<>();
     // 给RecyclerView添加ItemBinding
     public ItemBinding<GoodCourseItemViewModel> goodCourseItemBinding = ItemBinding.of(BR.item, R.layout.item_good_course);
+
+    // 名师推荐的数据源
+    public ObservableList<GoodTeacherItemViewModel> goodTeacherList = new ObservableArrayList<>();
+    public ItemBinding<GoodTeacherItemViewModel> goodTeacherItemBinding = ItemBinding.of(BR.item, R.layout.item_good_teacher);
+
+
+    //题库的
+    public ObservableList<GoodTiKuItemViewModel> goodTiKuList = new ObservableArrayList<>();
+    public ItemBinding<GoodTiKuItemViewModel> goodTiKuItemBinding = ItemBinding.of(BR.item, R.layout.item_tiku);
 
 
     public class UIChangeObservable {
@@ -88,26 +105,93 @@ public class HomeViewModel extends BaseViewModel {
         Disposable subscribe = userApi.getUserDistribute().
                 compose(RxUtils.<BaseResponse<ArrayList<HomeResourseDistribute>>>schedulersTransformer())
                 .compose(RxUtils.exceptionTransformer())
-                .subscribe(new Consumer<ArrayList<HomeResourseDistribute> >() {
+                .subscribe(new Consumer<ArrayList<HomeResourseDistribute>>() {
                     @Override
                     public void accept(ArrayList<HomeResourseDistribute> list) throws Exception {
                         for (HomeResourseDistribute homeResourseDistribute : list) {
-                            Log.e("test", homeResourseDistribute.getName());
                             if ("Banner".equals(homeResourseDistribute.getName())) {
                                 //发送 banner 数据到 页面上。更新数据源
                                 uc.finishGetBannerData.setValue(homeResourseDistribute);
                             } else if ("精品体验课".equals(homeResourseDistribute.getName())) {
                                 List<HomeResource> goodCourseResource = homeResourseDistribute.getResource();
+                                goodCourseList.clear();
                                 for (HomeResource homeResource : goodCourseResource) {
                                     GoodCourseItemViewModel itemViewModel = new GoodCourseItemViewModel(HomeViewModel.this, homeResource);
                                     goodCourseList.add(itemViewModel);
                                 }
+                            } else if ("名师推荐".equals(homeResourseDistribute.getName())) {
+                                goodTeacherList.clear();
+                                List<HomeResource> goodTeacheList = homeResourseDistribute.getResource();
+                                for (HomeResource homeResource : goodTeacheList) {
+                                    GoodTeacherItemViewModel itemViewModel = new GoodTeacherItemViewModel(HomeViewModel.this, homeResource);
+                                    goodTeacherList.add(itemViewModel);
+                                }
+                                Log.e("test", "名师推送" + goodTeacheList.size());
                             }
                         }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
                     }
                 });
 
         addSubscribe(subscribe);
+        getTiKuResource();
+    }
+
+
+    // 获取题库资源
+    @SuppressWarnings("unchecked")
+    public void getTiKuResource() {
+        // 执行网络嵌套。
+        final TiKuApi tiKuApi = RetrofitClient.getInstance().create(TiKuApi.class);
+        Disposable subscribe2 = tiKuApi.getDistributeSubject(6)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Consumer<BaseResponse<List<TiKuExamInfo>>>() {
+                    @Override
+                    public void accept(BaseResponse<List<TiKuExamInfo>> listBaseResponse) throws Exception {
+                        //第一次请求成功。
+                        Log.e("test", "第一次请求成功" + listBaseResponse.getMsg());
+                        Log.e("test","xianz1 "+Thread.currentThread().getName());
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Function<BaseResponse<List<TiKuExamInfo>>, ObservableSource<?>>() {
+                    @Override
+                    public ObservableSource<?> apply(BaseResponse<List<TiKuExamInfo>> listBaseResponse) throws Exception {
+                        List<TiKuExamInfo> list = listBaseResponse.getResult();
+                        int id = 0;
+                        if (listBaseResponse.getCode() == 200 && list != null && list.size() > 0) {
+                            id = list.get(0).getId();
+                        }
+                        Log.e("test","xianz2: "+Thread.currentThread().getName());
+                        return tiKuApi.getSubjects(id);
+                    }
+                })
+                .compose(RxUtils.schedulersTransformer())
+                .compose(RxUtils.exceptionTransformer())
+                .subscribe(new Consumer<TiKuExamResponse>() {
+                    @Override
+                    public void accept(TiKuExamResponse response) throws Exception {
+                        List<TiKuExamInfo> list = response.getSubjects();
+                        goodTiKuList.clear();
+                        if(list != null){
+                            for (TiKuExamInfo tiKuExamInfo : list) {
+                                goodTiKuList.add(new GoodTiKuItemViewModel(HomeViewModel.this,tiKuExamInfo));
+                            }
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("test", "190:" + throwable.getMessage());
+                    }
+                });
+
+        addSubscribe(subscribe2);
     }
 
 

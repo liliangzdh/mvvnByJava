@@ -92,7 +92,7 @@ public class MainViewModel extends BaseViewModel {
                     }
                 }, new Consumer<Throwable>() {
                     @Override
-                    public void accept(Throwable throwable) {
+                    public void accept(Throwable throwable)  {
                         ELog.e("test", throwable.getMessage() + " ");
                     }
                 });

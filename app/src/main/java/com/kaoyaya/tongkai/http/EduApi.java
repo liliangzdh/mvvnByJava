@@ -35,7 +35,12 @@ public interface EduApi {
     Observable<BaseResponse<List<CourseSampleInfo>>> getCourseWareInfo3(@FieldMap HashMap<String,List<Integer>> data);
 
 
+    // 获取 首页 分发资源
     @GET("api/v1/distribute/examType")
     Observable<BaseResponse<List<ExamTypeInfo>>> getOemExamTypeList();
+
+
+
+
 
 }
