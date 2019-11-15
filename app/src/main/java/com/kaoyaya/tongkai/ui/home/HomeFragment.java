@@ -1,13 +1,11 @@
 package com.kaoyaya.tongkai.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.Observer;
 
 import com.gyf.immersionbar.ImmersionBar;
@@ -38,6 +36,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         return BR.viewModel;
     }
 
+
     @Override
     public void initData() {
         super.initData();
@@ -45,43 +44,33 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         initBanner();
 
         binding.teacherRecyclerView.setNestedScrollingEnabled(false);
-        binding.tiKuRecyclerView     .setNestedScrollingEnabled(false);
-
+        binding.tiKuRecyclerView.setNestedScrollingEnabled(false);
+        binding.liveRecyclerView.setNestedScrollingEnabled(false);
         // 发起获取分发资源请求
         viewModel.getNetResource();
     }
 
 
-
-    public void initStatusBar(){
+    public void initStatusBar() {
         ImmersionBar.with(this)
                 .statusBarDarkFont(true)
                 .titleBar(binding.toolbar)
                 .init();
-
     }
 
-//    GoodCourseAdapter adapter;
-//    private void initGoodCourse() {
-//        adapter = new GoodCourseAdapter(getContext());
-//        binding.goodCourseRecycleView.setAdapter(adapter);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        layoutManager.setOrientation(RecyclerView.HORIZONTAL);
-//        binding.goodCourseRecycleView.setLayoutManager(layoutManager);
-//    }
+
 
 
     @Override
     public void initViewObservable() {
         super.initViewObservable();
         updateBanner();
+    }
 
-//        viewModel.uc.goodCourseList.observe(this, new Observer<List<HomeResource>>() {
-//            @Override
-//            public void onChanged(List<HomeResource> homeResourceList) {
-//                adapter.refresh(homeResourceList);
-//            }
-//        });
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     //更新banner 数据

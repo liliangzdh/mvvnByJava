@@ -214,13 +214,32 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_marginTop="5dp">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
 
                     <include
                         layout="@layout/layout_title"
                         binding:action="@{viewModel.goodLessonCommand}"
                         binding:title="@{@string/good_live}" />
+
+
+                    <!--<androidx.recyclerview.widget.RecyclerView-->
+                        <!--android:id="@+id/liveRecyclerView"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:paddingLeft="14dp"-->
+                        <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
+                    <!---->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/liveRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="14dp"
+                        binding:itemBinding="@{viewModel.goodLiveItemBinding}"
+                        binding:items="@{viewModel.goodLiveList}"
+                        binding:adapter="@{viewModel.adapter}"
+                        binding:layoutManager="@{LayoutManagers.ver()}" />
 
 
                 </LinearLayout>

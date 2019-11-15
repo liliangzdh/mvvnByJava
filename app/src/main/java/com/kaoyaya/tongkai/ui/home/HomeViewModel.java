@@ -11,11 +11,12 @@ import androidx.databinding.ObservableList;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
-import com.kaoyaya.tongkai.entity.ExamTypeInfo;
 import com.kaoyaya.tongkai.entity.HomeResource;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
+import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.entity.TiKuExamInfo;
 import com.kaoyaya.tongkai.entity.TiKuExamResponse;
+import com.kaoyaya.tongkai.http.LiveApi;
 import com.kaoyaya.tongkai.http.TiKuApi;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.kaoyaya.tongkai.ui.test.TestAct;
@@ -32,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.ObservableSource;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
@@ -59,6 +59,13 @@ public class HomeViewModel extends BaseViewModel {
     public ObservableList<GoodTiKuItemViewModel> goodTiKuList = new ObservableArrayList<>();
     public ItemBinding<GoodTiKuItemViewModel> goodTiKuItemBinding = ItemBinding.of(BR.item, R.layout.item_tiku);
 
+
+    //直播的
+    public ObservableList<LiveItemViewModel> goodLiveList = new ObservableArrayList<>();
+    public ItemBinding<LiveItemViewModel> goodLiveItemBinding = ItemBinding.of(BR.item, R.layout.item_home_live);
+
+
+    public HomeLiveAdapter adapter = new HomeLiveAdapter();
 
     public class UIChangeObservable {
         //获取分发资源
@@ -126,7 +133,6 @@ public class HomeViewModel extends BaseViewModel {
                                     GoodTeacherItemViewModel itemViewModel = new GoodTeacherItemViewModel(HomeViewModel.this, homeResource);
                                     goodTeacherList.add(itemViewModel);
                                 }
-                                Log.e("test", "名师推送" + goodTeacheList.size());
                             }
                         }
                     }
@@ -139,6 +145,7 @@ public class HomeViewModel extends BaseViewModel {
 
         addSubscribe(subscribe);
         getTiKuResource();
+        getHomeLive();
     }
 
 
@@ -154,8 +161,7 @@ public class HomeViewModel extends BaseViewModel {
                     @Override
                     public void accept(BaseResponse<List<TiKuExamInfo>> listBaseResponse) throws Exception {
                         //第一次请求成功。
-                        Log.e("test", "第一次请求成功" + listBaseResponse.getMsg());
-                        Log.e("test","xianz1 "+Thread.currentThread().getName());
+
                     }
                 })
                 .subscribeOn(Schedulers.io())
@@ -163,12 +169,11 @@ public class HomeViewModel extends BaseViewModel {
                     @Override
                     public ObservableSource<?> apply(BaseResponse<List<TiKuExamInfo>> listBaseResponse) throws Exception {
                         List<TiKuExamInfo> list = listBaseResponse.getResult();
-                        int id = 0;
                         if (listBaseResponse.getCode() == 200 && list != null && list.size() > 0) {
-                            id = list.get(0).getId();
+                            int id = list.get(0).getId();
+                            return tiKuApi.getSubjects(id);
                         }
-                        Log.e("test","xianz2: "+Thread.currentThread().getName());
-                        return tiKuApi.getSubjects(id);
+                        return null;
                     }
                 })
                 .compose(RxUtils.schedulersTransformer())
@@ -178,11 +183,12 @@ public class HomeViewModel extends BaseViewModel {
                     public void accept(TiKuExamResponse response) throws Exception {
                         List<TiKuExamInfo> list = response.getSubjects();
                         goodTiKuList.clear();
-                        if(list != null){
+                        if (list != null) {
                             for (TiKuExamInfo tiKuExamInfo : list) {
-                                goodTiKuList.add(new GoodTiKuItemViewModel(HomeViewModel.this,tiKuExamInfo));
+                                goodTiKuList.add(new GoodTiKuItemViewModel(HomeViewModel.this, tiKuExamInfo));
                             }
                         }
+                        Log.e("test", "题库 " + goodTiKuList.size());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -196,6 +202,35 @@ public class HomeViewModel extends BaseViewModel {
 
 
     /**
+     * 获取 首页 直播
+     **/
+    @SuppressWarnings("unchecked")
+    public void getHomeLive() {
+        LiveApi liveApi = RetrofitClient.getInstance().create(LiveApi.class);
+
+        Disposable subscribe = liveApi.getHotPreLive()
+                .compose(RxUtils.<BaseResponse<List<LiveInfo>>>schedulersTransformer())
+                .compose(RxUtils.exceptionTransformer())
+                .subscribe(new Consumer<List<LiveInfo>>() {
+                    @Override
+                    public void accept(List<LiveInfo> list) throws Exception {
+                        goodLiveList.clear();
+                        for (LiveInfo info : list) {
+                            goodLiveList.add(new LiveItemViewModel(HomeViewModel.this, info));
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("test", "   " + throwable.getMessage());
+                    }
+                });
+        addSubscribe(subscribe);
+    }
+
+
+    /**
      * 获取条目下标
      */
     public int getItemPosition(GoodCourseItemViewModel itemViewModel) {
@@ -203,4 +238,10 @@ public class HomeViewModel extends BaseViewModel {
         return goodCourseList.indexOf(itemViewModel);
     }
 
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        adapter.cancelAllTimers();
+    }
 }
