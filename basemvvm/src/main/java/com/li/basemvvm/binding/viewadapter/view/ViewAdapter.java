@@ -1,6 +1,7 @@
 package com.li.basemvvm.binding.viewadapter.view;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 
@@ -124,11 +125,17 @@ public class ViewAdapter {
         }
     }
 
-    /** view的显示隐藏
-     */
+
     @BindingAdapter(value = {"backgroundColor"}, requireAll = false)
     public static void backgroundColor(View view, String color) {
         view.setBackgroundColor(Color.parseColor(color));
+    }
+
+    /** view的显示隐藏
+     */
+    @BindingAdapter(value = {"background"}, requireAll = false)
+    public static void background(View view, int resId) {
+        view.setBackgroundResource(resId);
     }
 //    @BindingAdapter({"onTouchCommand"})
 //    public static void onTouchCommand(View view, final ResponseCommand<MotionEvent, Boolean> onTouchCommand) {
