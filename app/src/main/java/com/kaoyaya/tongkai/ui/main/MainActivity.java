@@ -74,6 +74,7 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
         if (tempWidth == layoutParams.width) {
             return;
         }
+        layoutParams.width = tempWidth;
         binding.leftDrawer.setLayoutParams(layoutParams);
     }
 

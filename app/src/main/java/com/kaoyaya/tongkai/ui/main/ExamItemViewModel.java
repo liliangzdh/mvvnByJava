@@ -45,7 +45,7 @@ public class ExamItemViewModel extends ItemViewModel<MainViewModel> {
             if (temp != null) {
                 Boolean aBoolean = viewModel.isExamInfoEmpty.get();
                 //只有第一次选择栏目的时候。才需要发送。
-                if (aBoolean != null && !aBoolean) {
+                if (aBoolean != null && aBoolean) {
                     viewModel.isExamInfoEmpty.set(false);
                 }
                 viewModel.uc.examChange.setValue(true);
