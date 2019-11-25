@@ -11,6 +11,11 @@ public class ExamInfo {
     private String name;
 
 
+    public ExamInfo(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     private boolean isSelect;
 
     public boolean isSelect() {

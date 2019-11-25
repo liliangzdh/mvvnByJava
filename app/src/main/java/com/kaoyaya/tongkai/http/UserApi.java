@@ -13,6 +13,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface UserApi {
 
@@ -29,6 +30,6 @@ public interface UserApi {
 
 
     // 获取用户分发资源
-    @GET("api/v1/distribute/resource?examType=2")
-    Observable<BaseResponse<ArrayList<HomeResourseDistribute>>> getUserDistribute();
+    @GET("api/v1/distribute/resource")
+    Observable<BaseResponse<ArrayList<HomeResourseDistribute>>> getUserDistribute(@Query("examType") int examType);
 }

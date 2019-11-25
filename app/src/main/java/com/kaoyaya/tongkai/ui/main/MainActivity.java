@@ -1,12 +1,8 @@
 package com.kaoyaya.tongkai.ui.main;
 
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.ViewGroup;
-import android.view.animation.LayoutAnimationController;
 import android.widget.LinearLayout;
 
 import androidx.core.view.GravityCompat;
@@ -15,16 +11,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 
 import com.gyf.immersionbar.ImmersionBar;
-import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.databinding.ActMainBinding;
-import com.kaoyaya.tongkai.entity.ExamInfo;
 import com.kaoyaya.tongkai.entity.TabItem;
 import com.kaoyaya.tongkai.ui.home.HomeFragment;
 import com.kaoyaya.tongkai.ui.home.HomeViewModel;
 import com.kaoyaya.tongkai.ui.study.StudyFragment;
 import com.kaoyaya.tongkai.ui.user.UserCenterFragment;
+import com.kaoyaya.tongkai.utils.SPUtils;
+import com.kaoyaya.tongkai.utils.SizeUtils;
 import com.li.basemvvm.base.BaseActivity;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.bus.Messenger;
@@ -58,6 +54,27 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
         initBottomTab();
         initOpenDrawerListener();
         viewModel.request();
+
+        if (SPUtils.getInstance().isEmptyExamInfo()) {
+            // 没有选择。要选择一个。
+            binding.drawerLayout.openDrawer(GravityCompat.START);
+        }
+        setLeftDrawer(SPUtils.getInstance().isEmptyExamInfo());
+    }
+
+
+    public void setLeftDrawer(boolean isFullWidth) {
+        ViewGroup.LayoutParams layoutParams = binding.leftDrawer.getLayoutParams();
+        int tempWidth;
+        if (isFullWidth) {
+            tempWidth = SizeUtils.getScreenWidth(this);
+        } else {
+            tempWidth = SizeUtils.dp2px(this, 245);
+        }
+        if (tempWidth == layoutParams.width) {
+            return;
+        }
+        binding.leftDrawer.setLayoutParams(layoutParams);
     }
 
 
@@ -72,6 +89,22 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
                 if (!aBoolean) {
                     binding.drawerLayout.closeDrawers();
                 }
+            }
+        });
+
+        // 切换栏目、
+        viewModel.uc.examChange.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                binding.leftDrawer.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        binding.drawerLayout.closeDrawers();
+                        setLeftDrawer(SPUtils.getInstance().isEmptyExamInfo());
+                        // 通知 homeViewModel。
+                        Messenger.getDefault().sendNoMsg(HomeViewModel.RefreshByChangeExam);
+                    }
+                }, 300);
             }
         });
     }

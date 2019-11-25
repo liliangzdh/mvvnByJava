@@ -11,6 +11,7 @@ import androidx.databinding.ObservableList;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
+import com.kaoyaya.tongkai.entity.ExamInfo;
 import com.kaoyaya.tongkai.entity.HomeResource;
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.entity.LiveInfo;
@@ -20,6 +21,7 @@ import com.kaoyaya.tongkai.http.LiveApi;
 import com.kaoyaya.tongkai.http.TiKuApi;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.kaoyaya.tongkai.ui.test.TestAct;
+import com.kaoyaya.tongkai.utils.SPUtils;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
@@ -67,16 +69,40 @@ public class HomeViewModel extends BaseViewModel {
 
     public HomeLiveAdapter adapter = new HomeLiveAdapter();
 
+
     public class UIChangeObservable {
         //获取分发资源
         public SingleLiveEvent<HomeResourseDistribute> finishGetBannerData = new SingleLiveEvent<>();
     }
 
     public static final String OpenMenuAction = "action_open_menu";
+    public static final String RefreshByChangeExam = "refreshByChangeExam";
+
+    public ExamInfo examInfo;
+
+    private void initExamInfo() {
+        ExamInfo examInfo = SPUtils.getInstance().getExamInfo();
+        if (examInfo != null) {
+            title.set(examInfo.getName());
+            this.examInfo = examInfo;
+        } else {
+            // 默认值。
+            this.examInfo = new ExamInfo(2, "会计初级职称");
+        }
+    }
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
-
+        this.initExamInfo();
+        Messenger.getDefault().register(this, RefreshByChangeExam, new BindingAction() {
+            @Override
+            public void call() {
+                initExamInfo();
+                getNetResource();
+                getTiKuResource();
+                getHomeLive();
+            }
+        });
     }
 
 
@@ -109,7 +135,7 @@ public class HomeViewModel extends BaseViewModel {
     @SuppressWarnings("unchecked")
     public void getNetResource() {
         UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
-        Disposable subscribe = userApi.getUserDistribute().
+        Disposable subscribe = userApi.getUserDistribute(examInfo.getId()).
                 compose(RxUtils.<BaseResponse<ArrayList<HomeResourseDistribute>>>schedulersTransformer())
                 .compose(RxUtils.exceptionTransformer())
                 .subscribe(new Consumer<ArrayList<HomeResourseDistribute>>() {
@@ -154,7 +180,7 @@ public class HomeViewModel extends BaseViewModel {
     public void getTiKuResource() {
         // 执行网络嵌套。
         final TiKuApi tiKuApi = RetrofitClient.getInstance().create(TiKuApi.class);
-        Disposable subscribe2 = tiKuApi.getDistributeSubject(6)
+        Disposable subscribe2 = tiKuApi.getDistributeSubject(examInfo.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<BaseResponse<List<TiKuExamInfo>>>() {

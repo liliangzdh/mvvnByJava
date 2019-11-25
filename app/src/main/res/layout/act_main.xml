@@ -9,6 +9,8 @@
 
         <import type="com.li.basemvvm.base.LayoutManagers" />
 
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="MainViewModel" />
@@ -52,6 +54,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="#fff"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <LinearLayout
@@ -66,8 +69,9 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginLeft="15dp"
-                    binding:onClickCommand="@{viewModel.closeCommend}"
-                    android:background="@mipmap/delete" />
+                    android:background="@mipmap/delete"
+                    android:visibility="@{viewModel.isExamInfoEmpty?View.INVISIBLE:View.VISIBLE}"
+                    binding:onClickCommand="@{viewModel.closeCommend}" />
 
             </LinearLayout>
 
@@ -75,12 +79,20 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#C7CCE2" />
+                android:background="#C7CCE2"
+                android:visibility="@{viewModel.isExamInfoEmpty?View.INVISIBLE:View.VISIBLE}" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#请君选择一个目标,祝君考运昌荣"
+                android:textColor="#7DB6BE"
+                android:textSize="14sp"
+                android:visibility="@{viewModel.isExamInfoEmpty?View.VISIBLE:View.INVISIBLE}" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
+                android:layout_width="245dp"
                 android:layout_height="match_parent"
                 binding:itemBinding="@{viewModel.examItemBinding}"
                 binding:items="@{viewModel.examList}"
