@@ -2,6 +2,8 @@ package com.li.basemvvm.http.base;
 
 import android.text.TextUtils;
 
+import com.li.basemvvm.http.Config;
+
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -16,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
 
-    private static final String baseUrl = "http://www.kuaixuezaixian.com/";
+
     private static Retrofit retrofit;
 
     private static OkHttpClient okHttpClient;
@@ -34,12 +36,12 @@ public class RetrofitClient {
     }
 
     private RetrofitClient() {
-        this(baseUrl);
+        this(Config.baseUrl);
     }
 
     private RetrofitClient(String url) {
         if (TextUtils.isEmpty(url)) {
-            url = baseUrl;
+            url = Config.baseUrl;
         }
 
         okHttpClient = new OkHttpClient.Builder().
