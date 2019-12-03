@@ -12,7 +12,12 @@ import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.databinding.FragmentUserCenterBinding;
 import com.li.basemvvm.base.BaseFragment;
 
-public class UserCenterFragment extends BaseFragment<FragmentUserCenterBinding,UserCenterViewModel> {
+public class UserCenterFragment extends BaseFragment<FragmentUserCenterBinding, UserCenterViewModel> {
+
+
+
+
+
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return R.layout.fragment_user_center;
@@ -25,9 +30,13 @@ public class UserCenterFragment extends BaseFragment<FragmentUserCenterBinding,U
 
     public void initData() {
         super.initData();
-        ImmersionBar.with(this).
-                fitsSystemWindows(true).
-                statusBarColor(R.color.colorPrimaryDark).
-                init();
+        initStatusBar();
+    }
+
+    public void initStatusBar() {
+        ImmersionBar.with(this)
+                .statusBarDarkFont(false)
+                .titleBar(binding.toolbar)
+                .init();
     }
 }

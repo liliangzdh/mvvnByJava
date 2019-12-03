@@ -9,11 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
 import com.hdl.elog.ELog;
+import com.kaoyaya.tongkai.config.Constant;
 import com.kaoyaya.tongkai.entity.UserInfo;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
+import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
 import com.li.basemvvm.http.base.ResponseThrowable;
 import com.li.basemvvm.http.base.RetrofitClient;
@@ -27,7 +29,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 
 
-public class LoginViewModel extends BaseViewModel{
+public class LoginViewModel extends BaseViewModel {
 
 
     public ObservableField<String> userName = new ObservableField<>();
@@ -50,6 +52,13 @@ public class LoginViewModel extends BaseViewModel{
         @Override
         public void call() {
             login();
+        }
+    });
+
+    public BindingCommand backAction = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            finish();
         }
     });
 
@@ -97,8 +106,10 @@ public class LoginViewModel extends BaseViewModel{
                         if (result != null && result.size() > 0) {
                             String token = result.get("token");
                             if (!TextUtils.isEmpty(token)) {
-                                ELog.e("test","保存token");
+                                ELog.e("test", "保存token");
                                 SPUtils.getInstance().saveToken(token);
+                                Messenger.getDefault().sendNoMsg(Constant.Login);
+                                finish();
                             }
                         }
 
@@ -108,10 +119,11 @@ public class LoginViewModel extends BaseViewModel{
                     @Override
                     public void accept(Throwable throwable) {
                         dismissDialog();
-                        ELog.e("test",throwable.getMessage());
+                        ELog.e("test", throwable.getMessage());
                         if (throwable instanceof ResponseThrowable) {
                             Log.e("test", ((ResponseThrowable) throwable).message);
                         }
+                        Toast.makeText(getApplication(), "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
         addSubscribe(subscribe);
@@ -127,12 +139,12 @@ public class LoginViewModel extends BaseViewModel{
                 subscribe(new Consumer<UserInfo>() {
                     @Override
                     public void accept(UserInfo info) {
-                        ELog.e("test","----1-----"+info.getUsername());
+                        ELog.e("test", "----1-----" + info.getUsername());
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        ELog.e("test",throwable.getMessage());
+                        ELog.e("test", throwable.getMessage());
                     }
                 });
         addSubscribe(subscribe);

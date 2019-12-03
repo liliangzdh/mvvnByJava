@@ -30,15 +30,19 @@ public class ViewAdapter {
      * onClickCommand 绑定的命令,
      * isThrottleFirst 是否开启防止过快点击
      */
-    @BindingAdapter(value = {"onClickCommand", "isThrottleFirst"}, requireAll = false)
-    public static void onClickCommand(final View view, final BindingCommand clickCommand, final boolean isThrottleFirst) {
+    @BindingAdapter(value = {"onClickCommand", "isThrottleFirst", "params"}, requireAll = false)
+    public static void onClickCommand(final View view, final BindingCommand clickCommand, final boolean isThrottleFirst, final Object params) {
         if (isThrottleFirst) {
-            Disposable subscribe  = RxView.clicks(view)
+            Disposable subscribe = RxView.clicks(view)
                     .subscribe(new Consumer<Object>() {
                         @Override
-                        public void accept(Object object)  {
+                        public void accept(Object object) {
                             if (clickCommand != null) {
-                                clickCommand.execute();
+                                if (params != null) {
+                                    clickCommand.execute(params);
+                                } else {
+                                    clickCommand.execute();
+                                }
                             }
                         }
                     });
@@ -47,9 +51,13 @@ public class ViewAdapter {
                     .throttleFirst(CLICK_INTERVAL, TimeUnit.MILLISECONDS)//1秒钟内只允许点击1次
                     .subscribe(new Consumer<Object>() {
                         @Override
-                        public void accept(Object object)  {
+                        public void accept(Object object) {
                             if (clickCommand != null) {
-                                clickCommand.execute();
+                                if (params != null) {
+                                    clickCommand.execute(params);
+                                } else {
+                                    clickCommand.execute();
+                                }
                             }
                         }
                     });
@@ -131,7 +139,8 @@ public class ViewAdapter {
         view.setBackgroundColor(Color.parseColor(color));
     }
 
-    /** view的显示隐藏
+    /**
+     * view的显示隐藏
      */
     @BindingAdapter(value = {"background"}, requireAll = false)
     public static void background(View view, int resId) {

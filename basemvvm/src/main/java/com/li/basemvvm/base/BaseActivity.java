@@ -2,6 +2,7 @@ package com.li.basemvvm.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -12,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.gyf.immersionbar.ImmersionBar;
 import com.li.basemvvm.base.inter.IBaseView;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.utils.MaterialDialogUtils;
@@ -244,5 +246,20 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
     public <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
 //        return  ViewModelProviders.of(activity).get(cls);
        return new ViewModelProvider(activity).get(cls);
+    }
+
+
+    public void initStatusBar(View view) {
+        ImmersionBar.with(this)
+                .statusBarDarkFont(true)
+                .titleBar(view)
+                .init();
+    }
+
+    public void initStatusBar() {
+        ImmersionBar.with(this)
+                .fitsSystemWindows(true)
+                .statusBarDarkFont(true)
+                .init();
     }
 }

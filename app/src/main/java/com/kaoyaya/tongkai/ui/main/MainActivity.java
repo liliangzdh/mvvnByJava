@@ -153,15 +153,20 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
                 Fragment oldFragment = mFragments.get(old);
                 Fragment newFragment = mFragments.get(index);
                 transaction.hide(oldFragment);
+
                 if (!cacheFragments.contains(newFragment)) {
                     cacheFragments.add(newFragment);
                     transaction.add(R.id.frameLayout, newFragment);
                 } else {
                     transaction.show(newFragment);
-                }
 
-                if (newFragment instanceof HomeFragment) {
-                    ((HomeFragment) newFragment).initStatusBar();
+                    if (newFragment instanceof HomeFragment) {
+                        ((HomeFragment) newFragment).initStatusBar();
+                    }else if(newFragment instanceof UserCenterFragment){
+                        ((UserCenterFragment)newFragment).initStatusBar();
+                    }else if(newFragment instanceof StudyFragment){
+
+                    }
                 }
                 transaction.commit();
             }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+        <variable
+            name="title"
+            type="String" />
+
+        <variable
+            name="action"
+            type="com.li.basemvvm.binding.command.BindingCommand" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:background="@drawable/white_color_efefef_select"
+            binding:onClickCommand="@{action}">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="16dp"
+                android:src="@mipmap/arrow" />
+
+        </RelativeLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@{title}"
+            android:textSize="18sp" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_efef" />
+
+    </RelativeLayout>
+</layout>

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hdl.elog.ELog;
+import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.http.logging.Printer;
 import com.li.basemvvm.utils.SPUtils;
 
@@ -45,6 +46,10 @@ public class ResponseLogInterceptor implements Interceptor {
                 if(baseResponse.getCode() == 401){
                     ELog.e("test","清除cookie ，退出登录");
                     SPUtils.getInstance().clearToken();
+
+
+                    //退出登录。发出。退出登录通知
+                    Messenger.getDefault().sendNoMsg("login");
                 }
             }
 

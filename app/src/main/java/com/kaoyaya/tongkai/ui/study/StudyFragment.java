@@ -28,9 +28,5 @@ public class StudyFragment extends BaseFragment<FragmentStudyBinding, StudyViewM
     @Override
     public void initData() {
         super.initData();
-        ImmersionBar.with(this).
-                fitsSystemWindows(true).
-                statusBarColor(R.color.colorPrimaryDark).
-                init();
     }
 }

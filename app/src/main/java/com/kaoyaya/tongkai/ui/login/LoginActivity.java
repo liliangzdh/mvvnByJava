@@ -38,4 +38,10 @@ public class LoginActivity extends BaseActivity<ActivityLoginBinding, LoginViewM
             }
         });
     }
+
+    @Override
+    public void initData() {
+        super.initData();
+        initStatusBar();
+    }
 }

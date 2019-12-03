@@ -1,15 +1,177 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <variable
             name="viewModel"
             type="com.kaoyaya.tongkai.ui.user.UserCenterViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/llHeader"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="个人中心"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/ic_launcher" />
+
+                <LinearLayout
+                    android:id="@+id/llLoginTopCell"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.isLogin?View.VISIBLE:View.GONE}">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:gravity="bottom"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="用户名"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:layout_marginLeft="6dp"
+                            android:layout_marginRight="6dp"
+                            android:src="@mipmap/ic_launcher" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="修改昵称"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="18579123435"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/llUnLoginTopCell"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:visibility="@{viewModel.isLogin?View.GONE:View.VISIBLE}">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="立即登录"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        binding:params="@{0}"
+                        binding:onClickCommand="@{viewModel.action}" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="90dp"
+                    android:layout_height="32dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:text="个人资料"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:visibility="@{viewModel.isLogin?View.VISIBLE:View.INVISIBLE}" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="125dp"
+            android:background="@drawable/circle_color_white"
+            android:orientation="vertical">
+
+
+            <include
+                layout="@layout/item_user_center"
+                binding:title='@{"我的订单"}' />
+
+
+            <include
+                layout="@layout/item_user_center"
+                binding:title='@{"我的优惠卷"}' />
+
+            <include
+                layout="@layout/item_user_center"
+                binding:title='@{"我的缓存"}' />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/color_efef" />
+
+            <include
+                layout="@layout/item_user_center"
+                binding:title='@{"帮助与反馈"}' />
+
+            <include
+                layout="@layout/item_user_center"
+                binding:action="@{viewModel.action}"
+                binding:params="@{1}"
+                binding:title='@{"设置"}' />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
 </layout>
