@@ -19,6 +19,9 @@
             name="action"
             type="com.li.basemvvm.binding.command.BindingCommand&lt;java.lang.Integer&gt;" />
 
+        <variable
+            name="img"
+            type="Integer" />
 
     </data>
 
@@ -26,23 +29,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginRight="10dp"
             android:background="@drawable/white_color_efefef_select"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             binding:onClickCommand="@{action}"
-            binding:params="@{params}"
-            android:orientation="horizontal">
+            binding:params="@{params}">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="10dp"
-                android:src="@mipmap/ic_launcher" />
+                binding:load_image='@{img}' />
 
             <TextView
                 android:layout_width="wrap_content"

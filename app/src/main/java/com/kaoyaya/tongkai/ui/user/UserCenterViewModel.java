@@ -3,6 +3,7 @@ package com.kaoyaya.tongkai.ui.user;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -48,6 +49,9 @@ public class UserCenterViewModel extends BaseViewModel {
                     break;
                 case 1:
                     startActivity(SetActivity.class);
+                    break;
+                case 2:
+                    Toast.makeText(getApplication(),"调整个人中心",Toast.LENGTH_SHORT).show();
                     break;
             }
         }
