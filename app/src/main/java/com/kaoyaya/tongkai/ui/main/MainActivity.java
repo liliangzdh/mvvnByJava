@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
                     }else if(newFragment instanceof UserCenterFragment){
                         ((UserCenterFragment)newFragment).initStatusBar();
                     }else if(newFragment instanceof StudyFragment){
-
+                        ((StudyFragment)newFragment).initStatusBar();
                     }
                 }
                 transaction.commit();

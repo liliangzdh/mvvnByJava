@@ -28,5 +28,15 @@ public class StudyFragment extends BaseFragment<FragmentStudyBinding, StudyViewM
     @Override
     public void initData() {
         super.initData();
+        initStatusBar();
     }
+
+    public void initStatusBar() {
+        ImmersionBar.with(this)
+                .statusBarDarkFont(false)
+                .titleBar(binding.toolbar)
+                .init();
+    }
+
+
 }
