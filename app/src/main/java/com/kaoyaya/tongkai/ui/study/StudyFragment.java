@@ -29,6 +29,8 @@ public class StudyFragment extends BaseFragment<FragmentStudyBinding, StudyViewM
     public void initData() {
         super.initData();
         initStatusBar();
+
+        viewModel.request();
     }
 
     public void initStatusBar() {

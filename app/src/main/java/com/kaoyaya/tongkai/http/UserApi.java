@@ -1,11 +1,13 @@
 package com.kaoyaya.tongkai.http;
 
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
+import com.kaoyaya.tongkai.entity.StudyResourceItem;
 import com.kaoyaya.tongkai.entity.UserInfo;
 import com.li.basemvvm.http.base.BaseResponse;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -32,4 +34,8 @@ public interface UserApi {
     // 获取用户分发资源
     @GET("api/v1/distribute/resource")
     Observable<BaseResponse<ArrayList<HomeResourseDistribute>>> getUserDistribute(@Query("examType") int examType);
+
+
+    @GET("api/v1/users/studyResource")
+    Observable<BaseResponse<HashMap<String, List<StudyResourceItem>>>> getStudyResource();
 }

@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
 
     <data>
 
         <import type="com.kaoyaya.tongkai.ui.study.StudyViewModel" />
+
+        <import type="com.li.basemvvm.base.LayoutManagers" />
+
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -21,26 +26,83 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="@{viewModel.showType!=2?View.VISIBLE:View.GONE}">
 
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="42dp"
                 android:gravity="center"
-                android:text="学习中心"
+                android:text='@{viewModel.showType==0?"学习中心":"选择要学习的产品"}'
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="42dp"
                 android:background="@drawable/circle_color_white">
 
 
-            </LinearLayout>
+                <!--显示去登录状态-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="@{viewModel.showType==0?View.VISIBLE:View.GONE}">
+
+
+                    <ImageView
+                        android:layout_width="113dp"
+                        android:layout_height="92dp"
+                        android:src="@mipmap/kaoyaya_unlogin" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginBottom="34dp"
+                        android:text="登录后可学习已购买的产品哦~"
+                        android:textColor="#8E8E93"
+                        android:textSize="17sp" />
+
+
+                    <TextView
+                        android:layout_width="160dp"
+                        android:layout_height="44dp"
+                        android:background="@drawable/circle_color_primary_color_primary_dark_select"
+                        android:gravity="center"
+                        android:text="立即登录"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        binding:onClickCommand="@{viewModel.goLoginAction}" />
+
+                </LinearLayout>
+
+                <!--显示列表状态-->
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.showType==1?View.VISIBLE:View.GONE}">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        binding:itemBinding="@{viewModel.studyItemBinding}"
+                        binding:items="@{viewModel.resourceList}"
+                        binding:layoutManager="@{LayoutManagers.ver()}" />
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -48,7 +110,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="@{viewModel.showType==2?View.VISIBLE:View.GONE}">
 
 
             <LinearLayout
@@ -60,18 +123,20 @@
                 <LinearLayout
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/color_primary_color_primary_dark_select"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
+                    binding:onClickCommand="@{viewModel.changeExamAction}"
                     android:paddingLeft="10dp">
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/edit" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/menu_white" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
                         android:text="切换"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
@@ -91,19 +156,19 @@
                 <LinearLayout
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/color_primary_color_primary_dark_select"
                     android:orientation="horizontal"
                     android:paddingRight="10dp">
 
 
                     <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@mipmap/edit" />
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@mipmap/guide" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="4dp"
                         android:text="指南"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
@@ -123,40 +188,40 @@
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/color_primary_color_primary_dark_select"
+                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
                     android:gravity="center"
                     android:text="录播课"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/color_primary_color_primary_dark_select"
+                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
                     android:gravity="center"
                     android:text="题库"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/color_primary_color_primary_dark_select"
+                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
                     android:gravity="center"
                     android:text="直播"
                     android:textColor="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/color_primary_color_primary_dark_select"
+                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
                     android:gravity="center"
                     android:text="回放"
                     android:textColor="@color/white" />

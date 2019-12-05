@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="com.kaoyaya.tongkai.ui.study.StudyItemViewModel" />
+    </data>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginRight="27dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_eff2f7"
+            android:gravity="center"
+            android:text="@{item.entity.title}"
+            android:textColor="@color/color_33"
+            android:textSize="17sp"
+            binding:onClickCommand="@{item.click}" />
+
+    </LinearLayout>
+</layout>
