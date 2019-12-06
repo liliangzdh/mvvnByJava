@@ -15,231 +15,241 @@
             type="StudyViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="@{viewModel.showType!=2?View.VISIBLE:View.GONE}">
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:gravity="center"
-                android:text='@{viewModel.showType==0?"学习中心":"选择要学习的产品"}'
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+            android:layout_height="match_parent">
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="42dp"
-                android:background="@drawable/circle_color_white">
+                android:orientation="vertical"
+                android:visibility="@{viewModel.showType!=2?View.VISIBLE:View.GONE}">
 
 
-                <!--显示去登录状态-->
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_height="42dp"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="@{viewModel.showType==0?View.VISIBLE:View.GONE}">
-
-
-                    <ImageView
-                        android:layout_width="113dp"
-                        android:layout_height="92dp"
-                        android:src="@mipmap/kaoyaya_unlogin" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:layout_marginBottom="34dp"
-                        android:text="登录后可学习已购买的产品哦~"
-                        android:textColor="#8E8E93"
-                        android:textSize="17sp" />
-
-
-                    <TextView
-                        android:layout_width="160dp"
-                        android:layout_height="44dp"
-                        android:background="@drawable/circle_color_primary_color_primary_dark_select"
-                        android:gravity="center"
-                        android:text="立即登录"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
-                        binding:onClickCommand="@{viewModel.goLoginAction}" />
-
-                </LinearLayout>
-
-                <!--显示列表状态-->
+                    android:text='@{viewModel.showType==0?"学习中心":"选择要学习的产品"}'
+                    android:textColor="@color/white"
+                    android:textSize="18sp" />
 
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="@{viewModel.showType==1?View.VISIBLE:View.GONE}">
+                    android:layout_marginTop="42dp"
+                    android:background="@drawable/circle_color_white">
 
-                    <androidx.recyclerview.widget.RecyclerView
+
+                    <!--显示去登录状态-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:visibility="@{viewModel.showType==0?View.VISIBLE:View.GONE}">
+
+
+                        <ImageView
+                            android:layout_width="113dp"
+                            android:layout_height="92dp"
+                            android:src="@mipmap/kaoyaya_unlogin" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:layout_marginBottom="34dp"
+                            android:text="登录后可学习已购买的产品哦~"
+                            android:textColor="#8E8E93"
+                            android:textSize="17sp" />
+
+
+                        <TextView
+                            android:layout_width="160dp"
+                            android:layout_height="44dp"
+                            android:background="@drawable/circle_color_primary_color_primary_dark_select"
+                            android:gravity="center"
+                            android:text="立即登录"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            binding:onClickCommand="@{viewModel.goLoginAction}" />
+
+                    </LinearLayout>
+
+                    <!--显示列表状态-->
+
+
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        binding:itemBinding="@{viewModel.studyItemBinding}"
-                        binding:items="@{viewModel.resourceList}"
-                        binding:layoutManager="@{LayoutManagers.ver()}" />
+                        android:visibility="@{viewModel.showType==1?View.VISIBLE:View.GONE}">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            binding:itemBinding="@{viewModel.studyItemBinding}"
+                            binding:items="@{viewModel.resourceList}"
+                            binding:layoutManager="@{LayoutManagers.ver()}" />
+
+                    </RelativeLayout>
+
 
                 </RelativeLayout>
 
-
             </RelativeLayout>
 
-        </RelativeLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:visibility="@{viewModel.showType==2?View.VISIBLE:View.GONE}">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/color_primary_color_primary_dark_select"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    binding:onClickCommand="@{viewModel.changeExamAction}"
-                    android:paddingLeft="10dp">
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@mipmap/menu_white" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="切换"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="初级会计职称"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-
-                <LinearLayout
-                    android:layout_width="70dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/color_primary_color_primary_dark_select"
-                    android:orientation="horizontal"
-                    android:paddingRight="10dp">
-
-
-                    <ImageView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:src="@mipmap/guide" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="指南"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
-                    android:gravity="center"
-                    android:text="录播课"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
-                    android:gravity="center"
-                    android:text="题库"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
-                    android:gravity="center"
-                    android:text="直播"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/circle_color_primary_color_primary_dark_select"
-                    android:gravity="center"
-                    android:text="回放"
-                    android:textColor="@color/white" />
-
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/circle_color_white">
+                android:orientation="vertical"
+                android:visibility="@{viewModel.showType==2?View.VISIBLE:View.GONE}">
 
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/color_primary_color_primary_dark_select"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        binding:onClickCommand="@{viewModel.changeExamAction}">
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@mipmap/menu_white" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="切换"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@{viewModel.selectSource.title}"
+                        android:textColor="@color/white"
+                        android:textSize="18sp" />
+
+
+                    <LinearLayout
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/color_primary_color_primary_dark_select"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+                        <ImageView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@mipmap/guide" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="指南"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_color_primary_color_primary_dark_select"
+                        android:gravity="center"
+                        android:text="录播课"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_color_primary_color_primary_dark_select"
+                        android:gravity="center"
+                        android:text="题库"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_color_primary_color_primary_dark_select"
+                        android:gravity="center"
+                        android:text="直播"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/circle_color_primary_color_primary_dark_select"
+                        android:gravity="center"
+                        android:text="回放"
+                        android:textColor="@color/white" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/circle_color_white">
+
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
-
-    </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
 
 </layout>

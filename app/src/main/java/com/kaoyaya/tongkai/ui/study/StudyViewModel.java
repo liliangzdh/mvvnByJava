@@ -31,15 +31,30 @@ import java.util.List;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+import me.tatarka.bindingcollectionadapter2.OnItemBind;
 
 public class StudyViewModel extends BaseViewModel {
 
 
-    public ItemBinding<StudyItemViewModel> studyItemBinding = ItemBinding.of(BR.item, R.layout.item_study_resource);
     public ObservableList<StudyItemViewModel> resourceList = new ObservableArrayList<>();
+    //RecyclerView多布局添加ItemBinding
+    public ItemBinding<StudyItemViewModel> studyItemBinding = ItemBinding.of(new OnItemBind<StudyItemViewModel>() {
+        @Override
+        public void onItemBind(@NonNull ItemBinding itemBinding, int position, StudyItemViewModel item) {
+            //通过item的类型, 动态设置Item加载的布局
+            StudyResourceItem studyResourceItem = item.entity.get();
+            if (studyResourceItem != null && studyResourceItem.isHeader()) {
+                itemBinding.set(BR.item, R.layout.item_study_resource_header);
+            } else {
+                itemBinding.set(BR.item, R.layout.item_study_resource);
+            }
+        }
+    });
 
 
     public ObservableField<Integer> showType = new ObservableField<>();
+    public ObservableField<StudyResourceItem> selectSource = new ObservableField<>();
+
 
     public StudyViewModel(@NonNull Application application) {
         super(application);
@@ -47,7 +62,6 @@ public class StudyViewModel extends BaseViewModel {
         Messenger.getDefault().register(this, Constant.Login, new BindingAction() {
             @Override
             public void call() {
-                Log.e("test", "监听到退出或者登录");
                 initState();
             }
         });
@@ -74,7 +88,7 @@ public class StudyViewModel extends BaseViewModel {
     public BindingCommand changeExamAction = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-           showType.set(1);
+            showType.set(1);
         }
     });
 
@@ -92,15 +106,9 @@ public class StudyViewModel extends BaseViewModel {
                 .subscribe(new Consumer<HashMap<String, List<StudyResourceItem>>>() {
                     @Override
                     public void accept(HashMap<String, List<StudyResourceItem>> map) throws Exception {
-                        List<StudyResourceItem> aClass = map.get("class");
-
-                        Log.e("test", "===" + aClass.size());
-
                         resourceList.clear();
-                        for (StudyResourceItem studyResourceItem : aClass) {
-                            resourceList.add(new StudyItemViewModel(StudyViewModel.this, studyResourceItem));
-                        }
-
+                        addResource(map,"class","系统班级");
+                        addResource(map,"course","单项课程");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -108,5 +116,19 @@ public class StudyViewModel extends BaseViewModel {
                         ELog.e("test", "  " + throwable.getMessage());
                     }
                 });
+    }
+
+
+    public void addResource(HashMap<String, List<StudyResourceItem>> map, String key, String title) {
+        List<StudyResourceItem> aClass = map.get(key);
+        if (aClass != null) {
+            if (aClass.size() > 0) {
+                resourceList.add(new StudyItemViewModel(StudyViewModel.this, new StudyResourceItem(title, true)));
+            }
+
+            for (StudyResourceItem studyResourceItem : aClass) {
+                resourceList.add(new StudyItemViewModel(StudyViewModel.this, studyResourceItem));
+            }
+        }
     }
 }

@@ -10,8 +10,16 @@ public class StudyResourceItem {
     private String courseType;
     private int subjectID;
 
+    private boolean isHeader;
+
 
     private boolean isSelect;
+
+    public StudyResourceItem(String title, boolean isHeader) {
+        this.title = title;
+        this.isHeader = isHeader;
+
+    }
 
     public int getId() {
         return id;
@@ -51,5 +59,17 @@ public class StudyResourceItem {
 
     public void setSelect(boolean select) {
         isSelect = select;
+    }
+
+    public boolean isHeader() {
+        return isHeader;
+    }
+
+    public void setHeader(boolean header) {
+        isHeader = header;
+    }
+
+    public boolean showLine() {
+        return !"系统班级".equals(title);
     }
 }
