@@ -47,13 +47,17 @@ public class TimeUtils {
 
 
     public String formatTime(String startTime) {
+        return formatTime(startTime,"HH:mm");
+    }
+
+    public String formatTime(String startTime,String dateFormat) {
         if (TextUtils.isEmpty(startTime)) {
             return "";
         }
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date parse = sdf.parse(startTime);
-            sdf = new SimpleDateFormat("HH:mm");
+            sdf = new SimpleDateFormat(dateFormat);
             return sdf.format(parse);
         } catch (Exception e) {
             return startTime;

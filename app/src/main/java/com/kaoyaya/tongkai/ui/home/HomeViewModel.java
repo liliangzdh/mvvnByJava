@@ -25,6 +25,7 @@ import com.kaoyaya.tongkai.utils.SPUtils;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
+import com.li.basemvvm.binding.command.BindingConsumer;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
 import com.li.basemvvm.http.base.BaseResponse;
@@ -113,19 +114,28 @@ public class HomeViewModel extends BaseViewModel {
         }
     });
 
-    public BindingCommand goodLessonMoreCommand = new BindingCommand(new BindingAction() {
+    public BindingCommand<Integer> moreCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
-        public void call() {
-            Log.e("test", "点击事件");
-
+        public void call(Integer integer) {
+            Log.e("test","ppp:"+integer);
         }
     });
 
 
-    public BindingCommand goodLessonCommand = new BindingCommand(new BindingAction() {
+    public BindingCommand<Integer> goodLessonCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
-        public void call() {
-            Log.e("test", "点击事件 精选好课");
+        public void call(Integer integer) {
+            Log.e("test","  "+integer);
+            switch (integer) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
             startActivity(TestAct.class);
         }
     });

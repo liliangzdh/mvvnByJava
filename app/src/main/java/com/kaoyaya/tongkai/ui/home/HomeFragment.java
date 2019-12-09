@@ -42,10 +42,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         super.initData();
         initStatusBar();
         initBanner();
-
-        binding.teacherRecyclerView.setNestedScrollingEnabled(false);
-        binding.tiKuRecyclerView.setNestedScrollingEnabled(false);
-        binding.liveRecyclerView.setNestedScrollingEnabled(false);
         // 发起获取分发资源请求
         viewModel.getNetResource();
     }

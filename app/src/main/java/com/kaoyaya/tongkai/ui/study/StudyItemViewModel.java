@@ -23,8 +23,7 @@ public class StudyItemViewModel extends ItemViewModel<StudyViewModel> {
     public BindingCommand click = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            viewModel.selectSource.set(entity.get());
-            viewModel.showType.set(2);
+            viewModel.changeClass(entity.get());
         }
     });
 

@@ -19,7 +19,6 @@ import io.reactivex.subjects.PublishSubject;
 public class ViewAdapter {
 
 
-
     @BindingAdapter("layoutManager")
     public static void setLayoutManager(RecyclerView recyclerView, LayoutManagers.LayoutManagerFactory layoutManagerFactory) {
         recyclerView.setLayoutManager(layoutManagerFactory.create(recyclerView));
@@ -69,6 +68,11 @@ public class ViewAdapter {
     @BindingAdapter("itemAnimator")
     public static void setItemAnimator(RecyclerView recyclerView, RecyclerView.ItemAnimator animator) {
         recyclerView.setItemAnimator(animator);
+    }
+
+    @BindingAdapter("nestedScrollingEnabled")
+    public static void setNestedScrollingEnabled(RecyclerView recyclerView,boolean enable) {
+        recyclerView.setNestedScrollingEnabled(enable);
     }
 
     public static class OnScrollListener extends RecyclerView.OnScrollListener {

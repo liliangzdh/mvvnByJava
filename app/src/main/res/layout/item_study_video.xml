@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="item"
+            type="com.kaoyaya.tongkai.ui.study.item.VideoRecordItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_height="190dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="6dp"
+        binding:onClickCommand="@{item.clickCommend}"
+        android:background="@drawable/white_color_efefef_select"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="96dp"
+            binding:url="@{item.entity.picture}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12sp"
+            android:maxLines="1"
+            android:text="@{item.entity.title}"
+            android:textColor="#171717"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="1"
+            binding:textColor='@{item.entity.getProgressColor()}'
+            android:text="@{item.entity.getProgress()}"
+            android:textColor="#B2B2B2"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:lineSpacingExtra="4dp"
+            android:maxLines="1"
+            android:text="@{item.entity.lastLessonName}"
+            android:layout_marginBottom="10dp"
+            android:textColor="#B2B2B2"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+</layout>

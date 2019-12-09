@@ -10,7 +10,6 @@ public class ViewAdapter {
 
     @BindingAdapter({"textColor"})
     public static void textColor(TextView textView, final String color) {
-        Log.d("test","asas"+color);
         textView.setTextColor(Color.parseColor(color));
     }
 }

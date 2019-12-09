@@ -24,13 +24,15 @@
 
 
         <TextView
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="18dp"
-            binding:background='@{item.entity.isStart?R.drawable.circle_color_5d92ff:R.drawable.circle_color_eaeffc}'
+            android:paddingRight="4dp"
+            android:paddingLeft="4dp"
+            binding:background='@{R.drawable.circle_color_5d92ff}'
             android:gravity="center"
-            android:text='@{item.entity.isStart?"直播中":"倒计时"}'
+            android:text='@{item.entity.title}'
             android:textSize="12sp"
-            binding:textColor='@{item.entity.isStart?"#ffffff":"#b2b2b2"}' />
+            android:textColor='@color/white' />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,15 +74,9 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content"
-                    android:text='@{item.entity.isStart?"直播中":"倒计时"}'
-                    binding:textColor='@{item.entity.isStart?"#6A9AFE":"#666666"}' />
-
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{item.entity.isStart?item.entity.getStartAndEndTime():item.entity.fromStartTimeStr}'
+                    android:text='@{item.entity.getStartAndEndTime2()}'
                     android:textColor="#666" />
 
                 <TextView
@@ -88,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
                     android:gravity="right"
-                    android:text='@{item.entity.isStart?"点击观看":"立即预约"}'
+                    android:text='观看回放'
                     android:textColor="#6A9AFE" />
 
             </LinearLayout>

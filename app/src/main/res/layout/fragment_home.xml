@@ -100,12 +100,14 @@
                         layout="@layout/layout_home_top_ceil"
                         binding:action="@{viewModel.goodLessonCommand}"
                         binding:img="@{R.mipmap.xuexi}"
+                        binding:params="@{0}"
                         binding:title="@{@string/good_lesson}" />
 
                     <include
                         layout="@layout/layout_home_top_ceil"
                         binding:action="@{viewModel.goodLessonCommand}"
                         binding:img='@{R.mipmap.tiku_write}'
+                        binding:params="@{1}"
                         binding:title="@{@string/every_day_exam}" />
 
                     <!--binding:load_image="@{@mipmap/tiku_write}"-->
@@ -115,6 +117,7 @@
                         layout="@layout/layout_home_top_ceil"
                         binding:action="@{viewModel.goodLessonCommand}"
                         binding:img='@{R.mipmap.kaoshizixun}'
+                        binding:params="@{2}"
                         binding:title="@{@string/exam_news}" />
 
 
@@ -122,6 +125,7 @@
                         layout="@layout/layout_home_top_ceil"
                         binding:action="@{viewModel.goodLessonCommand}"
                         binding:img='@{R.mipmap.online}'
+                        binding:params="@{3}"
                         binding:title="@{@string/online}" />
 
 
@@ -135,13 +139,13 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
                     <include
                         layout="@layout/layout_title"
-                        binding:action="@{viewModel.goodLessonCommand}"
+                        binding:action="@{viewModel.moreCommand}"
                         binding:show="@{true}"
+                        binding:params="@{0}"
                         binding:title="@{@string/good_course}" />
 
 
@@ -166,12 +170,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
                     <include
                         layout="@layout/layout_title"
-                        binding:action="@{viewModel.goodLessonCommand}"
+                        binding:action="@{viewModel.moreCommand}"
+                        binding:params="@{1}"
                         binding:title="@{@string/good_tiku}" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -180,6 +184,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:paddingLeft="14dp"
+                        binding:nestedScrollingEnabled="@{false}"
                         binding:itemBinding="@{viewModel.goodTiKuItemBinding}"
                         binding:items="@{viewModel.goodTiKuList}"
                         binding:layoutManager="@{LayoutManagers.grid(2)}" />
@@ -195,17 +200,18 @@
 
                     <include
                         layout="@layout/layout_title"
-                        binding:action="@{viewModel.goodLessonCommand}"
+                        binding:action="@{viewModel.moreCommand}"
                         binding:show="@{true}"
+                        binding:params="@{2}"
                         binding:title="@{@string/good_teacher}" />
 
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/teacherRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:paddingLeft="14dp"
+                        binding:nestedScrollingEnabled="@{false}"
                         binding:itemBinding="@{viewModel.goodTeacherItemBinding}"
                         binding:items="@{viewModel.goodTeacherList}"
                         binding:layoutManager="@{LayoutManagers.grid(2)}" />
@@ -215,30 +221,29 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:orientation="vertical">
 
                     <include
                         layout="@layout/layout_title"
-                        binding:action="@{viewModel.goodLessonCommand}"
+                        binding:action="@{viewModel.moreCommand}"
                         binding:title="@{@string/good_live}" />
 
 
                     <!--<androidx.recyclerview.widget.RecyclerView-->
-                        <!--android:id="@+id/liveRecyclerView"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:paddingLeft="14dp"-->
-                        <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
+                    <!--android:id="@+id/liveRecyclerView"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:paddingLeft="14dp"-->
+                    <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
                     <!---->
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/liveRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="14dp"
+                        binding:adapter="@{viewModel.adapter}"
+                        binding:nestedScrollingEnabled="@{false}"
                         binding:itemBinding="@{viewModel.goodLiveItemBinding}"
                         binding:items="@{viewModel.goodLiveList}"
-                        binding:adapter="@{viewModel.adapter}"
                         binding:layoutManager="@{LayoutManagers.ver()}" />
 
 

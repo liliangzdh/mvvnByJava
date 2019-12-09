@@ -3,22 +3,36 @@ package com.kaoyaya.tongkai.ui.study;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
 
+import com.google.gson.Gson;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.config.Constant;
+import com.kaoyaya.tongkai.entity.ExamTypeInfo;
+import com.kaoyaya.tongkai.entity.LearnCourseInfo;
+import com.kaoyaya.tongkai.entity.LearnInfoResponse;
+import com.kaoyaya.tongkai.entity.LiveBackRequest;
+import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.entity.StudyResourceItem;
+import com.kaoyaya.tongkai.http.EduApi;
 import com.kaoyaya.tongkai.http.UserApi;
+import com.kaoyaya.tongkai.test.User;
+import com.kaoyaya.tongkai.ui.home.HomeLiveAdapter;
+import com.kaoyaya.tongkai.ui.home.LiveItemViewModel;
 import com.kaoyaya.tongkai.ui.login.LoginActivity;
+import com.kaoyaya.tongkai.ui.study.item.VideoRecordItemViewModel;
+import com.kaoyaya.tongkai.ui.test.TestAct;
 import com.li.basemvvm.BR;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
+import com.li.basemvvm.binding.command.BindingConsumer;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.RetrofitClient;
@@ -51,9 +65,57 @@ public class StudyViewModel extends BaseViewModel {
         }
     });
 
+    // 在学录播课
+    public ObservableList<VideoRecordItemViewModel> videoList = new ObservableArrayList<>();
+    public ItemBinding<VideoRecordItemViewModel> videoItemBinding = ItemBinding.of(BR.item, R.layout.item_study_video);
+
+
+    //直播的
+    public ObservableList<LiveItemViewModel> goodLiveList = new ObservableArrayList<>();
+    public ItemBinding<LiveItemViewModel> goodLiveItemBinding = ItemBinding.of(com.kaoyaya.tongkai.BR.item, R.layout.item_home_live);
+    public HomeLiveAdapter adapter = new HomeLiveAdapter();
+
+    //回放
+    public ObservableList<LiveItemViewModel> liveBackList = new ObservableArrayList<>();
+    public ItemBinding<LiveItemViewModel> liveBackItemBinding = ItemBinding.of(com.kaoyaya.tongkai.BR.item, R.layout.item_home_live_back);
+
 
     public ObservableField<Integer> showType = new ObservableField<>();
     public ObservableField<StudyResourceItem> selectSource = new ObservableField<>();
+
+    public BindingCommand<Integer> topCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
+        @Override
+        public void call(Integer integer) {
+            Log.e("test", "  " + integer);
+            switch (integer) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+        }
+    });
+
+    public BindingCommand<Integer> moreCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
+        @Override
+        public void call(Integer integer) {
+            Log.e("test", "  " + integer);
+            switch (integer) {
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+            }
+        }
+    });
 
 
     public StudyViewModel(@NonNull Application application) {
@@ -76,6 +138,13 @@ public class StudyViewModel extends BaseViewModel {
             //退出登录
             resourceList.clear();
         }
+    }
+
+    public void changeClass(StudyResourceItem item) {
+        selectSource.set(item);
+        showType.set(2);
+        getLearnInfo();
+        getLiveBackInfo();
     }
 
 
@@ -107,8 +176,8 @@ public class StudyViewModel extends BaseViewModel {
                     @Override
                     public void accept(HashMap<String, List<StudyResourceItem>> map) throws Exception {
                         resourceList.clear();
-                        addResource(map,"class","系统班级");
-                        addResource(map,"course","单项课程");
+                        addResource(map, "class", "系统班级");
+                        addResource(map, "course", "单项课程");
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -116,6 +185,8 @@ public class StudyViewModel extends BaseViewModel {
                         ELog.e("test", "  " + throwable.getMessage());
                     }
                 });
+
+        addSubscribe(subscribe);
     }
 
 
@@ -130,5 +201,85 @@ public class StudyViewModel extends BaseViewModel {
                 resourceList.add(new StudyItemViewModel(StudyViewModel.this, studyResourceItem));
             }
         }
+    }
+
+
+    public void getLearnInfo() {
+        EduApi eduApi = RetrofitClient.getInstance().create(EduApi.class);
+
+        StudyResourceItem studyResourceItem = selectSource.get();
+        if (studyResourceItem == null) {
+            return;
+        }
+
+
+        videoList.clear();
+        goodLiveList.clear();
+
+        Disposable subscribe = eduApi.getLearnInfo(studyResourceItem.getId())
+                .compose(RxUtils.<BaseResponse<LearnInfoResponse>>schedulersTransformer())
+                .compose(RxUtils.exceptionTransformer())
+                .subscribe(new Consumer<LearnInfoResponse>() {
+                    @Override
+                    public void accept(LearnInfoResponse learnInfoResponse) throws Exception {
+                        List<LearnCourseInfo> normal = learnInfoResponse.getNormal();
+                        for (LearnCourseInfo learnCourseInfo : normal) {
+                            videoList.add(new VideoRecordItemViewModel(StudyViewModel.this, learnCourseInfo));
+                        }
+
+                        List<LiveInfo> live = learnInfoResponse.getLive();
+
+                        for (LiveInfo liveInfo : live) {
+                            goodLiveList.add(new LiveItemViewModel(null, liveInfo));
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
+
+
+        addSubscribe(subscribe);
+
+    }
+
+    public void getLiveBackInfo() {
+        liveBackList.clear();
+        StudyResourceItem studyResourceItem = selectSource.get();
+        if (studyResourceItem == null) {
+            return;
+        }
+
+        UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
+        Disposable subscribe = userApi
+                .replayLive(new LiveBackRequest(1, 10, 0, studyResourceItem.getId()))
+                .compose(RxUtils.<BaseResponse<List<LiveInfo>>>schedulersTransformer())
+                .compose(RxUtils.exceptionTransformer()).subscribe(new Consumer<List<LiveInfo>>() {
+                    @Override
+                    public void accept(List<LiveInfo> liveInfoList) throws Exception {
+                        Log.e("test", "=====" + liveInfoList.size());
+
+                        for (LiveInfo liveInfo : liveInfoList) {
+                            liveBackList.add(new LiveItemViewModel(null,liveInfo));
+                        }
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        Log.e("test","---"+throwable.getMessage());
+                    }
+                });
+
+        addSubscribe(subscribe);
+    }
+
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        adapter.cancelAllTimers();
     }
 }

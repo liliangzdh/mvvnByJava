@@ -1,6 +1,8 @@
 package com.kaoyaya.tongkai.http;
 
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
+import com.kaoyaya.tongkai.entity.LiveBackRequest;
+import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.entity.StudyResourceItem;
 import com.kaoyaya.tongkai.entity.UserInfo;
 import com.li.basemvvm.http.base.BaseResponse;
@@ -15,6 +17,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface UserApi {
@@ -28,7 +31,7 @@ public interface UserApi {
 
     @FormUrlEncoded
     @POST("api/v1/login/password")
-    Observable<BaseResponse<HashMap<String, String>>> passWord2(@Field("username") String username, @Field("password") String password,@Field("json") boolean json);
+    Observable<BaseResponse<HashMap<String, String>>> passWord2(@Field("username") String username, @Field("password") String password, @Field("json") boolean json);
 
 
     // 获取用户分发资源
@@ -38,4 +41,12 @@ public interface UserApi {
 
     @GET("api/v1/users/studyResource")
     Observable<BaseResponse<HashMap<String, List<StudyResourceItem>>>> getStudyResource();
+
+    @POST("api/v1/users/replayLive")
+    Observable<BaseResponse<List<LiveInfo>>> replayLive(@Body LiveBackRequest body);
+
+//    @POST("api/v1/users/replayLiveWithCount")
+//    Observable<BaseResponse<>> replayLiveWithCount(@Body LiveBackRequest body);
+
+
 }

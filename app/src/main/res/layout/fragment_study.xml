@@ -10,6 +10,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.kaoyaya.tongkai.R" />
+
         <variable
             name="viewModel"
             type="StudyViewModel" />
@@ -130,7 +132,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="60dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/color_primary_color_primary_dark_select"
                         android:gravity="center_vertical"
@@ -163,7 +165,7 @@
 
 
                     <LinearLayout
-                        android:layout_width="60dp"
+                        android:layout_width="70dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/color_primary_color_primary_dark_select"
                         android:gravity="center"
@@ -238,15 +240,142 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <ScrollView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
+                    android:paddingTop="18dp"
                     android:background="@drawable/circle_color_white">
 
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical">
 
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+
+                            <include
+                                layout="@layout/layout_home_top_ceil"
+                                binding:action="@{viewModel.topCommand}"
+                                binding:img="@{R.mipmap.wenda1}"
+                                binding:params="@{0}"
+                                binding:title='@{"班级问答"}' />
+
+                            <include
+                                layout="@layout/layout_home_top_ceil"
+                                binding:action="@{viewModel.topCommand}"
+                                binding:img="@{R.mipmap.tiku_write_huise}"
+                                binding:params="@{1}"
+                                binding:title='@{"班级作业"}' />
+
+                            <include
+                                layout="@layout/layout_home_top_ceil"
+                                binding:action="@{viewModel.topCommand}"
+                                binding:img="@{R.mipmap.online}"
+                                binding:params="@{2}"
+                                binding:title='@{"班级公告"}' />
+
+                        </LinearLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/color_efef" />
+
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:moreText='@{"全部课程"}'
+                            binding:params="@{0}"
+                            binding:show="@{true}"
+                            binding:title='@{"在学录播课"}' />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            binding:itemBinding="@{viewModel.videoItemBinding}"
+                            binding:items="@{viewModel.videoList}"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
+                            binding:layoutManager="@{LayoutManagers.horizontal()}" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/color_efef" />
+
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:moreText='@{"我的题库"}'
+                            binding:params="@{0}"
+                            binding:show="@{true}"
+                            binding:title='@{"在线题库"}' />
+
+
+
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/color_efef" />
+
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:moreText='@{"全部直播"}'
+                            binding:params="@{0}"
+                            binding:show="@{true}"
+                            binding:title='@{"最近直播"}' />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/liveRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="14dp"
+                            binding:adapter="@{viewModel.adapter}"
+                            binding:nestedScrollingEnabled="@{false}"
+                            binding:itemBinding="@{viewModel.goodLiveItemBinding}"
+                            binding:items="@{viewModel.goodLiveList}"
+                            binding:layoutManager="@{LayoutManagers.ver()}" />
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:background="@color/color_efef" />
+
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:moreText='@{"全部回放"}'
+                            binding:params="@{0}"
+                            binding:show="@{true}"
+                            binding:title='@{"直播回放"}' />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="14dp"
+                            binding:nestedScrollingEnabled="@{false}"
+                            binding:itemBinding="@{viewModel.liveBackItemBinding}"
+                            binding:items="@{viewModel.liveBackList}"
+                            binding:layoutManager="@{LayoutManagers.ver()}" />
+                    </LinearLayout>
+
+                </ScrollView>
             </LinearLayout>
 
         </RelativeLayout>

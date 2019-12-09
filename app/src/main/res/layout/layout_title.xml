@@ -5,13 +5,24 @@
     <data>
 
         <import type="android.view.View" />
+
         <variable
             name="title"
             type="String" />
 
         <variable
+            name="moreText"
+            type="String" />
+
+        <variable
+            name="params"
+            type="Integer" />
+
+        <variable
             name="action"
-            type="com.li.basemvvm.binding.command.BindingCommand" />
+            type="com.li.basemvvm.binding.command.BindingCommand&lt;java.lang.Integer&gt;" />
+
+        <import type="android.text.TextUtils" />
 
         <variable
             name="show"
@@ -20,7 +31,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
+        android:background="@drawable/white_color_efefef_select"
         android:orientation="horizontal">
 
         <TextView
@@ -28,13 +40,17 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@{title}"
-            android:textColor="#ff333333"
+            android:textColor="#333333"
             android:textSize="17sp" />
 
         <include
-            android:visibility="@{show?View.VISIBLE:View.INVISIBLE}"
             layout="@layout/layout_more"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:visibility="@{show?View.VISIBLE:View.INVISIBLE}"
             binding:action="@{action}"
-            binding:name='@{"更多"}' />
+            binding:name='@{TextUtils.isEmpty(moreText)?"更多":moreText}'
+            binding:params="@{params}" />
     </RelativeLayout>
 </layout>

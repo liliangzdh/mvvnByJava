@@ -1,5 +1,7 @@
 package com.kaoyaya.tongkai.entity;
 
+import android.text.TextUtils;
+
 import androidx.databinding.BaseObservable;
 
 import com.kaoyaya.tongkai.utils.TimeUtils;
@@ -37,6 +39,8 @@ public class LiveInfo {
     private String lessonTitle;
     private String end_time;
     private String start_time;
+    private String startTime;
+    private String endTime;
     private String picture;
     private String nickname;
     private int livePlatform;
@@ -45,6 +49,7 @@ public class LiveInfo {
 
     public boolean isStart;
 
+    public String title;
     public String fromStartTimeStr;
 
     public int getAccess() {
@@ -120,6 +125,9 @@ public class LiveInfo {
     }
 
     public String getEnd_time() {
+        if(TextUtils.isEmpty(end_time)){
+            return endTime;
+        }
         return end_time;
     }
 
@@ -128,7 +136,10 @@ public class LiveInfo {
     }
 
     public String getStart_time() {
-        return start_time;
+        if(TextUtils.isEmpty(startTime)){
+            return start_time;
+        }
+        return startTime;
     }
 
     public void setStart_time(String start_time) {
@@ -194,5 +205,10 @@ public class LiveInfo {
 
     public String getStartAndEndTime(){
         return TimeUtils.getInstance().formatTime(getStart_time()) + "-" + TimeUtils.getInstance().formatTime(getEnd_time());
+    }
+
+
+    public String getStartAndEndTime2(){
+        return TimeUtils.getInstance().formatTime(getStart_time(),"yyyy-MM-dd HH:mm")+ "-" + TimeUtils.getInstance().formatTime(getEnd_time());
     }
 }
