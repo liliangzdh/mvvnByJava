@@ -244,8 +244,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:paddingTop="18dp"
-                    android:background="@drawable/circle_color_white">
+                    android:background="@drawable/circle_color_white"
+                    android:paddingTop="18dp">
 
 
                     <LinearLayout
@@ -303,10 +303,10 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            binding:itemBinding="@{viewModel.videoItemBinding}"
-                            binding:items="@{viewModel.videoList}"
                             android:paddingLeft="10dp"
                             android:paddingRight="10dp"
+                            binding:itemBinding="@{viewModel.videoItemBinding}"
+                            binding:items="@{viewModel.videoList}"
                             binding:layoutManager="@{LayoutManagers.horizontal()}" />
 
                         <View
@@ -322,8 +322,29 @@
                             binding:show="@{true}"
                             binding:title='@{"在线题库"}' />
 
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:visibility="@{viewModel.examStatistic.get() == null?View.VISIBLE:View.GONE}"
+                            android:layout_height="wrap_content">
 
 
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="14dp"
+                                binding:itemBinding="@{viewModel.tiKuItemBinding}"
+                                binding:items="@{viewModel.tiKuList}"
+                                binding:layoutManager="@{LayoutManagers.grid(2)}"
+                                binding:nestedScrollingEnabled="@{false}" />
+
+
+                        </RelativeLayout>
+
+
+                        <include
+                            layout="@layout/layout_study_tiku"
+                            android:visibility="@{viewModel.examStatistic.get() != null?View.VISIBLE:View.GONE}"
+                            binding:viewModel="@{viewModel.examStatistic}" />
 
 
                         <View
@@ -339,16 +360,34 @@
                             binding:show="@{true}"
                             binding:title='@{"最近直播"}' />
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/liveRecyclerView"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="14dp"
-                            binding:adapter="@{viewModel.adapter}"
-                            binding:nestedScrollingEnabled="@{false}"
-                            binding:itemBinding="@{viewModel.goodLiveItemBinding}"
-                            binding:items="@{viewModel.goodLiveList}"
-                            binding:layoutManager="@{LayoutManagers.ver()}" />
+                            android:minHeight="100dp">
+
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/liveRecyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="14dp"
+                                binding:adapter="@{viewModel.adapter}"
+                                binding:itemBinding="@{viewModel.goodLiveItemBinding}"
+                                binding:items="@{viewModel.goodLiveList}"
+                                binding:layoutManager="@{LayoutManagers.ver()}"
+                                binding:nestedScrollingEnabled="@{false}" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="暂无直播"
+                                android:textColor="#999"
+                                android:textSize="18sp"
+                                android:visibility="@{viewModel.showNoLiveFlag?View.VISIBLE:View.GONE}" />
+
+
+                        </RelativeLayout>
 
 
                         <View
@@ -365,14 +404,34 @@
                             binding:title='@{"直播回放"}' />
 
 
-                        <androidx.recyclerview.widget.RecyclerView
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingLeft="14dp"
-                            binding:nestedScrollingEnabled="@{false}"
-                            binding:itemBinding="@{viewModel.liveBackItemBinding}"
-                            binding:items="@{viewModel.liveBackList}"
-                            binding:layoutManager="@{LayoutManagers.ver()}" />
+                            android:minHeight="100dp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="14dp"
+                                binding:itemBinding="@{viewModel.liveBackItemBinding}"
+                                binding:items="@{viewModel.liveBackList}"
+                                binding:layoutManager="@{LayoutManagers.ver()}"
+                                binding:nestedScrollingEnabled="@{false}" />
+
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:gravity="center"
+                                android:text="暂无直播回放"
+                                android:textColor="#999"
+                                android:textSize="18sp"
+                                android:visibility="@{viewModel.showNoLiveBackFlag?View.VISIBLE:View.GONE}" />
+
+
+                        </RelativeLayout>
+
+
                     </LinearLayout>
 
                 </ScrollView>

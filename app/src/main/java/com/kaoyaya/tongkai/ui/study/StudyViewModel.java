@@ -3,31 +3,31 @@ package com.kaoyaya.tongkai.ui.study;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableList;
 
-import com.google.gson.Gson;
 import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.config.Constant;
-import com.kaoyaya.tongkai.entity.ExamTypeInfo;
 import com.kaoyaya.tongkai.entity.LearnCourseInfo;
 import com.kaoyaya.tongkai.entity.LearnInfoResponse;
 import com.kaoyaya.tongkai.entity.LiveBackRequest;
 import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.entity.StudyResourceItem;
+import com.kaoyaya.tongkai.entity.TiKuExamInfo;
+import com.kaoyaya.tongkai.entity.TiKuStatistic;
+import com.kaoyaya.tongkai.entity.TiKuStudyInfo;
 import com.kaoyaya.tongkai.http.EduApi;
+import com.kaoyaya.tongkai.http.TiKuApi;
 import com.kaoyaya.tongkai.http.UserApi;
-import com.kaoyaya.tongkai.test.User;
 import com.kaoyaya.tongkai.ui.home.HomeLiveAdapter;
 import com.kaoyaya.tongkai.ui.home.LiveItemViewModel;
 import com.kaoyaya.tongkai.ui.login.LoginActivity;
+import com.kaoyaya.tongkai.ui.study.item.StudyTiKuItemViewModel;
 import com.kaoyaya.tongkai.ui.study.item.VideoRecordItemViewModel;
-import com.kaoyaya.tongkai.ui.test.TestAct;
 import com.li.basemvvm.BR;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
@@ -72,12 +72,24 @@ public class StudyViewModel extends BaseViewModel {
 
     //直播的
     public ObservableList<LiveItemViewModel> goodLiveList = new ObservableArrayList<>();
-    public ItemBinding<LiveItemViewModel> goodLiveItemBinding = ItemBinding.of(com.kaoyaya.tongkai.BR.item, R.layout.item_home_live);
+    public ItemBinding<LiveItemViewModel> goodLiveItemBinding = ItemBinding.of(BR.item, R.layout.item_home_live);
     public HomeLiveAdapter adapter = new HomeLiveAdapter();
+
+    //是否显示直播暂无标志
+    public ObservableField<Boolean> showNoLiveFlag = new ObservableField<>();
 
     //回放
     public ObservableList<LiveItemViewModel> liveBackList = new ObservableArrayList<>();
-    public ItemBinding<LiveItemViewModel> liveBackItemBinding = ItemBinding.of(com.kaoyaya.tongkai.BR.item, R.layout.item_home_live_back);
+    public ItemBinding<LiveItemViewModel> liveBackItemBinding = ItemBinding.of(BR.item, R.layout.item_home_live_back);
+    //是否显示回放暂无标志
+    public ObservableField<Boolean> showNoLiveBackFlag = new ObservableField<>();
+
+    // 题库   列表
+    public ObservableList<StudyTiKuItemViewModel> tiKuList = new ObservableArrayList<>();
+    public ItemBinding<StudyTiKuItemViewModel> tiKuItemBinding = ItemBinding.of(BR.item, R.layout.item_study_tiku);
+
+    //题库数据
+    public ObservableField<TiKuStatistic> examStatistic = new ObservableField<>();
 
 
     public ObservableField<Integer> showType = new ObservableField<>();
@@ -215,6 +227,8 @@ public class StudyViewModel extends BaseViewModel {
 
         videoList.clear();
         goodLiveList.clear();
+        showNoLiveFlag.set(false);
+        examStatistic.set(null);
 
         Disposable subscribe = eduApi.getLearnInfo(studyResourceItem.getId())
                 .compose(RxUtils.<BaseResponse<LearnInfoResponse>>schedulersTransformer())
@@ -232,11 +246,26 @@ public class StudyViewModel extends BaseViewModel {
                         for (LiveInfo liveInfo : live) {
                             goodLiveList.add(new LiveItemViewModel(null, liveInfo));
                         }
+                        showNoLiveFlag.set(live.size() == 0);
+
+
+                        List<TiKuExamInfo> subjectList = learnInfoResponse.getSubjectList();
+                        TiKuStudyInfo exam = learnInfoResponse.getExam();
+                        for (TiKuExamInfo tiKuExamInfo : subjectList) {
+                            tiKuList.add(new StudyTiKuItemViewModel(StudyViewModel.this, tiKuExamInfo));
+
+                            if (tiKuExamInfo.getId() == exam.getSubjectID()) {
+                                //去请求练题情况
+                                getSubjectStatistic(tiKuExamInfo.getId(),tiKuExamInfo.getName());
+                            }
+                        }
+
+
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-
+                        showNoLiveFlag.set(true);
                     }
                 });
 
@@ -245,9 +274,13 @@ public class StudyViewModel extends BaseViewModel {
 
     }
 
+    /**
+     * 获取直播回放 数据
+     */
     public void getLiveBackInfo() {
         liveBackList.clear();
-        StudyResourceItem studyResourceItem = selectSource.get();
+        showNoLiveBackFlag.set(false);
+        final StudyResourceItem studyResourceItem = selectSource.get();
         if (studyResourceItem == null) {
             return;
         }
@@ -259,17 +292,42 @@ public class StudyViewModel extends BaseViewModel {
                 .compose(RxUtils.exceptionTransformer()).subscribe(new Consumer<List<LiveInfo>>() {
                     @Override
                     public void accept(List<LiveInfo> liveInfoList) throws Exception {
-                        Log.e("test", "=====" + liveInfoList.size());
-
                         for (LiveInfo liveInfo : liveInfoList) {
-                            liveBackList.add(new LiveItemViewModel(null,liveInfo));
+                            liveBackList.add(new LiveItemViewModel(null, liveInfo));
                         }
-
+                        showNoLiveBackFlag.set(liveInfoList.size() == 0);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        Log.e("test","---"+throwable.getMessage());
+                        Log.e("test", "---" + throwable.getMessage());
+
+                        showNoLiveBackFlag.set(true);
+                    }
+                });
+
+        addSubscribe(subscribe);
+    }
+
+
+    /**
+     * 获取练题情况
+     */
+    private void getSubjectStatistic(int subjectId, final String title) {
+        TiKuApi tiKuApi = RetrofitClient.getInstance().create(TiKuApi.class);
+        Disposable subscribe = tiKuApi.getSubjectStatistic(subjectId)
+                .compose(RxUtils.<BaseResponse<TiKuStatistic>>schedulersTransformer())
+                .compose(RxUtils.exceptionTransformer())
+                .subscribe(new Consumer<TiKuStatistic>() {
+                    @Override
+                    public void accept(TiKuStatistic statistic) throws Exception {
+                        statistic.setName(title);
+                        examStatistic.set(statistic);
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
                     }
                 });
 

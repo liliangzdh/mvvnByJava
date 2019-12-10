@@ -1,8 +1,8 @@
 package com.kaoyaya.tongkai.http;
 
-import com.kaoyaya.tongkai.entity.ExamTypeInfo;
 import com.kaoyaya.tongkai.entity.TiKuExamInfo;
 import com.kaoyaya.tongkai.entity.TiKuExamResponse;
+import com.kaoyaya.tongkai.entity.TiKuStatistic;
 import com.li.basemvvm.http.base.BaseResponse;
 
 import java.util.List;
@@ -29,6 +29,11 @@ public interface TiKuApi {
      */
     @GET("/api/v1/subjects/{subjectID}/subjects")
     Observable<BaseResponse<TiKuExamResponse>> getSubjects(@Path("subjectID") int subjectID);
+
+
+    @GET("/api/v1/subjects/{subjectID}/statistic")
+    Observable<BaseResponse<TiKuStatistic>> getSubjectStatistic(@Path("subjectID") int subjectID);
+
 
 
 }
