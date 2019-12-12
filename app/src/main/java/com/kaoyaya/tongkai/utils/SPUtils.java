@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.kaoyaya.tongkai.entity.ExamInfo;
+import com.kaoyaya.tongkai.entity.StudyResourceItem;
 import com.li.basemvvm.CommonApplication;
 
 public class SPUtils {
@@ -41,8 +42,12 @@ public class SPUtils {
 
 
     public void removeToken() {
+        removeByKey(Token);
+    }
+
+    private void removeByKey(String name) {
         SharedPreferences.Editor edit = sharedPreferences.edit();
-        edit.remove(Token);
+        edit.remove(name);
         edit.apply();
     }
 
@@ -64,11 +69,16 @@ public class SPUtils {
     }
 
     public ExamInfo getExamInfo() {
-        String byKey = getByKey(ExamInfoKey);
+        return getObject(ExamInfoKey,ExamInfo.class);
+    }
+
+
+    private <T> T getObject(String key,Class<T> classOfT) {
+        String byKey = getByKey(key);
         if (TextUtils.isEmpty(byKey)) {
             return null;
         }
-        return new Gson().fromJson(byKey, ExamInfo.class);
+        return new Gson().fromJson(byKey, classOfT);
     }
 
     public boolean isEmptyExamInfo() {
@@ -79,4 +89,17 @@ public class SPUtils {
         return false;
     }
 
+    private final String StudyResourceItemKey = "StudyResourceItem";
+
+    public void saveStudyItem(StudyResourceItem item) {
+        saveString(StudyResourceItemKey, new Gson().toJson(item));
+    }
+
+    public StudyResourceItem getStudyResourceItem() {
+        return getObject(StudyResourceItemKey,StudyResourceItem.class);
+    }
+
+    public void clearStudyItem() {
+        removeByKey(StudyResourceItemKey);
+    }
 }

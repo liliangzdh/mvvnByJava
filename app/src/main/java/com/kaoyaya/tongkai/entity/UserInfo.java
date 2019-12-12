@@ -1,5 +1,7 @@
 package com.kaoyaya.tongkai.entity;
 
+import android.text.TextUtils;
+
 public class UserInfo {
     /**
      * uid : 1123761
@@ -115,5 +117,13 @@ public class UserInfo {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+
+    public String getRealName() {
+        if (!TextUtils.isEmpty(nickname)) {
+            return nickname;
+        }
+        return username;
     }
 }

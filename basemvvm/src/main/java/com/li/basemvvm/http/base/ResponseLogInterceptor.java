@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.hdl.elog.ELog;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.http.logging.Printer;
-import com.li.basemvvm.utils.SPUtils;
+import com.li.basemvvm.utils.TokenUtils;
 
 import java.io.IOException;
 
@@ -45,7 +45,7 @@ public class ResponseLogInterceptor implements Interceptor {
                 BaseResponse baseResponse = new Gson().fromJson(bodyString, BaseResponse.class);
                 if(baseResponse.getCode() == 401){
                     ELog.e("test","清除cookie ，退出登录");
-                    SPUtils.getInstance().clearToken();
+                    TokenUtils.getInstance().clearToken();
 
 
                     //退出登录。发出。退出登录通知

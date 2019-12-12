@@ -76,6 +76,20 @@ public class RxUtils {
      * 如果使用了  exceptionTransformer 。那么 subscribe 接收 就不能使用 BaseResponse<T>。只能是 T .
      */
 
+    @SuppressWarnings("unchecked")
+    public static <T>ObservableTransformer<BaseResponse<T>,T> exceptionTransformerSimple() {
+
+        return new ObservableTransformer() {
+            @Override
+            public ObservableSource<T> apply(Observable observable) {
+                return observable
+                        .map(new HandleFuc())
+                        .onErrorResumeNext(new HttpResponseFunc());
+//                return observable.onErrorResumeNext(new HttpResponseFunc());
+            }
+        };
+    }
+
     public static ObservableTransformer exceptionTransformer() {
 
         return new ObservableTransformer() {

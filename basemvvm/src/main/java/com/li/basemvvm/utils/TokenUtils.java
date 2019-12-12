@@ -7,20 +7,20 @@ import android.text.TextUtils;
 import com.li.basemvvm.CommonApplication;
 
 
-public class SPUtils {
+public class TokenUtils {
 
 
-    private static SPUtils spUtils;
+    private static TokenUtils spUtils;
     private static SharedPreferences preferences;
 
     private final static String TokenKey = "KaoYaYaToken";
 
-    private SPUtils() {
+    private TokenUtils() {
     }
 
-    public static SPUtils getInstance() {
+    public static TokenUtils getInstance() {
         if (spUtils == null) {
-            spUtils = new SPUtils();
+            spUtils = new TokenUtils();
             Context appContext = CommonApplication.getAppContext();
             preferences = appContext.getSharedPreferences("KaoYaYa", Context.MODE_PRIVATE);
         }

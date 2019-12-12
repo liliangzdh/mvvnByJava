@@ -26,6 +26,8 @@ public final class ViewAdapter {
                     .load(url)
                     .apply(new RequestOptions().placeholder(placeholderRes))
                     .into(imageView);
+        } else {
+            Glide.with(imageView.getContext()).load(placeholderRes).into(imageView);
         }
     }
 
@@ -37,19 +39,19 @@ public final class ViewAdapter {
     }
 
     @BindingAdapter("load_image")
-    public static void loadImage(ImageView view,  Drawable resource) {
+    public static void loadImage(ImageView view, Drawable resource) {
         view.setImageDrawable(resource);
     }
 
     @BindingAdapter("load_image")
-    public static void loadImage(ImageView view,  Bitmap resource) {
+    public static void loadImage(ImageView view, Bitmap resource) {
         view.setImageBitmap(resource);
     }
 
     @BindingAdapter("load_image")
-    public static void loadImage(ImageView view,  String resource) {
+    public static void loadImage(ImageView view, String resource) {
 
-        Log.e("test","sasas");
+        Log.e("test", "sasas");
     }
 
 }

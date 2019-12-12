@@ -6,6 +6,7 @@ public class StudyResourceItem {
 
     private String title;
 
+    private boolean isClass;
 
     private String courseType;
     private int subjectID;
@@ -18,7 +19,6 @@ public class StudyResourceItem {
     public StudyResourceItem(String title, boolean isHeader) {
         this.title = title;
         this.isHeader = isHeader;
-
     }
 
     public int getId() {
@@ -71,5 +71,13 @@ public class StudyResourceItem {
 
     public boolean showLine() {
         return !"系统班级".equals(title);
+    }
+
+    public void setClass(boolean aClass) {
+        isClass = aClass;
+    }
+
+    public boolean isClass() {
+        return isClass;
     }
 }

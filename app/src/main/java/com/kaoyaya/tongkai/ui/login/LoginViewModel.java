@@ -19,9 +19,8 @@ import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
 import com.li.basemvvm.http.base.ResponseThrowable;
 import com.li.basemvvm.http.base.RetrofitClient;
-import com.li.basemvvm.test.DemoRepository;
 import com.li.basemvvm.utils.RxUtils;
-import com.li.basemvvm.utils.SPUtils;
+import com.li.basemvvm.utils.TokenUtils;
 
 import java.util.HashMap;
 
@@ -107,7 +106,7 @@ public class LoginViewModel extends BaseViewModel {
                             String token = result.get("token");
                             if (!TextUtils.isEmpty(token)) {
                                 ELog.e("test", "保存token");
-                                SPUtils.getInstance().saveToken(token);
+                                TokenUtils.getInstance().saveToken(token);
                                 Messenger.getDefault().sendNoMsg(Constant.Login);
                                 finish();
                             }

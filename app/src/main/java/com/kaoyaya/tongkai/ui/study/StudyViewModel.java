@@ -28,16 +28,18 @@ import com.kaoyaya.tongkai.ui.home.LiveItemViewModel;
 import com.kaoyaya.tongkai.ui.login.LoginActivity;
 import com.kaoyaya.tongkai.ui.study.item.StudyTiKuItemViewModel;
 import com.kaoyaya.tongkai.ui.study.item.VideoRecordItemViewModel;
+import com.kaoyaya.tongkai.utils.SPUtils;
 import com.li.basemvvm.BR;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
 import com.li.basemvvm.binding.command.BindingConsumer;
 import com.li.basemvvm.bus.Messenger;
+import com.li.basemvvm.bus.event.SingleLiveEvent;
 import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.RetrofitClient;
 import com.li.basemvvm.utils.RxUtils;
-import com.li.basemvvm.utils.SPUtils;
+import com.li.basemvvm.utils.TokenUtils;
 
 import java.util.HashMap;
 import java.util.List;
@@ -95,6 +97,8 @@ public class StudyViewModel extends BaseViewModel {
     public ObservableField<Integer> showType = new ObservableField<>();
     public ObservableField<StudyResourceItem> selectSource = new ObservableField<>();
 
+
+    //顶部3个按钮
     public BindingCommand<Integer> topCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
         public void call(Integer integer) {
@@ -106,30 +110,45 @@ public class StudyViewModel extends BaseViewModel {
                     break;
                 case 2:
                     break;
-                case 3:
-                    break;
             }
         }
     });
 
+    //更多按钮()
     public BindingCommand<Integer> moreCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
         @Override
         public void call(Integer integer) {
             Log.e("test", "  " + integer);
             switch (integer) {
-                case 0:
+                case 0: //录播课
                     break;
-                case 1:
+                case 1://题库
                     break;
-                case 2:
+                case 2://直播
                     break;
-                case 3:
+                case 3://回放
                     break;
             }
         }
     });
 
 
+    //定位按钮
+    public BindingCommand<Integer> headCommand = new BindingCommand<>(new BindingConsumer<Integer>() {
+        @Override
+        public void call(Integer integer) {
+            uc.scrollEvent.setValue(integer);
+        }
+    });
+
+
+    // 发送到act页面。操作view。
+    public class UIChangeObservable {
+        public SingleLiveEvent<Integer> scrollEvent = new SingleLiveEvent<>();
+    }
+
+
+    public UIChangeObservable uc = new UIChangeObservable();
     public StudyViewModel(@NonNull Application application) {
         super(application);
         initState();
@@ -142,17 +161,27 @@ public class StudyViewModel extends BaseViewModel {
     }
 
     private void initState() {
-        String token = SPUtils.getInstance().getToken();
-        showType.set(TextUtils.isEmpty(token) ? 0 : 1);
+        String token = TokenUtils.getInstance().getToken();
+
         if (!TextUtils.isEmpty(token)) {
-            getStudyResource();
+            StudyResourceItem studyResourceItem = SPUtils.getInstance().getStudyResourceItem();
+            if (studyResourceItem != null) {
+                showType.set(2);
+                changeClass(studyResourceItem);
+            } else {
+                showType.set(1);
+                getStudyResource();
+            }
         } else {
+            showType.set(0);
             //退出登录
             resourceList.clear();
+            SPUtils.getInstance().clearStudyItem();
         }
     }
 
     public void changeClass(StudyResourceItem item) {
+        SPUtils.getInstance().saveStudyItem(item);
         selectSource.set(item);
         showType.set(2);
         getLearnInfo();
@@ -170,6 +199,9 @@ public class StudyViewModel extends BaseViewModel {
         @Override
         public void call() {
             showType.set(1);
+            if (resourceList == null || resourceList.size() == 0) {
+                getStudyResource();
+            }
         }
     });
 
@@ -188,8 +220,8 @@ public class StudyViewModel extends BaseViewModel {
                     @Override
                     public void accept(HashMap<String, List<StudyResourceItem>> map) throws Exception {
                         resourceList.clear();
-                        addResource(map, "class", "系统班级");
-                        addResource(map, "course", "单项课程");
+                        addResource(map, "class", "系统班级",true);
+                        addResource(map, "course", "单项课程",false);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -202,7 +234,7 @@ public class StudyViewModel extends BaseViewModel {
     }
 
 
-    public void addResource(HashMap<String, List<StudyResourceItem>> map, String key, String title) {
+    public void addResource(HashMap<String, List<StudyResourceItem>> map, String key, String title,boolean isClass) {
         List<StudyResourceItem> aClass = map.get(key);
         if (aClass != null) {
             if (aClass.size() > 0) {
@@ -210,6 +242,7 @@ public class StudyViewModel extends BaseViewModel {
             }
 
             for (StudyResourceItem studyResourceItem : aClass) {
+                studyResourceItem.setClass(isClass);
                 resourceList.add(new StudyItemViewModel(StudyViewModel.this, studyResourceItem));
             }
         }
@@ -256,7 +289,7 @@ public class StudyViewModel extends BaseViewModel {
 
                             if (tiKuExamInfo.getId() == exam.getSubjectID()) {
                                 //去请求练题情况
-                                getSubjectStatistic(tiKuExamInfo.getId(),tiKuExamInfo.getName());
+                                getSubjectStatistic(tiKuExamInfo.getId(), tiKuExamInfo.getName());
                             }
                         }
 

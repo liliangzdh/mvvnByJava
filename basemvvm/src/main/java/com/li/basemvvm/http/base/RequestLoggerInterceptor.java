@@ -4,14 +4,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.li.basemvvm.utils.SPUtils;
+import com.li.basemvvm.utils.TokenUtils;
 import com.li.basemvvm.utils.Utils;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
@@ -39,7 +37,7 @@ public class RequestLoggerInterceptor implements Interceptor {
         Request.Builder builder = request.newBuilder();
 
 
-        String token = SPUtils.getInstance().getToken();
+        String token = TokenUtils.getInstance().getToken();
 
         if (!TextUtils.isEmpty(token)) {
             builder.addHeader("x-token", token);

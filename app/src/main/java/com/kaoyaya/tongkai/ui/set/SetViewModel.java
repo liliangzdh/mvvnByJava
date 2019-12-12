@@ -11,7 +11,7 @@ import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
 import com.li.basemvvm.bus.Messenger;
-import com.li.basemvvm.utils.SPUtils;
+import com.li.basemvvm.utils.TokenUtils;
 
 public class SetViewModel extends BaseViewModel {
 
@@ -20,7 +20,7 @@ public class SetViewModel extends BaseViewModel {
 
     public SetViewModel(@NonNull Application application) {
         super(application);
-        isLogin.set(!TextUtils.isEmpty(SPUtils.getInstance().getToken()));
+        isLogin.set(!TextUtils.isEmpty(TokenUtils.getInstance().getToken()));
     }
 
     public BindingCommand backAction = new BindingCommand(new BindingAction() {
@@ -33,9 +33,9 @@ public class SetViewModel extends BaseViewModel {
     public BindingCommand logoutAction = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            SPUtils.getInstance().clearToken();
+            TokenUtils.getInstance().clearToken();
             Messenger.getDefault().sendNoMsg(Constant.Login);
-            isLogin.set(!TextUtils.isEmpty(SPUtils.getInstance().getToken()));
+            isLogin.set(!TextUtils.isEmpty(TokenUtils.getInstance().getToken()));
             finish();
         }
     });

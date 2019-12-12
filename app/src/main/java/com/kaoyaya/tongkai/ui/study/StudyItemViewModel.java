@@ -1,5 +1,7 @@
 package com.kaoyaya.tongkai.ui.study;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
 
@@ -23,7 +25,15 @@ public class StudyItemViewModel extends ItemViewModel<StudyViewModel> {
     public BindingCommand click = new BindingCommand(new BindingAction() {
         @Override
         public void call() {
-            viewModel.changeClass(entity.get());
+
+            StudyResourceItem studyResourceItem = entity.get();
+            if(studyResourceItem != null){
+                if(studyResourceItem.isClass()){
+                    viewModel.changeClass(studyResourceItem);
+                }else{
+                    Log.e("test","----"+studyResourceItem.getTitle());
+                }
+            }
         }
     });
 

@@ -31,6 +31,7 @@ public class UserCenterFragment extends BaseFragment<FragmentUserCenterBinding, 
     public void initData() {
         super.initData();
         initStatusBar();
+        binding.imageView.isCircle(true);
     }
 
     public void initStatusBar() {

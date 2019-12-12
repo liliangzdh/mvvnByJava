@@ -9,6 +9,7 @@
             type="com.kaoyaya.tongkai.ui.user.UserCenterViewModel" />
 
         <import type="android.view.View" />
+
         <import type="com.kaoyaya.tongkai.R" />
     </data>
 
@@ -41,11 +42,16 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.shehuan.niv.NiceImageView
+                    android:id="@+id/imageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:src="@mipmap/icon_user" />
+                    android:layout_marginLeft="15dp"
+                    binding:is_circle="true"
+                    binding:placeholderRes="@{R.mipmap.icon_user}"
+                    binding:url="@{viewModel.userInfoField.avatar}" />
+
+
 
                 <LinearLayout
                     android:id="@+id/llLoginTopCell"
@@ -67,7 +73,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="用户名"
+                            android:text="@{viewModel.userInfoField.getRealName()}"
                             android:textColor="@color/white"
                             android:textSize="18sp" />
 
@@ -92,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:text="18579123435"
+                        android:text="@{viewModel.userInfoField.getUsername()}"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -140,9 +146,9 @@
             android:layout_height="match_parent"
             android:layout_marginTop="130dp"
 
-            android:paddingTop="2dp"
             android:background="@drawable/circle_color_white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="2dp">
 
 
             <include
@@ -174,8 +180,8 @@
 
             <include
                 layout="@layout/item_user_center"
-                binding:img='@{R.mipmap.set}'
                 binding:action="@{viewModel.action}"
+                binding:img='@{R.mipmap.set}'
                 binding:params="@{1}"
                 binding:title='@{"设置"}' />
 

@@ -80,7 +80,7 @@ public class BaseViewModel <M extends BaseModel>  extends AndroidViewModel imple
      * 跳转页面
      *
      */
-    public void startActivity(Class<?> clz) {
+    public void startActivity(Class clz) {
         startActivity(clz, null);
     }
 

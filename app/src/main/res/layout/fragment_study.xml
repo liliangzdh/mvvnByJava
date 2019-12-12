@@ -205,7 +205,9 @@
                         android:background="@drawable/circle_color_primary_color_primary_dark_select"
                         android:gravity="center"
                         android:text="录播课"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        binding:onClickCommand="@{viewModel.headCommand}"
+                        binding:params="@{0}" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -215,7 +217,9 @@
                         android:background="@drawable/circle_color_primary_color_primary_dark_select"
                         android:gravity="center"
                         android:text="题库"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        binding:onClickCommand="@{viewModel.headCommand}"
+                        binding:params="@{1}" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -225,7 +229,9 @@
                         android:background="@drawable/circle_color_primary_color_primary_dark_select"
                         android:gravity="center"
                         android:text="直播"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        binding:onClickCommand="@{viewModel.headCommand}"
+                        binding:params="@{2}" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -235,12 +241,15 @@
                         android:background="@drawable/circle_color_primary_color_primary_dark_select"
                         android:gravity="center"
                         android:text="回放"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        binding:onClickCommand="@{viewModel.headCommand}"
+                        binding:params="@{3}" />
 
 
                 </LinearLayout>
 
                 <ScrollView
+                    android:id="@+id/scrollView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -293,6 +302,7 @@
                             android:background="@color/color_efef" />
 
                         <include
+                            android:id="@+id/llTop1"
                             layout="@layout/layout_title"
                             binding:action="@{viewModel.moreCommand}"
                             binding:moreText='@{"全部课程"}'
@@ -315,17 +325,18 @@
                             android:background="@color/color_efef" />
 
                         <include
+                            android:id="@+id/llTop2"
                             layout="@layout/layout_title"
                             binding:action="@{viewModel.moreCommand}"
                             binding:moreText='@{"我的题库"}'
-                            binding:params="@{0}"
+                            binding:params="@{1}"
                             binding:show="@{true}"
                             binding:title='@{"在线题库"}' />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
-                            android:visibility="@{viewModel.examStatistic.get() == null?View.VISIBLE:View.GONE}"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:visibility="@{viewModel.examStatistic.get() == null?View.VISIBLE:View.GONE}">
 
 
                             <androidx.recyclerview.widget.RecyclerView
@@ -353,10 +364,11 @@
                             android:background="@color/color_efef" />
 
                         <include
+                            android:id="@+id/llTop3"
                             layout="@layout/layout_title"
                             binding:action="@{viewModel.moreCommand}"
                             binding:moreText='@{"全部直播"}'
-                            binding:params="@{0}"
+                            binding:params="@{2}"
                             binding:show="@{true}"
                             binding:title='@{"最近直播"}' />
 
@@ -396,10 +408,11 @@
                             android:background="@color/color_efef" />
 
                         <include
+                            android:id="@+id/llTop4"
                             layout="@layout/layout_title"
                             binding:action="@{viewModel.moreCommand}"
                             binding:moreText='@{"全部回放"}'
-                            binding:params="@{0}"
+                            binding:params="@{3}"
                             binding:show="@{true}"
                             binding:title='@{"直播回放"}' />
 
