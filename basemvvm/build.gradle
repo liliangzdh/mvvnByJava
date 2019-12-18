@@ -85,6 +85,11 @@ dependencies {
     // android.material:material 风格的各种控件
     api 'com.google.android.material:material:1.2.0-alpha02'
 
+    //
+    api 'com.lcodecorex:tkrefreshlayout:1.0.7'
+
+    api 'com.liaoinstan.springview:library:1.7.0'
+
 
 
 }

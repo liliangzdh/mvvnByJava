@@ -140,6 +140,13 @@ public class HomeViewModel extends BaseViewModel {
         }
     });
 
+    public BindingCommand refreshCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            getNetResource();
+        }
+    });
+
 
     // 发起网络请求。获取分发资源
     @SuppressWarnings("unchecked")

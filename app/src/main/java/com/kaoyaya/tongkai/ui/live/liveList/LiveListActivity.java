@@ -3,14 +3,21 @@ package com.kaoyaya.tongkai.ui.live.liveList;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.Observer;
+
 import com.google.android.material.tabs.TabLayout;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.databinding.ActivityLiveListBinding;
+import com.kaoyaya.tongkai.entity.LiveCommand;
 import com.kaoyaya.tongkai.ui.live.liveList.vm.LiveListViewModel;
 import com.li.basemvvm.base.BaseActivity;
 
 public class LiveListActivity extends BaseActivity<ActivityLiveListBinding, LiveListViewModel> {
+
+
+    LiveViewPageAdapter liveViewPageAdapter;
+
     @Override
     public int initContentView(Bundle savedInstanceState) {
         return R.layout.activity_live_list;
@@ -25,9 +32,10 @@ public class LiveListActivity extends BaseActivity<ActivityLiveListBinding, Live
     public void initData() {
         super.initData();
         initStatusBar();
+        liveViewPageAdapter = new LiveViewPageAdapter();
         binding.tab.setupWithViewPager(binding.viewPager);
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tab));
-        binding.setAdapter(new LiveViewPageAdapter());
+        binding.setAdapter(liveViewPageAdapter);
 
         final View inflate = View.inflate(this, R.layout.layout_tab_item, null);
 
@@ -39,6 +47,19 @@ public class LiveListActivity extends BaseActivity<ActivityLiveListBinding, Live
                 if (tabAt != null) {
                     tabAt.setCustomView(inflate);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void initViewObservable() {
+        super.initViewObservable();
+
+        viewModel.commandEvent.observe(this, new Observer<LiveCommand>() {
+            @Override
+            public void onChanged(LiveCommand liveCommand) {
+                //结束刷新。
+                liveViewPageAdapter.onFinishFreshAndLoad(liveCommand.type);
             }
         });
     }

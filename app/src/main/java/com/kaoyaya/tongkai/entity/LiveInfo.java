@@ -1,6 +1,7 @@
 package com.kaoyaya.tongkai.entity;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.databinding.BaseObservable;
 
@@ -66,6 +67,7 @@ public class LiveInfo {
     private String deadline;
     private int is_activate;
     private String type;
+    private int number;
 
 
     public int getAccess() {
@@ -245,5 +247,13 @@ public class LiveInfo {
 
     public String getStartAndEndTime2() {
         return TimeUtils.getInstance().formatTime(getStart_time(), "yyyy-MM-dd HH:mm") + "-" + TimeUtils.getInstance().formatTime(getEnd_time());
+    }
+
+    public boolean getIsStart(){
+        return TimeUtils.getInstance().getTime(getStart_time()) <= 0;
+    }
+
+    public String getLiveBackInfo(){
+        return number + "播放 | " + getStart_time();
     }
 }

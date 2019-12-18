@@ -71,187 +71,197 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <androidx.core.widget.NestedScrollView
+
+        <com.liaoinstan.springview.widget.SpringView
+            android:id="@+id/springView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            binding:enableFooter='@{false}'
+            binding:onRefreshCommand='@{viewModel.refreshCommand}'
+            android:layout_height="match_parent"
+            android:background="@color/color_efef">
 
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-
-                <com.youth.banner.Banner
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="155dp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="86dp"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingTop="6dp">
-
-                    <!--binding:title="@string/every_day_exam"-->
-                    <!--@mipmap/xuexi-->
-                    <include
-                        layout="@layout/layout_home_top_ceil"
-                        binding:action="@{viewModel.goodLessonCommand}"
-                        binding:img="@{R.mipmap.xuexi}"
-                        binding:params="@{0}"
-                        binding:title="@{@string/good_lesson}" />
-
-                    <include
-                        layout="@layout/layout_home_top_ceil"
-                        binding:action="@{viewModel.goodLessonCommand}"
-                        binding:img='@{R.mipmap.tiku_write}'
-                        binding:params="@{1}"
-                        binding:title="@{@string/every_day_exam}" />
-
-                    <!--binding:load_image="@{@mipmap/tiku_write}"-->
-
-
-                    <include
-                        layout="@layout/layout_home_top_ceil"
-                        binding:action="@{viewModel.goodLessonCommand}"
-                        binding:img='@{R.mipmap.kaoshizixun}'
-                        binding:params="@{2}"
-                        binding:title="@{@string/exam_news}" />
-
-
-                    <include
-                        layout="@layout/layout_home_top_ceil"
-                        binding:action="@{viewModel.goodLessonCommand}"
-                        binding:img='@{R.mipmap.online}'
-                        binding:params="@{3}"
-                        binding:title="@{@string/online}" />
-
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    android:background="@color/color_efef" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/white"
                     android:orientation="vertical">
 
-                    <include
-                        layout="@layout/layout_title"
-                        binding:action="@{viewModel.moreCommand}"
-                        binding:show="@{true}"
-                        binding:params="@{0}"
-                        binding:title="@{@string/good_course}" />
 
-
-                    <androidx.recyclerview.widget.RecyclerView
+                    <com.youth.banner.Banner
+                        android:id="@+id/banner"
                         android:layout_width="match_parent"
-                        android:layout_height="180dp"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="14dp"
-                        binding:itemBinding="@{viewModel.goodCourseItemBinding}"
-                        binding:items="@{viewModel.goodCourseList}"
-                        binding:layoutManager="@{LayoutManagers.horizontal()}" />
+                        android:layout_height="155dp" />
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="86dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingTop="6dp">
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="14dp"
-                    android:layout_marginRight="14dp"
-                    android:background="#D5DBEB" />
+                        <!--binding:title="@string/every_day_exam"-->
+                        <!--@mipmap/xuexi-->
+                        <include
+                            layout="@layout/layout_home_top_ceil"
+                            binding:action="@{viewModel.goodLessonCommand}"
+                            binding:img="@{R.mipmap.xuexi}"
+                            binding:params="@{0}"
+                            binding:title="@{@string/good_lesson}" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        <include
+                            layout="@layout/layout_home_top_ceil"
+                            binding:action="@{viewModel.goodLessonCommand}"
+                            binding:img='@{R.mipmap.tiku_write}'
+                            binding:params="@{1}"
+                            binding:title="@{@string/every_day_exam}" />
 
-                    <include
-                        layout="@layout/layout_title"
-                        binding:action="@{viewModel.moreCommand}"
-                        binding:params="@{1}"
-                        binding:title="@{@string/good_tiku}" />
+                        <!--binding:load_image="@{@mipmap/tiku_write}"-->
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/tiKuRecyclerView"
+
+                        <include
+                            layout="@layout/layout_home_top_ceil"
+                            binding:action="@{viewModel.goodLessonCommand}"
+                            binding:img='@{R.mipmap.kaoshizixun}'
+                            binding:params="@{2}"
+                            binding:title="@{@string/exam_news}" />
+
+
+                        <include
+                            layout="@layout/layout_home_top_ceil"
+                            binding:action="@{viewModel.goodLessonCommand}"
+                            binding:img='@{R.mipmap.online}'
+                            binding:params="@{3}"
+                            binding:title="@{@string/online}" />
+
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:background="@color/color_efef" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="14dp"
-                        binding:nestedScrollingEnabled="@{false}"
-                        binding:itemBinding="@{viewModel.goodTiKuItemBinding}"
-                        binding:items="@{viewModel.goodTiKuList}"
-                        binding:layoutManager="@{LayoutManagers.grid(2)}" />
+                        android:orientation="vertical">
+
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:params="@{0}"
+                            binding:show="@{true}"
+                            binding:title="@{@string/good_course}" />
 
 
-                </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:layout_marginTop="10dp"
+                            android:paddingLeft="14dp"
+                            binding:itemBinding="@{viewModel.goodCourseItemBinding}"
+                            binding:items="@{viewModel.goodCourseList}"
+                            binding:layoutManager="@{LayoutManagers.horizontal()}" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    </LinearLayout>
 
-                    <include
-                        layout="@layout/layout_title"
-                        binding:action="@{viewModel.moreCommand}"
-                        binding:show="@{true}"
-                        binding:params="@{2}"
-                        binding:title="@{@string/good_teacher}" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginLeft="14dp"
+                        android:layout_marginRight="14dp"
+                        android:background="#D5DBEB" />
 
-
-                    <androidx.recyclerview.widget.RecyclerView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingLeft="14dp"
-                        binding:nestedScrollingEnabled="@{false}"
-                        binding:itemBinding="@{viewModel.goodTeacherItemBinding}"
-                        binding:items="@{viewModel.goodTeacherList}"
-                        binding:layoutManager="@{LayoutManagers.grid(2)}" />
+                        android:orientation="vertical">
 
-                </LinearLayout>
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:params="@{1}"
+                            binding:title="@{@string/good_tiku}" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/tiKuRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:paddingLeft="14dp"
+                            binding:itemBinding="@{viewModel.goodTiKuItemBinding}"
+                            binding:items="@{viewModel.goodTiKuList}"
+                            binding:layoutManager="@{LayoutManagers.grid(2)}"
+                            binding:nestedScrollingEnabled="@{false}" />
 
-                    <include
-                        layout="@layout/layout_title"
-                        binding:action="@{viewModel.moreCommand}"
-                        binding:title="@{@string/good_live}" />
 
+                    </LinearLayout>
 
-                    <!--<androidx.recyclerview.widget.RecyclerView-->
-                    <!--android:id="@+id/liveRecyclerView"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:paddingLeft="14dp"-->
-                    <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
-                    <!---->
-                    <androidx.recyclerview.widget.RecyclerView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="14dp"
-                        binding:adapter="@{viewModel.adapter}"
-                        binding:nestedScrollingEnabled="@{false}"
-                        binding:itemBinding="@{viewModel.goodLiveItemBinding}"
-                        binding:items="@{viewModel.goodLiveList}"
-                        binding:layoutManager="@{LayoutManagers.ver()}" />
+                        android:layout_marginTop="5dp"
+                        android:orientation="vertical">
 
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:params="@{2}"
+                            binding:show="@{true}"
+                            binding:title="@{@string/good_teacher}" />
+
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:paddingLeft="14dp"
+                            binding:itemBinding="@{viewModel.goodTeacherItemBinding}"
+                            binding:items="@{viewModel.goodTeacherList}"
+                            binding:layoutManager="@{LayoutManagers.grid(2)}"
+                            binding:nestedScrollingEnabled="@{false}" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include
+                            layout="@layout/layout_title"
+                            binding:action="@{viewModel.moreCommand}"
+                            binding:title="@{@string/good_live}" />
+
+
+                        <!--<androidx.recyclerview.widget.RecyclerView-->
+                        <!--android:id="@+id/liveRecyclerView"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:paddingLeft="14dp"-->
+                        <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
+                        <!---->
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="14dp"
+                            binding:adapter="@{viewModel.adapter}"
+                            binding:itemBinding="@{viewModel.goodLiveItemBinding}"
+                            binding:items="@{viewModel.goodLiveList}"
+                            binding:layoutManager="@{LayoutManagers.ver()}"
+                            binding:nestedScrollingEnabled="@{false}" />
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-            </LinearLayout>
-
-        </androidx.core.widget.NestedScrollView>
+            </androidx.core.widget.NestedScrollView>
+        </com.liaoinstan.springview.widget.SpringView>
 
     </LinearLayout>
 

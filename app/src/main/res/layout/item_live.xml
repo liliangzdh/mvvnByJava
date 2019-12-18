@@ -42,14 +42,11 @@
                 binding:url="@{item.entity.picture}" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
                 android:background="#6A9AFE"
-                android:paddingLeft="10dp"
-                android:paddingTop="5dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="5dp"
-                android:text="直播中"
+                android:text='@{item.entity.getIsStart()?"直播中":"尚未开始"}'
+                android:gravity="center"
                 android:textColor="#fff" />
 
         </RelativeLayout>

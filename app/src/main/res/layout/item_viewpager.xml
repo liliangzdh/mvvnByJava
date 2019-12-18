@@ -4,6 +4,7 @@
     <data>
 
         <import type="com.kaoyaya.tongkai.ui.live.liveList.vm.ViewPageItemViewModel" />
+
         <import type="com.li.basemvvm.base.LayoutManagers" />
 
         <variable
@@ -18,13 +19,38 @@
         android:background="#fff"
         android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
+
+        <!--<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout-->
+        <!--android:background="@color/color_efef"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<androidx.recyclerview.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--binding:itemBinding="@{viewModel.itemBinding}"-->
+        <!--binding:items="@{viewModel.items}"-->
+        <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
+
+        <!--</com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>-->
+
+        <com.liaoinstan.springview.widget.SpringView
+            android:id="@+id/springView"
             android:layout_width="match_parent"
-            android:background="@color/color_efef"
             android:layout_height="match_parent"
-            binding:itemBinding="@{viewModel.itemBinding}"
-            binding:layoutManager="@{LayoutManagers.ver()}"
-            binding:items="@{viewModel.items}" />
+            android:background="@color/color_efef"
+            binding:onRefreshCommand="@{viewModel.refreshCommand}"
+            binding:onLoadMoreCommand="@{viewModel.loadMoreCommand}"
+            binding:enableFooter="@{!viewModel.isLiveType}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                binding:itemBinding="@{viewModel.itemBinding}"
+                binding:items="@{viewModel.items}"
+                binding:layoutManager="@{LayoutManagers.ver()}" />
+
+        </com.liaoinstan.springview.widget.SpringView>
 
     </LinearLayout>
 </layout>

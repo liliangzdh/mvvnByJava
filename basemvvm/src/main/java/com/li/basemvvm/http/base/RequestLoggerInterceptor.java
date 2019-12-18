@@ -47,7 +47,7 @@ public class RequestLoggerInterceptor implements Interceptor {
         builder.addHeader("User-Agent", Utils.getUserAgent());
 
         RequestBody body = request.body();
-        Log.d("request", new Gson().toJson(body));
+        Log.d("request", new Gson().toJson(body) + request.url());
         if ("POST".equals(request.method()) && body instanceof FormBody) {
             FormBody formBody = (FormBody) body;
             //找出 是否有json 这个字符

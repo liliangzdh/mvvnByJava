@@ -1,7 +1,6 @@
 package com.kaoyaya.tongkai.ui.live.liveList.vm;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
@@ -9,10 +8,12 @@ import androidx.databinding.ObservableList;
 
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
+import com.kaoyaya.tongkai.entity.LiveCommand;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
 import com.li.basemvvm.binding.command.BindingConsumer;
+import com.li.basemvvm.bus.event.SingleLiveEvent;
 
 import me.tatarka.bindingcollectionadapter2.BindingViewPagerAdapter;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
@@ -22,8 +23,8 @@ public class LiveListViewModel extends BaseViewModel {
 
     public LiveListViewModel(@NonNull Application application) {
         super(application);
-        items.add(new ViewPageItemViewModel(this,true));
-        items.add(new ViewPageItemViewModel(this,false));
+        items.add(new ViewPageItemViewModel(this, true));
+        items.add(new ViewPageItemViewModel(this, false));
     }
 
     //给ViewPager添加ObservableList
@@ -53,4 +54,8 @@ public class LiveListViewModel extends BaseViewModel {
             finish();
         }
     });
+
+
+    public SingleLiveEvent<LiveCommand> commandEvent = new SingleLiveEvent<>();
+
 }
