@@ -26,8 +26,16 @@ public class LiveInfo {
      * livePlatform : 1
      * subscribeNum : 0
      * subscribeStatus : false
+     * <p>
+     * activation_time
+     * deadline
+     * is_activate
+     * id :92301
+     * type:
      */
 
+
+    //首页的资源
     private int access;
     private int courseId;
     private String courseTitle;
@@ -46,11 +54,19 @@ public class LiveInfo {
     private int livePlatform;
     private int subscribeNum;
     private boolean subscribeStatus;
-
     public boolean isStart;
 
     public String title;
     public String fromStartTimeStr;
+
+
+    //直播 回放两个tad
+    private int id;
+    private String activation_time;
+    private String deadline;
+    private int is_activate;
+    private String type;
+
 
     public int getAccess() {
         return access;
@@ -125,7 +141,7 @@ public class LiveInfo {
     }
 
     public String getEnd_time() {
-        if(TextUtils.isEmpty(end_time)){
+        if (TextUtils.isEmpty(end_time)) {
             return endTime;
         }
         return end_time;
@@ -136,7 +152,7 @@ public class LiveInfo {
     }
 
     public String getStart_time() {
-        if(TextUtils.isEmpty(startTime)){
+        if (TextUtils.isEmpty(startTime)) {
             return start_time;
         }
         return startTime;
@@ -202,13 +218,32 @@ public class LiveInfo {
         this.fromStartTimeStr = fromStartTimeStr;
     }
 
+    public int getId() {
+        return id;
+    }
 
-    public String getStartAndEndTime(){
+    public String getActivationTime() {
+        return activation_time;
+    }
+
+    public String getDeadline() {
+        return deadline;
+    }
+
+    public int activate() {
+        return is_activate;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getStartAndEndTime() {
         return TimeUtils.getInstance().formatTime(getStart_time()) + "-" + TimeUtils.getInstance().formatTime(getEnd_time());
     }
 
 
-    public String getStartAndEndTime2(){
-        return TimeUtils.getInstance().formatTime(getStart_time(),"yyyy-MM-dd HH:mm")+ "-" + TimeUtils.getInstance().formatTime(getEnd_time());
+    public String getStartAndEndTime2() {
+        return TimeUtils.getInstance().formatTime(getStart_time(), "yyyy-MM-dd HH:mm") + "-" + TimeUtils.getInstance().formatTime(getEnd_time());
     }
 }

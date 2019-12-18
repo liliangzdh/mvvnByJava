@@ -80,6 +80,11 @@ dependencies {
     api 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:3.1.1'
 
     // 圆角ImagView
-    api 'com.github.SheHuan:NiceImageView:1.0.5'
+    api 'cn.gavinliu:ShapedImageView:0.8.6'
+
+    // android.material:material 风格的各种控件
+    api 'com.google.android.material:material:1.2.0-alpha02'
+
+
 
 }

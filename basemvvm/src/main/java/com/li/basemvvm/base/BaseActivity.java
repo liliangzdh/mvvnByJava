@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.gyf.immersionbar.ImmersionBar;
+import com.li.basemvvm.R;
 import com.li.basemvvm.base.inter.IBaseView;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.utils.MaterialDialogUtils;
@@ -23,7 +24,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseView {
+public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseViewModel> extends RxAppCompatActivity implements IBaseView {
 
 
     protected V binding;
@@ -55,26 +56,26 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
         if (viewModel != null) {
             viewModel.removeRxBus();
         }
-        if(binding != null){
+        if (binding != null) {
             binding.unbind();
         }
     }
 
     private void initViewDataBinding(Bundle savedInstanceState) {
-         binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState));
-         viewModelId = initVariableId();
-         viewModel = initViewModel();
-         if(viewModel == null){
-             Class modelClass;
-             Type type = getClass().getGenericSuperclass();
-             if (type instanceof ParameterizedType) {
-                 modelClass = (Class) ((ParameterizedType) type).getActualTypeArguments()[1];
-             } else {
-                 //如果没有指定泛型参数，则默认使用BaseViewModel
-                 modelClass = BaseViewModel.class;
-             }
-             viewModel = (VM) createViewModel(this, modelClass);
-         }
+        binding = DataBindingUtil.setContentView(this, initContentView(savedInstanceState));
+        viewModelId = initVariableId();
+        viewModel = initViewModel();
+        if (viewModel == null) {
+            Class modelClass;
+            Type type = getClass().getGenericSuperclass();
+            if (type instanceof ParameterizedType) {
+                modelClass = (Class) ((ParameterizedType) type).getActualTypeArguments()[1];
+            } else {
+                //如果没有指定泛型参数，则默认使用BaseViewModel
+                modelClass = BaseViewModel.class;
+            }
+            viewModel = (VM) createViewModel(this, modelClass);
+        }
 
         //关联ViewModel
         binding.setVariable(viewModelId, viewModel);
@@ -241,11 +242,10 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
 
     /**
      * 创建ViewModel
-     *
      */
     public <T extends ViewModel> T createViewModel(FragmentActivity activity, Class<T> cls) {
 //        return  ViewModelProviders.of(activity).get(cls);
-       return new ViewModelProvider(activity).get(cls);
+        return new ViewModelProvider(activity).get(cls);
     }
 
 
@@ -259,7 +259,9 @@ public abstract class BaseActivity<V extends ViewDataBinding,VM extends BaseView
     public void initStatusBar() {
         ImmersionBar.with(this)
                 .fitsSystemWindows(true)
+                .statusBarColor(R.color.white)
                 .statusBarDarkFont(true)
                 .init();
     }
+
 }

@@ -39,10 +39,20 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.li.basemvvm.base.ContainerActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
 
         <!--设置页面-->
         <activity
             android:name=".ui.set.SetActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+
+        <!--直播列表页面-->
+        <activity
+            android:name=".ui.live.liveList.LiveListActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 

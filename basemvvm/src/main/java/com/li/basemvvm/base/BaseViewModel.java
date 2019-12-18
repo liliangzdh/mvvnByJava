@@ -202,7 +202,7 @@ public class BaseViewModel <M extends BaseModel>  extends AndroidViewModel imple
         addSubscribe(disposable);
     }
 
-    protected void addSubscribe(Disposable disposable){
+    public void addSubscribe(Disposable disposable){
         if(mCompositeDisposable == null){
             mCompositeDisposable = new CompositeDisposable();
         }

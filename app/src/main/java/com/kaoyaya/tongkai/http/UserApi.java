@@ -39,14 +39,19 @@ public interface UserApi {
     Observable<BaseResponse<ArrayList<HomeResourseDistribute>>> getUserDistribute(@Query("examType") int examType);
 
 
+    //获取我的学习资源
     @GET("api/v1/users/studyResource")
     Observable<BaseResponse<HashMap<String, List<StudyResourceItem>>>> getStudyResource();
 
+    //获取我的回放直播
     @POST("api/v1/users/replayLive")
     Observable<BaseResponse<List<LiveInfo>>> replayLive(@Body LiveBackRequest body);
 
 //    @POST("api/v1/users/replayLiveWithCount")
 //    Observable<BaseResponse<>> replayLiveWithCount(@Body LiveBackRequest body);
 
+    // 获取我的直播列表
+    @GET("api/v1/users/preLive?isAllLive=1")
+    Observable<BaseResponse<List<LiveInfo>>> GetPreLive();
 
 }

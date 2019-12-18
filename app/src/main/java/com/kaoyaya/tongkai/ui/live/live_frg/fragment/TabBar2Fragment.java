@@ -1,26 +1,25 @@
-package com.kaoyaya.tongkai.ui.user;
+package com.kaoyaya.tongkai.ui.live.live_frg.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 
-import com.gyf.immersionbar.ImmersionBar;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
-import com.kaoyaya.tongkai.databinding.FragmentUserCenterBinding;
 import com.li.basemvvm.base.BaseFragment;
 
-public class UserCenterFragment extends BaseFragment<FragmentUserCenterBinding, UserCenterViewModel> {
 
+/**
+ * Created by goldze on 2018/7/18.
+ */
 
-
-
-
+public class TabBar2Fragment extends BaseFragment {
     @Override
     public int initContentView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return R.layout.fragment_user_center;
+        return R.layout.fragment_tab_bar_2;
     }
 
     @Override
@@ -28,15 +27,9 @@ public class UserCenterFragment extends BaseFragment<FragmentUserCenterBinding, 
         return BR.viewModel;
     }
 
+    @Override
     public void initData() {
         super.initData();
-        initStatusBar();
-    }
-
-    public void initStatusBar() {
-        ImmersionBar.with(this)
-                .statusBarDarkFont(false)
-                .titleBar(binding.toolbar)
-                .init();
+        Log.e("test","init 2:" );
     }
 }

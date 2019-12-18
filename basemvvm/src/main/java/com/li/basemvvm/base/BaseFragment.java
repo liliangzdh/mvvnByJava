@@ -2,9 +2,11 @@ package com.li.basemvvm.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -48,6 +50,10 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // 保存这个view。
+        if (binding != null) {
+            return binding.getRoot();
+        }
         binding = DataBindingUtil.inflate(inflater, initContentView(inflater, container, savedInstanceState), container, false);
         return binding.getRoot();
     }
@@ -62,6 +68,16 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         }
         if (binding != null) {
             binding.unbind();
+
+            //对应上面的 onCreateView 。( 不直接创建，直接返回view)
+            View view = binding.getRoot();
+            ViewParent parent = view.getParent();
+            if (parent != null) {
+                if (parent instanceof ViewGroup) {
+                    ViewGroup viewGroup = (ViewGroup) parent;
+                    viewGroup.removeView(view);
+                }
+            }
         }
     }
 

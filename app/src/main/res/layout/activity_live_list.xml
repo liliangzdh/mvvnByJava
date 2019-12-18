@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.kaoyaya.tongkai.ui.live.liveList.LiveViewPageAdapter" />
+
+        <variable
+            name="viewModel"
+            type="com.kaoyaya.tongkai.ui.live.liveList.vm.LiveListViewModel" />
+
+        <variable
+            name="adapter"
+            type="LiveViewPageAdapter" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/white_color_efefef_select"
+                android:gravity="center_vertical"
+                binding:onClickCommand="@{viewModel.goBack}">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginLeft="16dp"
+                    android:src="@mipmap/arrow" />
+
+            </RelativeLayout>
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab"
+                android:layout_width="160dp"
+                android:layout_height="42dp"
+                android:layout_centerInParent="true"
+                binding:tabIndicatorColor="@color/colorPrimary"
+                binding:tabIndicatorFullWidth="false"
+                binding:tabSelectedTextColor="@color/colorPrimary" />
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#F0F0F0" />
+
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            binding:adapter="@{adapter}"
+            binding:itemBinding="@{viewModel.itemBinding}"
+            binding:items="@{viewModel.items}"
+            binding:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}"
+            binding:pageTitles="@{viewModel.pageTitles}" />
+
+
+    </LinearLayout>
+</layout>

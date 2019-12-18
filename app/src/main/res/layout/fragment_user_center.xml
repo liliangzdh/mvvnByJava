@@ -42,15 +42,14 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.shehuan.niv.NiceImageView
-                    android:id="@+id/imageView"
+
+                <cn.gavinliu.android.lib.shapedimageview.ShapedImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"
-                    binding:is_circle="true"
                     binding:placeholderRes="@{R.mipmap.icon_user}"
+                    binding:shape_mode="circle"
                     binding:url="@{viewModel.userInfoField.avatar}" />
-
 
 
                 <LinearLayout
