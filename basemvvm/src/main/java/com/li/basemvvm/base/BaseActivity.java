@@ -2,6 +2,7 @@ package com.li.basemvvm.base;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -40,6 +41,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
         initParam();
         //私有的初始化Databinding和ViewModel方法
         initViewDataBinding(savedInstanceState);
+        Log.e("test","oncreat");
         //私有的ViewModel与View的契约事件回调逻辑
         registerUIChangeLiveDataCallBack();
         initViewObservable();
@@ -183,6 +185,7 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
             intent.putExtras(bundle);
         }
         startActivity(intent);
+//        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
     }
 
     /**
@@ -264,4 +267,17 @@ public abstract class BaseActivity<V extends ViewDataBinding, VM extends BaseVie
                 .init();
     }
 
+
+    @Override
+    public void finish() {
+        super.finish();
+//        int enterAnim, int exitAnim
+        overridePendingTransition(R.anim.slide_left_in,R.anim.slide_right_out);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+    }
 }

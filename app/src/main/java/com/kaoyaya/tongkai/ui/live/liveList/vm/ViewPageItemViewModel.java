@@ -1,7 +1,5 @@
 package com.kaoyaya.tongkai.ui.live.liveList.vm;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
 
@@ -11,7 +9,6 @@ import com.kaoyaya.tongkai.entity.LiveBackRequest;
 import com.kaoyaya.tongkai.entity.LiveCommand;
 import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.http.UserApi;
-import com.kaoyaya.tongkai.test.User;
 import com.li.basemvvm.base.ItemViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;

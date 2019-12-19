@@ -12,11 +12,13 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.li.basemvvm.R;
 import com.li.basemvvm.base.inter.IBaseView;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.utils.MaterialDialogUtils;
@@ -209,6 +211,16 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
             intent.putExtras(bundle);
         }
         startActivity(intent);
+//        getActivity().overridePendingTransition(R.anim.slide_right_in,R.anim.slide_left_out);
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        FragmentActivity activity = getActivity();
+        if (activity != null) {
+            activity.overridePendingTransition(R.anim.slide_right_in, R.anim.slide_left_out);
+        }
     }
 
     /**
