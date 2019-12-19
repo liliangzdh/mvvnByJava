@@ -89,4 +89,11 @@ public class ContainerActivity extends RxAppCompatActivity {
             super.onBackPressed();
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+//        int enterAnim, int exitAnim
+        overridePendingTransition(R.anim.slide_left_in,R.anim.slide_right_out);
+    }
 }

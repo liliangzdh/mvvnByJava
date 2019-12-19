@@ -50,9 +50,16 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
-        <!--直播列表页面-->
+        <!--直播列表页面  viewpage 嵌入的是 view 功能同下-->
+
         <activity
             android:name=".ui.live.liveList.LiveListActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
+
+        <!--直播列表页面  viewpage 嵌入的是Fragment ，功能同上 -->
+        <activity
+            android:name=".ui.live.live_frg.LiveListFragActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 

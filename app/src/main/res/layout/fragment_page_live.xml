@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="com.kaoyaya.tongkai.ui.live.live_frg.vm.LivePageViewModel" />
+
+        <import type="com.li.basemvvm.base.LayoutManagers" />
+
+        <variable
+            name="viewModel"
+            type="LivePageViewModel" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+
+
+        <!--<com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout-->
+        <!--android:background="@color/color_efef"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<androidx.recyclerview.widget.RecyclerView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--binding:itemBinding="@{viewModel.itemBinding}"-->
+        <!--binding:items="@{viewModel.items}"-->
+        <!--binding:layoutManager="@{LayoutManagers.ver()}" />-->
+
+        <!--</com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout>-->
+
+        <com.liaoinstan.springview.widget.SpringView
+            android:id="@+id/springView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_efef"
+            binding:onRefreshCommand="@{viewModel.refreshCommand}"
+            binding:onLoadMoreCommand="@{viewModel.loadMoreCommand}"
+            binding:enableFooter="@{false}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                binding:itemBinding="@{viewModel.itemBinding}"
+                binding:items="@{viewModel.items}"
+                binding:layoutManager="@{LayoutManagers.ver()}" />
+
+        </com.liaoinstan.springview.widget.SpringView>
+
+    </LinearLayout>
+</layout>
