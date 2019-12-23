@@ -147,14 +147,29 @@ public class StudyViewModel extends BaseViewModel {
         }
     });
 
+    //刷新成功按钮
+    public BindingCommand refreshCommand = new BindingCommand(new BindingAction() {
+        @Override
+        public void call() {
+            StudyResourceItem studyResourceItem = SPUtils.getInstance().getStudyResourceItem();
+            if (studyResourceItem != null) {
+                changeClass(studyResourceItem);
+            } else {
+
+            }
+        }
+    });
+
 
     // 发送到act页面。操作view。
     public class UIChangeObservable {
         public SingleLiveEvent<Integer> scrollEvent = new SingleLiveEvent<>();
+        public SingleLiveEvent<Integer> refreshEvent = new SingleLiveEvent<>();
     }
 
 
     public UIChangeObservable uc = new UIChangeObservable();
+
     public StudyViewModel(@NonNull Application application) {
         super(application);
         initState();
@@ -221,13 +236,13 @@ public class StudyViewModel extends BaseViewModel {
         UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
         Disposable subscribe = userApi.getStudyResource()
                 .compose(RxUtils.<BaseResponse<HashMap<String, List<StudyResourceItem>>>>schedulersTransformer())
-                .compose(RxUtils.exceptionTransformer())
+                .compose(RxUtils.<HashMap<String, List<StudyResourceItem>>>exceptionTransformerSimple())
                 .subscribe(new Consumer<HashMap<String, List<StudyResourceItem>>>() {
                     @Override
                     public void accept(HashMap<String, List<StudyResourceItem>> map) throws Exception {
                         resourceList.clear();
-                        addResource(map, "class", "系统班级",true);
-                        addResource(map, "course", "单项课程",false);
+                        addResource(map, "class", "系统班级", true);
+                        addResource(map, "course", "单项课程", false);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
@@ -240,7 +255,7 @@ public class StudyViewModel extends BaseViewModel {
     }
 
 
-    public void addResource(HashMap<String, List<StudyResourceItem>> map, String key, String title,boolean isClass) {
+    public void addResource(HashMap<String, List<StudyResourceItem>> map, String key, String title, boolean isClass) {
         List<StudyResourceItem> aClass = map.get(key);
         if (aClass != null) {
             if (aClass.size() > 0) {
@@ -271,7 +286,7 @@ public class StudyViewModel extends BaseViewModel {
 
         Disposable subscribe = eduApi.getLearnInfo(studyResourceItem.getId())
                 .compose(RxUtils.<BaseResponse<LearnInfoResponse>>schedulersTransformer())
-                .compose(RxUtils.exceptionTransformer())
+                .compose(RxUtils.<LearnInfoResponse>exceptionTransformerSimple())
                 .subscribe(new Consumer<LearnInfoResponse>() {
                     @Override
                     public void accept(LearnInfoResponse learnInfoResponse) throws Exception {
@@ -300,11 +315,15 @@ public class StudyViewModel extends BaseViewModel {
                         }
 
 
+                        // 主 recycleView 刷新成功。
+                        uc.refreshEvent.setValue(3);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         showNoLiveFlag.set(true);
+                        // 主 recycleView 刷新失败。
+                        uc.refreshEvent.setValue(3);
                     }
                 });
 
@@ -328,7 +347,7 @@ public class StudyViewModel extends BaseViewModel {
         Disposable subscribe = userApi
                 .replayLive(new LiveBackRequest(1, 10, 0, studyResourceItem.getId()))
                 .compose(RxUtils.<BaseResponse<List<LiveInfo>>>schedulersTransformer())
-                .compose(RxUtils.exceptionTransformer()).subscribe(new Consumer<List<LiveInfo>>() {
+                .compose(RxUtils.<List<LiveInfo>>exceptionTransformerSimple()).subscribe(new Consumer<List<LiveInfo>>() {
                     @Override
                     public void accept(List<LiveInfo> liveInfoList) throws Exception {
                         for (LiveInfo liveInfo : liveInfoList) {
@@ -356,7 +375,7 @@ public class StudyViewModel extends BaseViewModel {
         TiKuApi tiKuApi = RetrofitClient.getInstance().create(TiKuApi.class);
         Disposable subscribe = tiKuApi.getSubjectStatistic(subjectId)
                 .compose(RxUtils.<BaseResponse<TiKuStatistic>>schedulersTransformer())
-                .compose(RxUtils.exceptionTransformer())
+                .compose(RxUtils.<TiKuStatistic>exceptionTransformerSimple())
                 .subscribe(new Consumer<TiKuStatistic>() {
                     @Override
                     public void accept(TiKuStatistic statistic) throws Exception {

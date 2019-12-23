@@ -65,5 +65,17 @@ public class StudyFragment extends BaseFragment<FragmentStudyBinding, StudyViewM
                 }
             }
         });
+
+
+        viewModel.uc.refreshEvent.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                switch (integer){
+                    case 3:
+                        binding.contentSpringView.onFinishFreshAndLoad();
+                        break;
+                }
+            }
+        });
     }
 }

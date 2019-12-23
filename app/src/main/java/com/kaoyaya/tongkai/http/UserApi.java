@@ -2,6 +2,7 @@ package com.kaoyaya.tongkai.http;
 
 import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.entity.LiveBackRequest;
+import com.kaoyaya.tongkai.entity.LiveIdAndClassIdResponse;
 import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.entity.StudyResourceItem;
 import com.kaoyaya.tongkai.entity.UserInfo;
@@ -54,4 +55,6 @@ public interface UserApi {
     @GET("api/v1/users/preLive?isAllLive=1")
     Observable<BaseResponse<List<LiveInfo>>> GetPreLive();
 
+    @GET("api/v1/users/getLiveIdAndClassIdByReplayLive")
+    Observable<BaseResponse<LiveIdAndClassIdResponse>> getLiveIdAndClassId();
 }

@@ -5,10 +5,12 @@
     <data>
 
 
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
             type="com.kaoyaya.tongkai.ui.live.live_frg.vm.LiveFragViewModel" />
+
 
     </data>
 
@@ -20,6 +22,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/headView"
             android:layout_width="match_parent"
             android:layout_height="42dp"
             android:background="@color/white"
@@ -29,8 +32,8 @@
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/white_color_efefef_select"
-                app:onClickCommand="@{viewModel.goBack}"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                app:onClickCommand="@{viewModel.goBack}">
 
                 <ImageView
                     android:layout_width="18dp"
@@ -45,13 +48,37 @@
                 android:id="@+id/tabs"
                 android:layout_width="160dp"
                 android:layout_height="42dp"
-                android:background="@color/white"
                 android:layout_centerInParent="true"
+                android:background="@color/white"
                 app:tabGravity="fill"
                 app:tabIndicatorColor="@color/colorPrimary"
                 app:tabIndicatorFullWidth="false"
                 app:tabSelectedTextColor="@color/colorPrimary"
                 app:tabTextColor="@android:color/black" />
+
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/white_color_efefef_select"
+                android:gravity="center"
+                android:visibility="@{viewModel.page == 2 ?View.VISIBLE:View.INVISIBLE}"
+                app:onClickCommand="@{viewModel.filterCommand}">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="筛选"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@mipmap/shaixuan" />
+            </LinearLayout>
         </RelativeLayout>
 
 
@@ -64,6 +91,7 @@
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            app:onPageSelectedCommand="@{viewModel.onPageSelectedCommand}" />
     </LinearLayout>
 </layout>

@@ -5,13 +5,19 @@ import android.content.Context;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
-public class SizeUtils {
+public class    SizeUtils {
 
     public static int getScreenWidth(Activity context) {
         DisplayMetrics outMetrics = new DisplayMetrics();
         context.getWindowManager().getDefaultDisplay().getRealMetrics(outMetrics);
         int widthPixel = outMetrics.widthPixels;
         return widthPixel;
+    }
+
+    public static int getScreenHeight(Activity context) {
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getRealMetrics(outMetrics);
+        return outMetrics.heightPixels;
     }
 
     /**

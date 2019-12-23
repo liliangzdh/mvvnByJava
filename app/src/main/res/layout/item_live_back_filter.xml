@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+        <variable
+            name="item"
+            type="com.kaoyaya.tongkai.ui.live.live_frg.vm.LiveFilterItemViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            binding:textColor='@{item.entity.select?"#5e8ffe":"#666666"}'
+            android:background="@drawable/white_color_efefef_select"
+            android:gravity="center"
+            android:text="@{item.entity.title}"
+            binding:onClickCommand='@{item.command}' />
+
+
+    </LinearLayout>
+</layout>

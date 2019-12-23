@@ -58,7 +58,7 @@
                     android:background="@drawable/circle_color_white">
 
 
-                    <!--显示去登录状态-->
+                    <!--状态1 显示去登录状态 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -95,9 +95,7 @@
 
                     </LinearLayout>
 
-                    <!--显示列表状态-->
-
-
+                    <!--状态2 显示 班级和课程列表 -->
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -118,6 +116,7 @@
             </RelativeLayout>
 
 
+            <!--状态3、 学习状态-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -248,206 +247,216 @@
 
                 </LinearLayout>
 
-                <ScrollView
-                    android:id="@+id/scrollView"
+
+                <com.liaoinstan.springview.widget.SpringView
+                    android:id="@+id/contentSpringView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/circle_color_white"
-                    android:paddingTop="18dp">
+                    binding:enableFooter="@{false}"
+                    binding:onRefreshCommand="@{viewModel.refreshCommand}"
+                    binding:refreshColorType="@{1}">
 
-
-                    <LinearLayout
+                    <ScrollView
+                        android:id="@+id/scrollView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
-                        android:orientation="vertical">
+                        android:background="@drawable/circle_color_white"
+                        android:paddingTop="18dp">
 
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
 
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+
+                                <include
+                                    layout="@layout/layout_home_top_ceil"
+                                    binding:action="@{viewModel.topCommand}"
+                                    binding:img="@{R.mipmap.wenda1}"
+                                    binding:params="@{0}"
+                                    binding:title='@{"班级问答"}' />
+
+                                <include
+                                    layout="@layout/layout_home_top_ceil"
+                                    binding:action="@{viewModel.topCommand}"
+                                    binding:img="@{R.mipmap.tiku_write_huise}"
+                                    binding:params="@{1}"
+                                    binding:title='@{"班级作业"}' />
+
+                                <include
+                                    layout="@layout/layout_home_top_ceil"
+                                    binding:action="@{viewModel.topCommand}"
+                                    binding:img="@{R.mipmap.online}"
+                                    binding:params="@{2}"
+                                    binding:title='@{"班级公告"}' />
+
+                            </LinearLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:background="@color/color_efef" />
 
                             <include
-                                layout="@layout/layout_home_top_ceil"
-                                binding:action="@{viewModel.topCommand}"
-                                binding:img="@{R.mipmap.wenda1}"
+                                android:id="@+id/llTop1"
+                                layout="@layout/layout_title"
+                                binding:action="@{viewModel.moreCommand}"
+                                binding:moreText='@{"全部课程"}'
                                 binding:params="@{0}"
-                                binding:title='@{"班级问答"}' />
+                                binding:show="@{true}"
+                                binding:title='@{"在学录播课"}' />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                binding:itemBinding="@{viewModel.videoItemBinding}"
+                                binding:items="@{viewModel.videoList}"
+                                binding:layoutManager="@{LayoutManagers.horizontal()}" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:background="@color/color_efef" />
 
                             <include
-                                layout="@layout/layout_home_top_ceil"
-                                binding:action="@{viewModel.topCommand}"
-                                binding:img="@{R.mipmap.tiku_write_huise}"
+                                android:id="@+id/llTop2"
+                                layout="@layout/layout_title"
+                                binding:action="@{viewModel.moreCommand}"
+                                binding:moreText='@{"我的题库"}'
                                 binding:params="@{1}"
-                                binding:title='@{"班级作业"}' />
+                                binding:show="@{true}"
+                                binding:title='@{"在线题库"}' />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="@{viewModel.examStatistic.get() == null?View.VISIBLE:View.GONE}">
+
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="14dp"
+                                    binding:itemBinding="@{viewModel.tiKuItemBinding}"
+                                    binding:items="@{viewModel.tiKuList}"
+                                    binding:layoutManager="@{LayoutManagers.grid(2)}"
+                                    binding:nestedScrollingEnabled="@{false}" />
+
+
+                            </RelativeLayout>
+
 
                             <include
-                                layout="@layout/layout_home_top_ceil"
-                                binding:action="@{viewModel.topCommand}"
-                                binding:img="@{R.mipmap.online}"
+                                layout="@layout/layout_study_tiku"
+                                android:visibility="@{viewModel.examStatistic.get() != null?View.VISIBLE:View.GONE}"
+                                binding:viewModel="@{viewModel.examStatistic}" />
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:background="@color/color_efef" />
+
+                            <include
+                                android:id="@+id/llTop3"
+                                layout="@layout/layout_title"
+                                binding:action="@{viewModel.moreCommand}"
+                                binding:moreText='@{"全部直播"}'
                                 binding:params="@{2}"
-                                binding:title='@{"班级公告"}' />
+                                binding:show="@{true}"
+                                binding:title='@{"最近直播"}' />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="100dp">
+
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:id="@+id/liveRecyclerView"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="14dp"
+                                    binding:adapter="@{viewModel.adapter}"
+                                    binding:itemBinding="@{viewModel.goodLiveItemBinding}"
+                                    binding:items="@{viewModel.goodLiveList}"
+                                    binding:layoutManager="@{LayoutManagers.ver()}"
+                                    binding:nestedScrollingEnabled="@{false}" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:gravity="center"
+                                    android:text="暂无直播"
+                                    android:textColor="#999"
+                                    android:textSize="18sp"
+                                    android:visibility="@{viewModel.showNoLiveFlag?View.VISIBLE:View.GONE}" />
+
+
+                            </RelativeLayout>
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="10dp"
+                                android:background="@color/color_efef" />
+
+                            <include
+                                android:id="@+id/llTop4"
+                                layout="@layout/layout_title"
+                                binding:action="@{viewModel.moreCommand}"
+                                binding:moreText='@{"全部回放"}'
+                                binding:params="@{3}"
+                                binding:show="@{true}"
+                                binding:title='@{"直播回放"}' />
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minHeight="100dp">
+
+                                <androidx.recyclerview.widget.RecyclerView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="14dp"
+                                    binding:itemBinding="@{viewModel.liveBackItemBinding}"
+                                    binding:items="@{viewModel.liveBackList}"
+                                    binding:layoutManager="@{LayoutManagers.ver()}"
+                                    binding:nestedScrollingEnabled="@{false}" />
+
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="100dp"
+                                    android:gravity="center"
+                                    android:text="暂无直播回放"
+                                    android:textColor="#999"
+                                    android:textSize="18sp"
+                                    android:visibility="@{viewModel.showNoLiveBackFlag?View.VISIBLE:View.GONE}" />
+
+
+                            </RelativeLayout>
+
 
                         </LinearLayout>
 
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:background="@color/color_efef" />
-
-                        <include
-                            android:id="@+id/llTop1"
-                            layout="@layout/layout_title"
-                            binding:action="@{viewModel.moreCommand}"
-                            binding:moreText='@{"全部课程"}'
-                            binding:params="@{0}"
-                            binding:show="@{true}"
-                            binding:title='@{"在学录播课"}' />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            binding:itemBinding="@{viewModel.videoItemBinding}"
-                            binding:items="@{viewModel.videoList}"
-                            binding:layoutManager="@{LayoutManagers.horizontal()}" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:background="@color/color_efef" />
-
-                        <include
-                            android:id="@+id/llTop2"
-                            layout="@layout/layout_title"
-                            binding:action="@{viewModel.moreCommand}"
-                            binding:moreText='@{"我的题库"}'
-                            binding:params="@{1}"
-                            binding:show="@{true}"
-                            binding:title='@{"在线题库"}' />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="@{viewModel.examStatistic.get() == null?View.VISIBLE:View.GONE}">
-
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="14dp"
-                                binding:itemBinding="@{viewModel.tiKuItemBinding}"
-                                binding:items="@{viewModel.tiKuList}"
-                                binding:layoutManager="@{LayoutManagers.grid(2)}"
-                                binding:nestedScrollingEnabled="@{false}" />
-
-
-                        </RelativeLayout>
-
-
-                        <include
-                            layout="@layout/layout_study_tiku"
-                            android:visibility="@{viewModel.examStatistic.get() != null?View.VISIBLE:View.GONE}"
-                            binding:viewModel="@{viewModel.examStatistic}" />
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:background="@color/color_efef" />
-
-                        <include
-                            android:id="@+id/llTop3"
-                            layout="@layout/layout_title"
-                            binding:action="@{viewModel.moreCommand}"
-                            binding:moreText='@{"全部直播"}'
-                            binding:params="@{2}"
-                            binding:show="@{true}"
-                            binding:title='@{"最近直播"}' />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="100dp">
-
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/liveRecyclerView"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="14dp"
-                                binding:adapter="@{viewModel.adapter}"
-                                binding:itemBinding="@{viewModel.goodLiveItemBinding}"
-                                binding:items="@{viewModel.goodLiveList}"
-                                binding:layoutManager="@{LayoutManagers.ver()}"
-                                binding:nestedScrollingEnabled="@{false}" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="100dp"
-                                android:gravity="center"
-                                android:text="暂无直播"
-                                android:textColor="#999"
-                                android:textSize="18sp"
-                                android:visibility="@{viewModel.showNoLiveFlag?View.VISIBLE:View.GONE}" />
-
-
-                        </RelativeLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="10dp"
-                            android:background="@color/color_efef" />
-
-                        <include
-                            android:id="@+id/llTop4"
-                            layout="@layout/layout_title"
-                            binding:action="@{viewModel.moreCommand}"
-                            binding:moreText='@{"全部回放"}'
-                            binding:params="@{3}"
-                            binding:show="@{true}"
-                            binding:title='@{"直播回放"}' />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:minHeight="100dp">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="14dp"
-                                binding:itemBinding="@{viewModel.liveBackItemBinding}"
-                                binding:items="@{viewModel.liveBackList}"
-                                binding:layoutManager="@{LayoutManagers.ver()}"
-                                binding:nestedScrollingEnabled="@{false}" />
-
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="100dp"
-                                android:gravity="center"
-                                android:text="暂无直播回放"
-                                android:textColor="#999"
-                                android:textSize="18sp"
-                                android:visibility="@{viewModel.showNoLiveBackFlag?View.VISIBLE:View.GONE}" />
-
-
-                        </RelativeLayout>
-
-
-                    </LinearLayout>
-
-                </ScrollView>
+                    </ScrollView>
+                </com.liaoinstan.springview.widget.SpringView>
             </LinearLayout>
 
         </RelativeLayout>

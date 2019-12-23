@@ -44,6 +44,9 @@ public class LiveBackPageFragment extends BaseFragment<FragmentPageLiveBackBindi
             @Override
             public void onChanged(LiveCommand liveCommand) {
                 binding.springView.onFinishFreshAndLoad();
+
+                //
+                binding.springView.setEnableFooter(liveCommand.hasMore);
             }
         });
 

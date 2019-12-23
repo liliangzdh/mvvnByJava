@@ -1,20 +1,26 @@
 package com.kaoyaya.tongkai.ui.live.live_frg.vm;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
 
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
+import com.kaoyaya.tongkai.config.Constant;
+import com.kaoyaya.tongkai.entity.CourseSampleInfo;
 import com.kaoyaya.tongkai.entity.LiveBackRequest;
 import com.kaoyaya.tongkai.entity.LiveCommand;
+import com.kaoyaya.tongkai.entity.LiveIdAndClassIdResponse;
 import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.kaoyaya.tongkai.ui.live.liveList.vm.LiveItemViewModel;
 import com.li.basemvvm.base.BaseViewModel;
 import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
+import com.li.basemvvm.binding.command.BindingConsumer;
+import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
 import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.RetrofitClient;
@@ -28,9 +34,29 @@ import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class LiveBackPageViewModel extends BaseViewModel {
 
+    public int classId = 0;
+    public int courseId = 0;
+
     public LiveBackPageViewModel(@NonNull Application application) {
         super(application);
         request();
+
+
+        // 注册 点击 筛选监听
+        Messenger.getDefault().register(this, Constant.LiveBackFilter, CourseSampleInfo.class, new BindingConsumer<CourseSampleInfo>() {
+            @Override
+            public void call(CourseSampleInfo info) {
+                if (info.getType() == 1) {
+                    courseId = info.getId();
+                    classId = 0;
+                } else {
+                    //班级
+                    classId = info.getId();
+                    courseId = 0;
+                }
+                getLiveBackList(true);
+            }
+        });
     }
 
     public void request() {
@@ -63,9 +89,9 @@ public class LiveBackPageViewModel extends BaseViewModel {
     public SingleLiveEvent<LiveCommand> commandEvent = new SingleLiveEvent<>();
 
 
-    public void sendRefreshEnd() {
+    public void sendRefreshEnd(boolean hasMore) {
         // 只能发生给 act处理
-        commandEvent.setValue(new LiveCommand(1, 0));
+        commandEvent.setValue(new LiveCommand(1, 0,hasMore));
     }
 
 
@@ -78,7 +104,7 @@ public class LiveBackPageViewModel extends BaseViewModel {
             page++;
         }
         UserApi userApi = RetrofitClient.getInstance().create(UserApi.class);
-        Disposable subscribe = userApi.replayLive(new LiveBackRequest(this.page, 15, 0, 0))
+        Disposable subscribe = userApi.replayLive(new LiveBackRequest(this.page, 15, courseId, classId))
                 .compose(RxUtils.<BaseResponse<List<LiveInfo>>>schedulersTransformer())
                 .compose(RxUtils.<List<LiveInfo>>exceptionTransformerSimple())
                 .subscribe(new Consumer<List<LiveInfo>>() {
@@ -90,15 +116,17 @@ public class LiveBackPageViewModel extends BaseViewModel {
                         for (LiveInfo liveInfo : liveInfos) {
                             items.add(new LiveItemViewModel(null, liveInfo));
                         }
-                        sendRefreshEnd();
+                        sendRefreshEnd(liveInfos.size() == 15);
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
-                        sendRefreshEnd();
+                        sendRefreshEnd(true);
                     }
                 });
 
         addSubscribe(subscribe);
     }
+
+
 }
