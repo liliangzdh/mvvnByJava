@@ -91,5 +91,9 @@ dependencies {
     api 'com.liaoinstan.springview:library:1.7.0'
 
 
+    api 'com.android.support:multidex:1.0.3'
+
+    // 内存检查工具 (2.0版本，利用 profile 自动初始化)
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0'
 
 }

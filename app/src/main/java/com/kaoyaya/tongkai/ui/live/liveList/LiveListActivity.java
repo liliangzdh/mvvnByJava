@@ -63,4 +63,11 @@ public class LiveListActivity extends BaseActivity<ActivityLiveListBinding, Live
             }
         });
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+    }
 }

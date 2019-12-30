@@ -1,6 +1,5 @@
 package com.kaoyaya.tongkai.ui.live.liveList;
 
-import android.util.Log;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
