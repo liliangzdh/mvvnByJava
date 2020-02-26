@@ -53,6 +53,7 @@ public class LiveListFragActivity extends BaseActivity<ActivityLiveListFrgBindin
         BaseFragmentPagerAdapter pagerAdapter = new BaseFragmentPagerAdapter(getSupportFragmentManager(), list, titlePager);
         binding.viewPager.setAdapter(pagerAdapter);
         binding.tabs.setupWithViewPager(binding.viewPager);
+        binding.viewPager.setCurrentItem(titlePager.size());
         binding.viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(binding.tabs));
     }
 
@@ -78,10 +79,5 @@ public class LiveListFragActivity extends BaseActivity<ActivityLiveListFrgBindin
                 }
             }
         });
-    }
-
-
-    public void showFilterDialog() {
-
     }
 }

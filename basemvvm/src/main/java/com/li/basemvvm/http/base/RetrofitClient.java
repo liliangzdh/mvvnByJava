@@ -29,10 +29,15 @@ public class RetrofitClient {
 
     private static class SingletonHolder {
         private static RetrofitClient INSTANCE = new RetrofitClient();
+        private static RetrofitClient INSTANCE2 = new RetrofitClient();
     }
 
     public static RetrofitClient getInstance() {
         return SingletonHolder.INSTANCE;
+    }
+
+    public static RetrofitClient getInstance(String url) {
+        return new RetrofitClient(url);
     }
 
     private RetrofitClient() {

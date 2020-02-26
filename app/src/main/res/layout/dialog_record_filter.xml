@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:binding="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <!--ObservableArrayList<LiveFilterItemViewModel> items, ItemBinding<LiveFilterItemViewModel>-->
+
+        <import type="com.li.basemvvm.base.LayoutManagers" />
+
+
+        <variable
+            name="items"
+            type="androidx.databinding.ObservableArrayList&lt;com.kaoyaya.tongkai.ui.record.item.ItemRecordFilterDialogModel&gt;" />
+
+        <variable
+            name="itemBinding"
+            type="me.tatarka.bindingcollectionadapter2.ItemBinding&lt;com.kaoyaya.tongkai.ui.record.item.ItemRecordFilterDialogModel&gt;" />
+
+    </data>
+
+    <!--#80000000-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_efef" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                binding:itemBinding="@{itemBinding}"
+                binding:items="@{items}"
+                binding:layoutManager="@{LayoutManagers.ver()}" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#80000000" />
+
+    </LinearLayout>
+</layout>

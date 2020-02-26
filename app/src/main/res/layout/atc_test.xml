@@ -9,4 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="qwqwqw" />
+
+
+    <Button
+        android:id="@+id/btn"
+        android:text="拉取京东支付"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

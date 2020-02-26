@@ -1,5 +1,6 @@
 package com.li.basemvvm.base;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +37,7 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
     protected V binding;
     protected VM viewModel;
     private int viewModelId;
-    private MaterialDialog dialog;
+    private Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -179,8 +180,8 @@ public abstract class BaseFragment<V extends ViewDataBinding, VM extends BaseVie
         if (dialog != null) {
             dialog.show();
         } else {
-            MaterialDialog.Builder builder = MaterialDialogUtils.showIndeterminateProgressDialog(getActivity(), title, true);
-            dialog = builder.show();
+            dialog = MaterialDialogUtils.showIndeterminateProgressDialog(getActivity(), title, true);
+            dialog.show();
         }
     }
 

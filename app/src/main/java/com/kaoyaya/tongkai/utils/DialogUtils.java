@@ -3,12 +3,21 @@ package com.kaoyaya.tongkai.utils;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ObservableArrayList;
+
+import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
+import com.kaoyaya.tongkai.databinding.DialogRecordFilterBinding;
+import com.kaoyaya.tongkai.ui.record.item.ItemRecordFilterDialogModel;
 import com.li.basemvvm.base.BaseActivity;
+
+import me.tatarka.bindingcollectionadapter2.ItemBinding;
 
 public class DialogUtils {
 
@@ -45,12 +54,7 @@ public class DialogUtils {
     }
 
 
-    public void showLiveBackFilterDialog(Context context) {
-        Dialog dialog = new Dialog(context, R.style.dialog);
-        View inflate = View.inflate(context, R.layout.dialog_live_back_filter, null);
-        dialog.setContentView(inflate);
-        setDialogWidth(context, 1.0, dialog);
-        dialog.show();
-    }
+
+
 
 }

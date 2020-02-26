@@ -22,6 +22,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
 }
 
 dependencies {
@@ -42,4 +48,6 @@ dependencies {
 
     //录播图
     implementation 'com.youth.banner:banner:1.4.10'
+
+
 }

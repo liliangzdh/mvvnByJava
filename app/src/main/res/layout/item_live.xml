@@ -34,10 +34,11 @@
             android:layout_height="178dp">
 
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
+                binding:riv_corner_radius="5dp"
                 android:src="@mipmap/kaoyaya_unlogin"
                 binding:url="@{item.entity.picture}" />
 

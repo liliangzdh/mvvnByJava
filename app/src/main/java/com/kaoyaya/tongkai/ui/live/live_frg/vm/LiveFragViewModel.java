@@ -32,7 +32,7 @@ import me.tatarka.bindingcollectionadapter2.OnItemBind;
 public class LiveFragViewModel extends BaseViewModel {
 
 
-    public ObservableField<Integer> page = new ObservableField<>();
+    public ObservableField<Integer> page = new ObservableField<>(2);
 
     public LiveFragViewModel(@NonNull Application application) {
         super(application);

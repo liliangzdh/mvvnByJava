@@ -81,6 +81,10 @@ dependencies {
 
     // 圆角ImagView
     api 'cn.gavinliu:ShapedImageView:0.8.6'
+    api 'com.makeramen:roundedimageview:2.3.0'
+
+    // 星星
+    api 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
 
     // android.material:material 风格的各种控件
     api 'com.google.android.material:material:1.2.0-alpha02'

@@ -2,8 +2,6 @@ package com.kaoyaya.tongkai.ui.login;
 
 import android.app.Application;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableField;
@@ -17,9 +15,9 @@ import com.li.basemvvm.binding.command.BindingAction;
 import com.li.basemvvm.binding.command.BindingCommand;
 import com.li.basemvvm.bus.Messenger;
 import com.li.basemvvm.bus.event.SingleLiveEvent;
-import com.li.basemvvm.http.base.ResponseThrowable;
 import com.li.basemvvm.http.base.RetrofitClient;
 import com.li.basemvvm.utils.RxUtils;
+import com.li.basemvvm.utils.ToastUtils;
 import com.li.basemvvm.utils.TokenUtils;
 
 import java.util.HashMap;
@@ -78,12 +76,12 @@ public class LoginViewModel extends BaseViewModel {
 
     private void login() {
         if (TextUtils.isEmpty(userName.get())) {
-            Toast.makeText(getApplication(), "请输入用户名", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(getApplication(), "请输入用户名");
             return;
         }
 
         if (TextUtils.isEmpty(password.get())) {
-            Toast.makeText(getApplication(), "请输入密码", Toast.LENGTH_SHORT).show();
+            ToastUtils.show(getApplication(), "请输入密码");
             return;
         }
         loginByPassword();
@@ -118,11 +116,7 @@ public class LoginViewModel extends BaseViewModel {
                     @Override
                     public void accept(Throwable throwable) {
                         dismissDialog();
-                        ELog.e("test", throwable.getMessage());
-                        if (throwable instanceof ResponseThrowable) {
-                            Log.e("test", ((ResponseThrowable) throwable).message);
-                        }
-                        Toast.makeText(getApplication(), "" + throwable.getMessage(), Toast.LENGTH_LONG).show();
+                        ToastUtils.show(getApplication(), "" + throwable.getMessage());
                     }
                 });
         addSubscribe(subscribe);

@@ -27,8 +27,8 @@ import com.kaoyaya.tongkai.ui.home.HomeLiveAdapter;
 import com.kaoyaya.tongkai.ui.home.LiveItemViewModel;
 import com.kaoyaya.tongkai.ui.live.liveList.LiveListActivity;
 import com.kaoyaya.tongkai.ui.live.live_frg.LiveListFragActivity;
-import com.kaoyaya.tongkai.ui.live.live_frg.LiveViewPageGroupFragment;
 import com.kaoyaya.tongkai.ui.login.LoginActivity;
+import com.kaoyaya.tongkai.ui.record.RecordCourseActivity;
 import com.kaoyaya.tongkai.ui.study.item.StudyTiKuItemViewModel;
 import com.kaoyaya.tongkai.ui.study.item.VideoRecordItemViewModel;
 import com.kaoyaya.tongkai.utils.SPUtils;
@@ -124,6 +124,7 @@ public class StudyViewModel extends BaseViewModel {
             Log.e("test", "  " + integer);
             switch (integer) {
                 case 0: //录播课
+                    startActivity(RecordCourseActivity.class);
                     break;
                 case 1://题库
                     break;

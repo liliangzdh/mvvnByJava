@@ -14,13 +14,14 @@
         android:layout_height="190dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="6dp"
-        binding:onClickCommand="@{item.clickCommend}"
         android:background="@drawable/white_color_efefef_select"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        binding:onClickCommand="@{item.clickCommend}">
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="96dp"
+            android:scaleType="fitXY"
             binding:url="@{item.entity.picture}" />
 
         <TextView
@@ -38,19 +39,19 @@
             android:layout_marginTop="6dp"
             android:lineSpacingExtra="4dp"
             android:maxLines="1"
-            binding:textColor='@{item.entity.getProgressColor()}'
             android:text="@{item.entity.getProgress()}"
             android:textColor="#B2B2B2"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            binding:textColor='@{item.entity.getProgressColor()}' />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:layout_marginBottom="10dp"
             android:lineSpacingExtra="4dp"
             android:maxLines="1"
             android:text="@{item.entity.lastLessonName}"
-            android:layout_marginBottom="10dp"
             android:textColor="#B2B2B2"
             android:textSize="13sp" />
 

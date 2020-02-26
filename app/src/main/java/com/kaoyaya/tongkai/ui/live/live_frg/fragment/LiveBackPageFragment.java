@@ -1,7 +1,6 @@
 package com.kaoyaya.tongkai.ui.live.live_frg.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -34,7 +33,6 @@ public class LiveBackPageFragment extends BaseFragment<FragmentPageLiveBackBindi
     @Override
     public void initData() {
         super.initData();
-        Log.e("test", "init 3:");
     }
 
     @Override
@@ -51,4 +49,6 @@ public class LiveBackPageFragment extends BaseFragment<FragmentPageLiveBackBindi
         });
 
     }
+
+
 }

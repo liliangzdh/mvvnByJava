@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.kaoyaya.tongkai">
 
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MainApplication"
@@ -13,7 +16,8 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
 
 
         <activity
@@ -40,6 +44,13 @@
         </activity>
 
         <activity
+            android:name=".ui.test.TestAct"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
+
+        </activity>
+
+        <activity
             android:name="com.li.basemvvm.base.ContainerActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
@@ -63,9 +74,11 @@
             android:launchMode="singleInstance"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.test.TestAct">
-
-        </activity>
+        <!-- 录播课 列表 -->
+        <activity
+            android:name=".ui.record.RecordCourseActivity"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait" />
 
 
     </application>

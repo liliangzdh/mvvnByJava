@@ -5,6 +5,7 @@ import com.kaoyaya.tongkai.entity.LiveBackRequest;
 import com.kaoyaya.tongkai.entity.LiveIdAndClassIdResponse;
 import com.kaoyaya.tongkai.entity.LiveInfo;
 import com.kaoyaya.tongkai.entity.StudyResourceItem;
+import com.kaoyaya.tongkai.entity.UserCoursesResponse;
 import com.kaoyaya.tongkai.entity.UserInfo;
 import com.li.basemvvm.http.base.BaseResponse;
 
@@ -57,4 +58,9 @@ public interface UserApi {
 
     @GET("api/v1/users/getLiveIdAndClassIdByReplayLive")
     Observable<BaseResponse<LiveIdAndClassIdResponse>> getLiveIdAndClassId();
+
+    //根据产品分类id获取用户课程信息
+    @GET("api/v1/users/myCourse")
+    Observable<BaseResponse<UserCoursesResponse>> getUserCourses(@Query("topId") int topId);
+
 }

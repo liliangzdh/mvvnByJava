@@ -6,14 +6,19 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.databinding.ObservableArrayList;
 
+import com.google.gson.Gson;
+import com.hdl.elog.ELog;
 import com.kaoyaya.tongkai.BR;
 import com.kaoyaya.tongkai.R;
 import com.kaoyaya.tongkai.config.Constant;
+import com.kaoyaya.tongkai.entity.CCPage;
 import com.kaoyaya.tongkai.entity.CourseSampleInfo;
+import com.kaoyaya.tongkai.entity.LiveAppEnterInfo;
 import com.kaoyaya.tongkai.entity.LiveBackRequest;
 import com.kaoyaya.tongkai.entity.LiveCommand;
 import com.kaoyaya.tongkai.entity.LiveIdAndClassIdResponse;
 import com.kaoyaya.tongkai.entity.LiveInfo;
+import com.kaoyaya.tongkai.http.LiveApi;
 import com.kaoyaya.tongkai.http.UserApi;
 import com.kaoyaya.tongkai.ui.live.liveList.vm.LiveItemViewModel;
 import com.li.basemvvm.base.BaseViewModel;
@@ -26,16 +31,27 @@ import com.li.basemvvm.http.base.BaseResponse;
 import com.li.basemvvm.http.base.RetrofitClient;
 import com.li.basemvvm.utils.RxUtils;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import me.tatarka.bindingcollectionadapter2.ItemBinding;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import retrofit2.http.Query;
 
 public class LiveBackPageViewModel extends BaseViewModel {
 
     public int classId = 0;
-    public int courseId = 0;
+    //    public int courseId = 92443; // 注会的
+    public int courseId = 0; // 注会的
 
     public LiveBackPageViewModel(@NonNull Application application) {
         super(application);
@@ -46,6 +62,8 @@ public class LiveBackPageViewModel extends BaseViewModel {
         Messenger.getDefault().register(this, Constant.LiveBackFilter, CourseSampleInfo.class, new BindingConsumer<CourseSampleInfo>() {
             @Override
             public void call(CourseSampleInfo info) {
+
+                Log.e("test", info.getId() + "  " + info.getType());
                 if (info.getType() == 1) {
                     courseId = info.getId();
                     classId = 0;
@@ -88,10 +106,12 @@ public class LiveBackPageViewModel extends BaseViewModel {
 
     public SingleLiveEvent<LiveCommand> commandEvent = new SingleLiveEvent<>();
 
+    public SingleLiveEvent<Map<String, Object>> saveImageListEvent = new SingleLiveEvent<>();
+
 
     public void sendRefreshEnd(boolean hasMore) {
         // 只能发生给 act处理
-        commandEvent.setValue(new LiveCommand(1, 0,hasMore));
+        commandEvent.setValue(new LiveCommand(1, 0, hasMore));
     }
 
 
@@ -113,6 +133,8 @@ public class LiveBackPageViewModel extends BaseViewModel {
                         if (page == 1) {
                             items.clear();
                         }
+
+
                         for (LiveInfo liveInfo : liveInfos) {
                             items.add(new LiveItemViewModel(null, liveInfo));
                         }

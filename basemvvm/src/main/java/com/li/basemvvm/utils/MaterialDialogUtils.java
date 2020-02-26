@@ -1,5 +1,6 @@
 package com.li.basemvvm.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
@@ -81,26 +82,8 @@ public class MaterialDialogUtils {
      * @param horizontal
      * @return MaterialDialog.Builder
      */
-    public static MaterialDialog.Builder showIndeterminateProgressDialog(Context context, String content, boolean horizontal) {
-        MaterialDialog.Builder builder = new MaterialDialog.Builder(context)
-                .title(content)
-                .progress(true, 0)
-                .progressIndeterminateStyle(horizontal)
-                .canceledOnTouchOutside(false)
-                .backgroundColorRes(R.color.white)
-                .keyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-                        if (event.getAction() == KeyEvent.ACTION_DOWN) {//如果是按下，则响应，否则，一次按下会响应两次
-                            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                                //activity.onBackPressed();
-
-                            }
-                        }
-                        return false;//false允许按返回键取消对话框，true除了调用取消，其他情况下不会取消
-                    }
-                });
-        return builder;
+    public static Dialog showIndeterminateProgressDialog(Context context, String content, boolean horizontal) {
+        return   DialogUtils.getInstance().showLoading(context);
     }
 
 
