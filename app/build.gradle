@@ -49,5 +49,6 @@ dependencies {
     //录播图
     implementation 'com.youth.banner:banner:1.4.10'
 
-
+    // rxWebSocket
+    implementation 'com.dhh:websocket:2.1.2'
 }

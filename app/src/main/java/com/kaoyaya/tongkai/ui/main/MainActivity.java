@@ -1,7 +1,9 @@
 package com.kaoyaya.tongkai.ui.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
@@ -18,6 +20,7 @@ import com.kaoyaya.tongkai.entity.TabItem;
 import com.kaoyaya.tongkai.ui.home.HomeFragment;
 import com.kaoyaya.tongkai.ui.home.HomeViewModel;
 import com.kaoyaya.tongkai.ui.study.StudyFragment;
+import com.kaoyaya.tongkai.ui.test.TestProcessAct;
 import com.kaoyaya.tongkai.ui.user.UserCenterFragment;
 import com.kaoyaya.tongkai.utils.SPUtils;
 import com.kaoyaya.tongkai.utils.SizeUtils;
@@ -162,10 +165,10 @@ public class MainActivity extends BaseActivity<ActMainBinding, MainViewModel> {
 
                     if (newFragment instanceof HomeFragment) {
                         ((HomeFragment) newFragment).initStatusBar();
-                    }else if(newFragment instanceof UserCenterFragment){
-                        ((UserCenterFragment)newFragment).initStatusBar();
-                    }else if(newFragment instanceof StudyFragment){
-                        ((StudyFragment)newFragment).initStatusBar();
+                    } else if (newFragment instanceof UserCenterFragment) {
+                        ((UserCenterFragment) newFragment).initStatusBar();
+                    } else if (newFragment instanceof StudyFragment) {
+                        ((StudyFragment) newFragment).initStatusBar();
                     }
                 }
                 transaction.commit();

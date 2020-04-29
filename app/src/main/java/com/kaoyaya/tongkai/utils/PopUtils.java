@@ -1,9 +1,12 @@
 package com.kaoyaya.tongkai.utils;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import androidx.databinding.DataBindingUtil;
@@ -81,6 +84,50 @@ public class PopUtils {
         popupBigPhoto.showAsDropDown(headView);
 
         return popupBigPhoto;
+    }
+
+
+    public void showScoreTipPop(Context context, View view) {
+        View inflate = View.inflate(context, R.layout.pop_score_tip, null);
+
+        final PopupWindow mPopupWindow = new PopupWindow(inflate, SizeUtils.dp2px(context, 200), SizeUtils.dp2px(context, 45));
+        int[] location = new int[2];
+        int measuredHeight = view.getMeasuredHeight();
+        view.getLocationOnScreen(location);
+
+
+        inflate.findViewById(R.id.tvOpen).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+
+
+        inflate.findViewById(R.id.tvClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+        //显示在上方
+        mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], location[1] - measuredHeight - SizeUtils.dp2px(context, 10));
+    }
+
+
+    public void showScorePop(Context context, View view) {
+        View inflate = View.inflate(context, R.layout.pop_score, null);
+
+        final PopupWindow mPopupWindow = new PopupWindow(inflate, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        int[] location = new int[2];
+        int measuredHeight = view.getMeasuredHeight();
+        view.getLocationOnScreen(location);
+
+
+
+
+        //显示在上方
+        mPopupWindow.showAtLocation(view, Gravity.NO_GRAVITY, location[0], location[1] + measuredHeight);
     }
 
 }

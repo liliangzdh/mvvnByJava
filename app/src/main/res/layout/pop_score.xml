@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="为本次直播拼个分吧~"
+                android:textColor="#303133"
+                android:textSize="14sp" />
+
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="11dp"
+                android:src="@mipmap/close" />
+
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="visible">
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:orientation="vertical"
+               android:layout_height="match_parent">
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="20dp"
+                   android:orientation="horizontal">
+
+
+                   <com.makeramen.roundedimageview.RoundedImageView
+                       android:id="@+id/imageView"
+                       android:layout_width="50dp"
+                       android:layout_height="50dp"
+                       android:layout_marginLeft="27dp"
+                       android:layout_marginRight="10dp"
+                       android:background="#f00"
+                       android:scaleType="fitXY"
+                       app:riv_corner_radius="25dip"
+                       app:riv_oval="true" />
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="vertical">
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text="蒲公英老师"
+                           android:textColor="#ff303133"
+                           android:textSize="16sp" />
+
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="10dp"
+                           android:text="初级第七章 税收征收管理法律制度"
+                           android:textColor="#ff909399"
+                           android:textSize="14sp" />
+
+                   </LinearLayout>
+
+               </LinearLayout>
+
+
+               <View
+                   android:layout_width="match_parent"
+                   android:layout_height="1dp"
+                   android:layout_marginTop="20dp"
+                   android:layout_marginHorizontal="20dp"
+                   android:background="#EDEFF2" />
+
+
+               <RelativeLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:paddingBottom="20dp">
+
+
+                   <LinearLayout
+                       android:id="@+id/llEditScore"
+                       android:visibility="gone"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentBottom="true"
+                       android:layout_marginTop="20dp"
+                       android:orientation="vertical"
+                       android:paddingHorizontal="20dp">
+
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginBottom="16dp"
+                           android:text="老师着装得体、精神饱满吗？"
+                           android:textColor="#303133"
+                           android:textSize="16sp" />
+
+
+                       <com.kaoyaya.tongkai.views.StarView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="14dp"
+                           android:text="比较满意，仍可改善"
+                           android:textColor="#bfc2cc"
+                           android:textSize="12sp" />
+
+
+                       <EditText
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="20dp"
+                           android:layout_marginBottom="20dp"
+                           android:background="@drawable/et_bg"
+                           android:hint="还想说点什么"
+                           android:maxHeight="90dp"
+                           android:minHeight="46dp"
+                           android:paddingHorizontal="10dp"
+                           android:visibility="visible" />
+
+
+                       <TextView
+                           android:id="@+id/tvCommit"
+                           android:layout_width="match_parent"
+                           android:layout_height="50dp"
+                           android:background="@drawable/color_3d7eff_select"
+                           android:gravity="center"
+                           android:text="匿名提交"
+                           android:textColor="#fff" />
+
+                   </LinearLayout>
+
+
+                   <LinearLayout
+                       android:id="@+id/llLookScore"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentBottom="true"
+                       android:layout_marginTop="20dp"
+                       android:gravity="center_horizontal"
+                       android:orientation="vertical"
+                       android:paddingHorizontal="20dp"
+                       android:visibility="visible">
+
+
+                       <ImageView
+                           android:layout_width="88dp"
+                           android:layout_height="74dp"
+                           android:src="@mipmap/score_tip" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="16dp"
+                           android:gravity="center"
+                           android:text="感谢您的评价！\n我们会更努力的改进，为您提供更好的服务！"
+                           android:textColor="#ff909399"
+                           android:textSize="16sp" />
+
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="48dp"
+                           android:layout_marginHorizontal="30dp"
+                           android:layout_marginTop="34dp"
+                           android:layout_marginBottom="21dp"
+                           android:background="@drawable/circle_3d7eff_radiu_23"
+                           android:gravity="center"
+                           android:text="查看我的评分"
+                           android:textColor="#3d7eff"
+                           android:textSize="16sp" />
+
+                   </LinearLayout>
+
+
+                   <LinearLayout
+                       android:id="@+id/llShowScore"
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_alignParentBottom="true"
+                       android:layout_marginHorizontal="30dp"
+                       android:background="@drawable/et_bg"
+                       android:orientation="vertical"
+                       android:padding="20dp"
+                       android:visibility="gone">
+
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginBottom="16dp"
+                           android:text="老师着装得体、精神饱满吗？"
+                           android:textColor="#303133"
+                           android:textSize="16sp" />
+
+
+                       <com.kaoyaya.tongkai.views.StarView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="14dp"
+                           android:text="比较满意，仍可改善"
+                           android:textColor="#bfc2cc"
+                           android:textSize="12sp" />
+
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:layout_marginTop="23dp"
+                           android:layout_marginBottom="12dp"
+                           android:text="补充评论："
+                           android:textColor="#303133"
+                           android:textSize="14sp" />
+
+                       <TextView
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:text="老师的语速能再慢一点就好了~"
+                           android:textColor="#ff303133"
+                           android:textSize="13sp" />
+
+                   </LinearLayout>
+
+               </RelativeLayout>
+
+           </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

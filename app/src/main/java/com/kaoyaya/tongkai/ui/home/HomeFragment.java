@@ -1,7 +1,6 @@
 package com.kaoyaya.tongkai.ui.home;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,6 @@ import com.kaoyaya.tongkai.entity.HomeResourseDistribute;
 import com.kaoyaya.tongkai.utils.GlideImageLoader;
 import com.li.basemvvm.BR;
 import com.li.basemvvm.base.BaseFragment;
-import com.liaoinstan.springview.container.DefaultFooter;
-import com.liaoinstan.springview.container.DefaultHeader;
-import com.liaoinstan.springview.widget.SpringView;
 import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
